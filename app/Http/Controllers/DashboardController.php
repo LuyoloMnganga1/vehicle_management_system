@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+Use DB;
+use DateTime;
+use App\Models\User;
+use App\Models\feeds;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
+use App\Services\sendSMS;
+use App\Mail\AccountUpdated;
+use Illuminate\Support\Str;
+
+class DashboardController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('dashboard');
+    }
+    public static function update_feed($task, $event,  $person, $date)
+    {
+        feeds::create(
+            [
+                'task'=> $task,
+                'event'=> $event,
+                'person'=> $person,
+                'date'=> $date,
+            ]
+        );
+        return true;
+    }
+
+}
