@@ -161,20 +161,26 @@
                         </em>
                         </small>
                         </div>
-                    @if ($errors->any())
-                    <div class="alert alert-danger alert-dismissible">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    @if ($message = Session::get('success'))
-                    <div class="alert alert-success alert-dismissible">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            <p>{{ $message }}</p>
+                        @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        @if (Session('message'))
+                            <div class="alert alert-success alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <p>{{ session('message') }}</p>
+                            </div>
+                        @endif
+                        @if (Session('success'))
+                            <div class="alert alert-success alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <p>{{ session('success') }}</p>
                             </div>
                         @endif
                     <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">

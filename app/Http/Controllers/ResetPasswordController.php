@@ -92,7 +92,7 @@ class ResetPasswordController extends Controller {
       'updated_at' => Carbon::now(),
   ]);
 
-  return redirect()->back()->with('success', 'Your password has been changed successfully!');
+  return redirect('login')->with('success', 'Your password has been changed successfully!');
 
   }
   public function updatePasswordbyUser(Request $request)

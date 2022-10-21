@@ -166,6 +166,12 @@
                                 <p>{{ session('message') }}</p>
                         </div>
                     @endif
+                    @if (Session('success'))
+                        <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <p>{{ session('success') }}</p>
+                        </div>
+                    @endif
                     <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
                         <input class="input100" type="text" name="email" placeholder="Email">
                         <span class="focus-input100"></span>

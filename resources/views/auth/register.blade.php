@@ -14,21 +14,26 @@
                     <div class="row mb-4 px-3">
                         <h2 class="mb-0 mr-4 mt-2">Register User</h2>
                     </div>
-
-@if ($errors->any())
-<div class="alert alert-danger alert-dismissible">
-<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-@if ($message = Session::get('success'))
-                <div class="alert alert-success alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <p>{{ $message }}</p>
+                    @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    @if (Session('message'))
+                        <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <p>{{ session('message') }}</p>
+                        </div>
+                    @endif
+                    @if (Session('success'))
+                        <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <p>{{ session('success') }}</p>
                         </div>
                     @endif
                     <small>Please fill this form to create an account. </small>
