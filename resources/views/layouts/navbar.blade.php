@@ -25,8 +25,8 @@
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                     <a class="dropdown-item" href ="#"><i class="dw dw-user1"></i> Profile</a>
 
-                    <a class="dropdown-item" href ="#"><i class="dw dw-file-3"></i> User Activity Feeds</a>
-                    <a class="dropdown-item" href ="#"><i class="dw dw-file-4"></i> Reports</a>
+                    {{-- <a class="dropdown-item" href ="#"><i class="dw dw-file-3"></i> User Activity Feeds</a>
+                    <a class="dropdown-item" href ="#"><i class="dw dw-file-4"></i> Reports</a> --}}
 
                     <a class="dropdown-item" href ="{{route('Logout')}}"><i class="dw dw-logout"></i> Log Out</a>
                 </div>

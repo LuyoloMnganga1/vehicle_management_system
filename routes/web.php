@@ -18,12 +18,13 @@ use App\Http\Controllers\DashboardController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('dashboard');
 });
 
 Route::group(['middleware' => ['auth', 'verifyOTP']], function(){
-    Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
+    // Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
 });
+Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('passwordCreate/{id}/{token}',[RegisterUserController::class, 'passwordCreate'])->name('passwordCreate');
 Route::post('password/{id}',[RegisterUserController::class, 'password'])->name('password');

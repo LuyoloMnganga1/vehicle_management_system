@@ -3,7 +3,7 @@
 <head>
 	<!-- Basic Page Info -->
 	<meta charset="utf-8">
-	<title></title>
+	<title>Vehicle App - Dashboard</title>
 
 	<!-- Site favicon -->
     <link rel="icon" href="images/logo.png" sizes="16x16" type="images/logo.png">
