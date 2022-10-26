@@ -52,13 +52,13 @@
                         <span class="micon dw dw-car"></span><span class="mtext"> Vehicles</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="#">Manage Vehicles </a></li>
+                        <li><a href="#">Add Vehicles </a></li>
 
-                        <li><a href="#">Log Book</a></li>
+                        <li><a  href="{{route('vehicle')}}">Vehicles</a></li>
 
-                        {{-- <li><a  href="#">Leaves</a></li> --}}
+                        <li><a href="{{route('assiged-vehicle')}}">Assignment New Vehicle</a></li>
 
-                        {{-- <li><a href="#">HOD Leaves</a></li> --}}
+                        <li><a href="{{route('assig-history')}}">Assignment History</a></li>
 
                         {{-- <li><a href="#">Department Leaves</a></li> --}}
 

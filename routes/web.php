@@ -6,6 +6,8 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DriverController;
+use App\Http\Controllers\VehicleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +27,16 @@ Route::group(['middleware' => ['auth', 'verifyOTP']], function(){
     // Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
 });
 Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
+
+Route::get('driver',[DriverController::class, 'driver'])->name('driver');
+
+Route::get('vehicle',[VehicleController::class, 'vehicle'])->name('vehicle');
+
+Route::post('addVehicle',[VehicleController::class, 'addVehicle'])->name('addVehicle');
+
+Route::get('assiged-vehicle',[VehicleController::class, 'assigned'])->name('assiged-vehicle');
+
+Route::get('assig-history',[VehicleController::class, 'assigedhistory'])->name('assig-history');
 
 Route::get('passwordCreate/{id}/{token}',[RegisterUserController::class, 'passwordCreate'])->name('passwordCreate');
 Route::post('password/{id}',[RegisterUserController::class, 'password'])->name('password');
