@@ -52,13 +52,29 @@
                         <span class="micon dw dw-car"></span><span class="mtext"> Vehicles</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="#">Add Vehicles </a></li>
 
                         <li><a  href="{{route('vehicle')}}">Vehicles</a></li>
 
+                        <li><a href="{{route('assiged-vehicle')}}">Assign Vehicle</a></li>
+
+                        <li><a href="{{route('assig-history')}}">Assign History</a></li>
+
+                        {{-- <li><a href="#">Department Leaves</a></li> --}}
+
+                        {{-- <li><a href="#">My Leaves</a></li> --}}
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle">
+                        <span class="micon dw dw-car"></span><span class="mtext"> Issues</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a  href="{{route('issue')}}">Issues</a></li>
+{{-- 
                         <li><a href="{{route('assiged-vehicle')}}">Assignment New Vehicle</a></li>
 
-                        <li><a href="{{route('assig-history')}}">Assignment History</a></li>
+                        <li><a href="{{route('assig-history')}}">Assignment History</a></li> --}}
 
                         {{-- <li><a href="#">Department Leaves</a></li> --}}
 

@@ -22,7 +22,8 @@
                             <label for="inputEmail4">Vehicle Type</label>
                             {{-- <input type="text" class="form-control" id="hod_fullname" name="hod_fullname" value=""> --}}
 
-                            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="vehicle_type">
+                            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
+                                name="vehicle_type">
                                 <option selected>Choose...</option>
                                 <option value="Bakkie">Bakkie</option>
                                 <option value="Sedan">Sedan</option>
@@ -44,13 +45,18 @@
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Vehicle Image</label>
                             <div class="custom-file">
-                              <input type="file" class="custom-file-input rounded-circle" id="customFile" name="vehicle_image" accept=".jpg,.jpeg,.bmp,.png,.gif,.jfif"  onchange="displayImg2(this,$(this))">
-                              <label class="custom-file-label" for="customFile">Choose file</label>
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                <input type="file" class="custom-file-input rounded-circle" id="customFile"
+                                    name="vehicle_image" accept=".jpg,.jpeg,.bmp,.png,.gif,.jfif"
+                                    onchange="displayImg2(this,$(this))">
+
+
                             </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Status</label>
-                            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="vehicle_status">
+                            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
+                                name="vehicle_status">
                                 <option selected>Choose...</option>
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>
@@ -58,7 +64,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Registration Number</label>
-                            <input type="text" class="form-control" id="phone" name="registration_no" value="">
+                            <input type="text" class="form-control" id="phone" name="Registration_no" value="">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Engine Number</label>
@@ -66,7 +72,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Chassis Number</label>
-                            <input type="text" class="form-control" id="phone" name="vehicle_chassis_no" value="">
+                            <input type="text" class="form-control" id="phone" name="chassis_no" value="">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Fuel Type</label>
@@ -79,20 +85,36 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Fuel Measurement In</label>
-                            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="fuel_measurement">
+                            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
+                                name="fuel_measurement">
                                 <option selected>Choose...</option>
                                 <option value="Litres">Litres</option>
                                 <option value="Gallons">Gallons</option>
-                                
+
                             </select> </div>
                         <div class="form-group col-md-12">
                             <label for="inputEmail4">Track Usage As</label>
-                            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="vehicle_usage">
+                            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
+                                name="vehicle_usage">
                                 <option selected>Choose...</option>
                                 <option value="Kilometers">Kilometers</option>
                                 <option value="Miles">Miles</option>
                                 <option value="Hours">Hours</option>
                             </select>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="inputEmail4">Secondary/Auxilary Meter</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="aux_meter" id="inlineRadio1"
+                                    value="Yes">
+                                <label class="form-check-label" for="inlineRadio1">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="aux_meter" id="inlineRadio2"
+                                    value="No">
+                                <label class="form-check-label" for="inlineRadio2">No</label>
+                            </div>
                         </div>
                     </div>
 
@@ -116,11 +138,11 @@
         <div class="card-header card-header-text">
             <div class="row">
                 <div class="col-md-9">
-                    <h4 class="card-title">Vehicle List</h4>
+                    <h4 class="card-title">Manage Vehicle</h4>
                 </div>
                 <div class="col-md-3">
                     <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal"
-                        data-target="#exampleModalCenter"> <i class="fa fa-plus"></i> Add New Vehicle</button>
+                        data-target="#exampleModalCenter"> <i class="fa fa-plus"></i> Add New</button>
                 </div>
             </div>
         </div>
@@ -146,39 +168,45 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
-                        <th scope="col">HOD Name</th>
-                        <th scope="col">Contact No.</th>
+                        <th scope="col">Model</th>
+                        <th scope="col">Fuel Type</th>
+                        <th scope="col">Manufacture Year</th>
+                        <th scope="col">Registration No</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @if ($dep->count() == 0) --}}
+                    @if ($vehicle->count() == 0)
                     <tr>
                         <td colspan="5" class="text-center">No data available in table.</td>
                     </tr>
-                    {{-- @endif
-@foreach($dep as $item ) --}}
+                    @endif
+                    @foreach($vehicle as $vehicle )
                     <tr>
-                        {{-- <td width="5%">{{$i++}}</td>
-                        <td>{{ $item->name}}</td>
-                        <td>{{ $item->hod_fullname}}</td>
-                        <td>{{ $item->phone}}</td> --}}
+                        <td width="5%">{{$i++}}</td>
+                        <td>{{ $vehicle->vehicle_name}}</td>
+                        <td>{{ $vehicle->vehicle_model}}</td>
+                        <td>{{ $vehicle->fuel_type}}</td>
+                        <td>{{ $vehicle->year}}</td>
+                        <td>{{ $vehicle->Registration_no}}</td>
                         <td>
-                            {{-- <form action="" method="get" >
-       <a class="btn bg-transparent btn-outline-info"  data-toggle="modal" data-target="#edit"  ><i style ="color:#5bc0de;" class="material-icons">edit</i> </a>
-       @csrf
-      {{ method_field('GET') }}
+                            <form action="{{route('deleteVehicle',$vehicle->id)}}" method="get">
+                                <a class="btn bg-transparent btn-outline-info" data-toggle="modal"
+                                    data-target="#edit{{$vehicle->id}}"><i style="color:#5bc0de;" class="material-icons">edit</i> </a>
+                                @csrf
+                                {{ method_field('GET') }}
 
-                            <button type="submit" name="archive" onclick="archiveFunction()"
-                                class="btn bg-transparent btn-outline-danger"><i
-                                    style="color:red; padding-bottom: -50%;" class="material-icons">delete</i> </button>
-                            </form> --}}
+                                <button type="submit" name="archive" onclick="archiveFunction()"
+                                    class="btn bg-transparent btn-outline-danger"><i
+                                        style="color:red; padding-bottom: -50%;" class="material-icons">delete</i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     <!-- Modal -->
-                    <div class="modal fade" id="edit" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="edit{{$vehicle->id}}" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLongTitle">Edit Department</h5>
@@ -190,39 +218,119 @@
                                     <form action="" method="post">
                                         {!! csrf_field() !!}
                                         <div class="row">
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail4">HOD Name</label>
-                                                <input type="text" class="form-control" id="hod_fullname"
-                                                    name="hod_fullname" value="" required autofocus>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Phone No.</label>
-                                                <input type="text" class="form-control" id="phone" name="phone" value=""
-                                                    required autofocus>
-                                            </div>
-                                            <div class="form-group col-md-12">
-                                                <label for="inputEmail4">Department Name</label>
-                                                <input type="text" class="form-control" id="department" name="name"
-                                                    value="" required autofocus>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                </div>
+                                          <div class="form-group col-md-12">
+                                              <label for="inputEmail4">Vehicle Type</label>
+                                              <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
+                                                  name="vehicle_type">
+                                                  <option selected>{{$vehicle->vehicle_type}}</option>
+                                                  <option value="Bakkie">Bakkie</option>
+                                                  <option value="Sedan">Sedan</option>
+                                                  <option value="Truck">Truck</option>
+                                              </select>
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                              <label for="inputEmail4">Vehicle Name</label>
+                                              <input type="text" class="form-control" id="hod_fullname" name="vehicle_name" value="{{$vehicle->vehicle_name}}">
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                              <label for="inputEmail4">Make/Model</label>
+                                              <input type="text" class="form-control" id="phone" name="vehicle_model" value="{{$vehicle->vehicle_model}}">
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                              <label for="inputEmail4">Year of Manufacture</label>
+                                              <input type="text" class="form-control" id="hod_fullname" name="year" value="{{$vehicle->year}}">
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                              <label for="inputEmail4">Vehicle Image</label>
+                                              <div class="custom-file">
+                                                  <label class="custom-file-label" for="customFile">Choose file</label>
+                                                  <input type="file" class="custom-file-input rounded-circle" id="customFile"
+                                                      name="vehicle_image" accept=".jpg,.jpeg,.bmp,.png,.gif,.jfif"
+                                                      onchange="displayImg2(this,$(this))">
+                  
+                  
+                                              </div>
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                              <label for="inputEmail4">Status</label>
+                                              <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
+                                                  name="vehicle_status">
+                                                  <option selected>{{$vehicle->vehicle_status}}</option>
+                                                  <option value="Active">Active</option>
+                                                  <option value="Inactive">Inactive</option>
+                                              </select>
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                              <label for="inputEmail4">Registration Number</label>
+                                              <input type="text" class="form-control" id="phone" name="Registration_no" value="{{$vehicle->Registration_no}}">
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                              <label for="inputEmail4">Engine Number</label>
+                                              <input type="text" class="form-control" id="hod_fullname" name="engine_no" value="{{$vehicle->engine_no}}">
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                              <label for="inputEmail4">Chassis Number</label>
+                                              <input type="text" class="form-control" id="phone" name="chassis_no" value="{{$vehicle->chassis_no}}">
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                              <label for="inputEmail4">Fuel Type</label>
+                                              <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="fuel_type">
+                                                  <option selected>{{$vehicle->fuel_type}}</option>
+                                                  <option value="Petrol">Petrol</option>
+                                                  <option value="Dessiel">Dessiel</option>
+                                                  <option value="Electric">Electric</option>
+                                              </select>
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                              <label for="inputEmail4">Fuel Measurement In</label>
+                                              <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
+                                                  name="fuel_measurement">
+                                                  <option selected>{{$vehicle->fuel_measurement}}</option>
+                                                  <option value="Litres">Litres</option>
+                                                  <option value="Gallons">Gallons</option>
+                  
+                                              </select> </div>
+                                          <div class="form-group col-md-12">
+                                              <label for="inputEmail4">Track Usage As</label>
+                                              <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
+                                                  name="vehicle_usage">
+                                                  <option selected>{{$vehicle->vehicle_usage}}</option>
+                                                  <option value="Kilometers">Kilometers</option>
+                                                  <option value="Miles">Miles</option>
+                                                  <option value="Hours">Hours</option>
+                                              </select>
+                                          </div>
+                  
+                                          <div class="form-group col-md-12">
+                                              <label for="inputEmail4">Secondary/Auxilary Meter</label>
+                                              <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="radio" name="aux_meter" id="inlineRadio1"
+                                                      value="{{$vehicle->aux_meter}}">
+                                                  <label class="form-check-label" for="inlineRadio1">Yes</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="radio" name="aux_meter" id="inlineRadio2"
+                                                      value="{{$vehicle->aux_meter}}">
+                                                  <label class="form-check-label" for="inlineRadio2">No</label>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                      <div style="margin-top: 2%">
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
                                 </form>
                             </div>
 
                         </div>
                     </div>
         </div>
-        {{-- @endforeach --}}
+        @endforeach
         </tbody>
         </table>
         <div class="d-flex">
-            {{-- {{ $dep->links() }} --}}
+            {{-- {{ $vehicle->links() }} --}}
         </div>
     </div>
 </div>
@@ -230,11 +338,11 @@
 </div>
 
 <script>
-    function displayImg2(input,_this) {
+    function displayImg2(input, _this) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-              $('#timg').attr('src',e.target.result);
+                $('#timg').attr('src', e.target.result);
             }
 
             reader.readAsDataURL(input.files[0]);
