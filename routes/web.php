@@ -61,6 +61,10 @@ Route::get('fuel-Entry',[VehicleController::class, 'fuelEntry'])->name('fuel-Ent
 
 Route::post('addFuel',[VehicleController::class, 'addFuel'])->name('addFuel');
 
+Route::post('updateFuel/{id}',[VehicleController::class, 'updateFuel'])->name('updateFuel');
+
+Route::get('deleteFuel/{id}',[VehicleController::class, 'deleteFuel'])->name('deleteFuel');
+
 
 Route::get('passwordCreate/{id}/{token}',[RegisterUserController::class, 'passwordCreate'])->name('passwordCreate');
 Route::post('password/{id}',[RegisterUserController::class, 'password'])->name('password');
