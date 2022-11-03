@@ -19,7 +19,7 @@ class IssueController extends Controller
 
     public function addIssue(Request $request)
     {
-        $validator = Issue::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'vehicle_name' => ['required', 'string' , 'max:100000'],
             'assignee' => ['required', 'string' , 'max:225'],
             'title' => ['required', 'string' , 'max:225'],
@@ -31,10 +31,10 @@ class IssueController extends Controller
         $img ='';
         if ($request->issue_image == null){
             return redirect()->back()
-            ->withErrors("Image iimages required")
+            ->withErrors("File upload is required")
             ->withInput();
         }else{
-            if($request->hasFile('vehicle_image')){
+            if($request->hasFile('issue_image')){
                 $fileName = auth()->id() . '_' . time() . '.'. $request->issue_image->extension();
                 $request->issue_image->move('files/img', $fileName);
                 $img = 'files/img/'.$fileName;
@@ -55,7 +55,7 @@ class IssueController extends Controller
             'due_date' => $request->due_date,
         ];
         Issue::create($data);
-        return redirect()->back()->with('success','Vehicle  has been added');
+        return redirect()->back()->with('success','Issue has been added');
     }
 
     public function updateIssue(Request $request, $id)

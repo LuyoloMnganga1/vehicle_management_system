@@ -6,15 +6,14 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Add Issue</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Fuel Entry</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{route('addIssue')}}" method="post">
+                <form action="{{route('addFuel')}}" method="post">
                     {!! csrf_field() !!}
-                    <!-- {!! method_field('GET') !!}  -->
 
                     <div class="row">
                        
@@ -23,19 +22,41 @@
                             <input type="text" class="form-control" id="hod_fullname" name="vehicle_name" value="">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">Assignee</label>
-                            <input type="text" class="form-control" id="phone" name="assignee" value="">
+                            <label for="inputEmail4">Date</label>
+                            <input type="date" class="form-control" id="phone" name="start_datte" value="">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">Title</label>
-                            <input type="text" class="form-control" id="hod_fullname" name="title" value="">
+                            <label for="inputEmail4">Odometer</label>
+                            <input type="text" class="form-control" id="hod_fullname" name="odometer" value="">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">Description</label>
-                            <input type="text" class="form-control" id="hod_fullname" name="description" value="">
+                            <label for="inputEmail4">Partial Fuel Up</label> <br>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="partial_fuel" id="inlineRadio1"
+                                    value="Yes">
+                                <label class="form-check-label" for="inlineRadio1">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="partial_fuel" id="inlineRadio2"
+                                    value="No">
+                                <label class="form-check-label" for="inlineRadio2">No</label>
+                            </div>
                         </div>
-                        <div class="form-group col-md-12">
-                            <label for="inputEmail4">File Upload</label>
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Price/Unit</label>
+                            <input type="text" class="form-control" id="hod_fullname" name="price" value="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Vendor</label>
+                            <input type="text" class="form-control" id="hod_fullname" name="vendor" value="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Vendor Number</label>
+                            <input type="text" class="form-control" id="hod_fullname" name="vendor_no" value="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Invoice Upload</label>
                             <div class="custom-file">
                                 <label class="custom-file-label" for="customFile">Choose file</label>
                                 <input type="file" class="custom-file-input rounded-circle" id="customFile"
@@ -48,20 +69,7 @@
                         <div class="form-group d-flex justify-content-center col-md-12">
 							<img src="img/placeholder.jpg" alt="" id="timg1" class="img-fluid img-thumbnail">
 						</div>
-                        <div class="form-group col-md-6">
-                            <label for="inputEmail4">Priority</label>
-                            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
-                                name="priority">
-                                <option selected>Choose...</option>
-                                <option value="Low">Low</option>
-                                <option value="Medium">Medium</option>
-                                <option value="High">High</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputEmail4">Due Date</label>
-                            <input type="date" class="form-control" id="hod_fullname" name="due_date" value="">
-                        </div>
+                       
                     </div>
                     <div style="margin-top: 5%">
                         <button type="submit" class="btn btn-primary">Add</button>
@@ -82,7 +90,7 @@
         <div class="card-header card-header-text">
             <div class="row">
                 <div class="col-md-9">
-                    <h4 class="card-title">Manage Issues</h4>
+                    <h4 class="card-title">Manage Fuel</h4>
                 </div>
                 <div class="col-md-3">
                     <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal"
@@ -121,24 +129,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($issue->count() == 0)
+                    {{-- @if ($issue->count() == 0) --}}
                     <tr>
                         <td colspan="8" class="text-center">No data available in table.</td>
                     </tr>
-                    @endif
-                    @foreach($issue as $issue )
+                    {{-- @endif
+                    @foreach($issue as $issue ) --}}
                     <tr>
-                        <td width="5%">{{$i++}}</td>
+                        {{-- <td width="5%">{{$i++}}</td>
                         <td>{{ $issue->vehicle_name}}</td>
                         <td>{{ $issue->assignee}}</td>
                         <td>{{ $issue->title}}</td>
                         <td>{{ $issue->due_date}}</td>
                         <td>{{ $issue->priority}}</td>
-                        <td>{{ $issue->status}}</td>
+                        <td>{{ $issue->status}}</td> --}}
                         <td>
-                            <form action="{{route('deleteIssue',$issue->id)}}" method="get">
+                            {{-- <form action="" method="get">
                                 <a class="btn bg-transparent btn-outline-info" data-toggle="modal"
-                                    data-target="#edit{{$issue->id}}"><i style="color:#5bc0de;" class="material-icons">edit</i> </a>
+                                    data-target="#edit"><i style="color:#5bc0de;" class="material-icons">edit</i> </a>
                                 @csrf
                                 {{ method_field('GET') }}
 
@@ -146,11 +154,11 @@
                                     class="btn bg-transparent btn-outline-danger"><i
                                         style="color:red; padding-bottom: -50%;" class="material-icons">delete</i>
                                 </button>
-                            </form>
+                            </form> --}}
                         </td>
                     </tr>
                     <!-- Modal -->
-                    <div class="modal fade" id="edit{{$issue->id}}" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="edit" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
@@ -167,19 +175,19 @@
                        
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">Vehicle Name</label>
-                                                <input type="text" class="form-control" id="hod_fullname" name="{{$issue->vehicle_name}}" value="">
+                                                <input type="text" class="form-control" id="hod_fullname" name="" value="">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">Assignee</label>
-                                                <input type="text" class="form-control" id="phone" name="{{$issue->assignee}}" value="">
+                                                <input type="text" class="form-control" id="phone" name="" value="">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">Title</label>
-                                                <input type="text" class="form-control" id="hod_fullname" name="{{$issue->title}}" value="">
+                                                <input type="text" class="form-control" id="hod_fullname" name="" value="">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">Description</label>
-                                                <input type="text" class="form-control" id="hod_fullname" name="{{$issue->description}}" value="">
+                                                <input type="text" class="form-control" id="hod_fullname" name="" value="">
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <label for="inputEmail4">File Upload</label>
@@ -193,13 +201,13 @@
                                                 </div>
                                             </div>
                                             <div class="form-group d-flex justify-content-center col-md-12">
-                                                <img src="{{ $issue->issue_image}}"  alt="" id="timg" class="img-fluid img-thumbnail">
+                                                <img src=""  alt="" id="timg" class="img-fluid img-thumbnail">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">Priority</label>
                                                 <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
                                                     name="priority">
-                                                    <option selected>{{$issue->priority}}</option>
+                                                    <option selected></option>
                                                     <option value="Low">Low</option>
                                                     <option value="Medium">Medium</option>
                                                     <option value="High">High</option>
@@ -207,7 +215,7 @@
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">Due Date</label>
-                                                <input type="date" class="form-control" id="hod_fullname" name="{{$issue->due_date}}" value="">
+                                                <input type="date" class="form-control" id="hod_fullname" name="" value="">
                                             </div>
                                         </div>
 
@@ -221,7 +229,7 @@
                         </div>
                     </div>
         </div>
-        @endforeach
+        {{-- @endforeach --}}
         </tbody>
         </table>
         <div class="d-flex">

@@ -41,6 +41,12 @@ Route::get('deleteVehicle/{id}',[VehicleController::class, 'deleteVehicle'])->na
 
 Route::get('assiged-vehicle',[VehicleController::class, 'assigned'])->name('assiged-vehicle');
 
+Route::post('addAssigned',[VehicleController::class, 'addAssigned'])->name('addAssigned');
+
+Route::post('updateAssigned/{id}',[VehicleController::class, 'updateAssigned'])->name('updateAssigned');
+
+Route::get('deleteAssigned/{id}',[VehicleController::class, 'deleteAssigned'])->name('deleteAssigned');
+
 Route::get('assig-history',[VehicleController::class, 'assigedhistory'])->name('assig-history');
 
 Route::get('issue',[IssueController::class, 'issue'])->name('issue');
@@ -51,6 +57,9 @@ Route::post('updateIssue/{id}',[IssueController::class, 'updateIssue'])->name('u
 
 Route::get('deleteIssue/{id}',[IssueController::class, 'deleteIssue'])->name('deleteIssue');
 
+Route::get('fuel-Entry',[VehicleController::class, 'fuelEntry'])->name('fuel-Entry');
+
+Route::post('addFuel',[VehicleController::class, 'addFuel'])->name('addFuel');
 
 
 Route::get('passwordCreate/{id}/{token}',[RegisterUserController::class, 'passwordCreate'])->name('passwordCreate');

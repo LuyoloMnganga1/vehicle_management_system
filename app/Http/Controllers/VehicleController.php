@@ -10,6 +10,8 @@ use App\Models\Vehicle;
 
 use App\Models\Assign;
 
+use App\Models\Fuel;
+
 class VehicleController extends Controller
 {
     public function Vehicle()
@@ -136,8 +138,127 @@ class VehicleController extends Controller
         return view('assignedVehicle');
     }
 
+    public function addAssigned(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'vehicle_name' => ['required', 'string' , 'max:100000'],
+            'assignee' => ['required', 'string' , 'max:225'],
+            'start_datte' => ['required', 'string' , 'max:225'],
+            'odometer' => ['required', 'string' , 'max:225'],
+            'comment' => ['required', 'string' , 'max:225'],
+            'status' => ['required', 'string' , 'max:100000'],
+           
+
+        ]);
+       
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        $data = [
+            'vehicle_name' => $request->vehicle_name,
+            'assignee' => $request->assignee,
+            'start_datte' => $request->start_datte,
+            'odometer' => $request->odometer,
+            'comment' => $request->comment,
+            'status' => $request->status,
+        ];
+        Assign::create($data);
+        return redirect()->back()->with('success','Vehicle  has been assigned successfully');
+    }
+
+    public function updateAssigned(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'vehicle_name' => ['required', 'string' , 'max:100000'],
+            'assignee' => ['required', 'string' , 'max:225'],
+            'start_datte' => ['required', 'string' , 'max:225'],
+            'odometer' => ['required', 'string' , 'max:225'],
+            'comment' => ['required', 'string' , 'max:225'],
+            'status' => ['required', 'string' , 'max:100000'],
+           
+
+        ]);
+       
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        $data = [
+            'vehicle_name' => $request->vehicle_name,
+            'assignee' => $request->assignee,
+            'start_datte' => $request->start_datte,
+            'odometer' => $request->odometer,
+            'comment' => $request->comment,
+            'status' => $request->status,
+        ];
+        Assign::whereId($id)->update($data);
+        return redirect()->back()->with('success','Assignment has been updated');
+    }
+
+    public function deleteAssigned(){
+
+    }
+
     public function assigedhistory()
     {
-        return view('VehicleHistory');
+        $assigned = Assign::all();
+        $i =1;
+        return view('VehicleHistory')->with(["assigned"=>$assigned, 'i'=>$i]);
     }
+
+    public function fuelEntry()
+    {
+        // $assigned = Assign::all();
+        // $i =1; ->with(["assigned"=>$assigned, 'i'=>$i])
+        return view('fuelEntry');
+    }
+
+    public function addFuel(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'vehicle_name' => ['required', 'string' , 'max:100000'],
+            'start_datte' => ['required', 'string' , 'max:225'],
+            'odometer' => ['required', 'string' , 'max:225'],
+            'partial_fuel' => ['required', 'string' , 'max:225'],
+            'price' => ['required', 'double' , 'max:100000'],
+            'vendor' => ['required', 'string' , 'max:100000'],
+            'invoice_no' => ['required', 'string' , 'max:100000'],
+           
+
+        ]);
+        $file ='';
+        if ($request->vehicle_image == null){
+            return redirect()->back()
+            ->withErrors("File upload required")
+            ->withInput();
+        }else{
+            if($request->hasFile('invoice_upload')){
+                $fileName = auth()->id() . '_' . time() . '.'. $request->invoice_upload->extension();
+                $request->invoice_upload->move('files/img', $fileName);
+                $file = 'files/img/'.$fileName;
+            }
+        }
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        $data = [
+            'vehicle_name' => $request->vehicle_name,
+            'start_datte' => $request->start_datte,
+            'odometer' => $request->odometer,
+            'partial_fuel' => $request->partial_fuel,
+            'price' => $request->price,
+            'vendor' => $request->vendor,
+            'invoice_no' => $request->invoice_no,
+            'invoice_upload' => $file,
+        ];
+        Fuel::create($data);
+        return redirect()->back()->with('success','Vehicle  has been assigned successfully');
+    }
+
+
 }

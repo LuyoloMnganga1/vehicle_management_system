@@ -1,13 +1,18 @@
 @extends('layouts.main')
 @section('content')
+
+
+
+
 <div class="col-lg-12 col-md-12">
     <div class="card">
         <div class="card-header card-header-text">
             <div class="row">
                 <div class="col-md-9">
-                    <h4 class="card-title">Assign Vehicle</h4>
+                    <h4 class="card-title">Vehicle List</h4>
                 </div>
-
+                <div class="col-md-3">
+                </div>
             </div>
         </div>
         @if ($errors->any())
@@ -26,16 +31,17 @@
             <p>{{ $message }}</p>
         </div>
         @endif
-        <div class="card-content table-responsive">
-            <form action="" method="post">
+        <br>
+        <div class="card-content ">
+            <form action="{{route('addAssigned')}}" method="post">
                 {!! csrf_field() !!}
                 <!-- {!! method_field('GET') !!}  -->
-
+<br>
                 <div class="row">
-
+                    
                     <div class="form-group col-md-6">
                         <label for="inputEmail4">Vehicle Name</label>
-                        <input type="text" class="form-control" id="hod_fullname" name="hod_fullname" value="">
+                        <input type="text" class="form-control" id="hod_fullname" name="vehicle_name" value="">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputEmail4">Driver</label>
@@ -43,35 +49,36 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputEmail4">Start Date</label>
-                        <input type="date" class="form-control" id="hod_fullname" name="start_date" value="">
+                        <input type="date" class="form-control" id="hod_fullname" name="start_datte" value="">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="inputEmail4">Starting Odometer</label>
+                        <label for="inputEmail4">Start Odometer</label>
                         <input type="text" class="form-control" id="phone" name="odometer" value="">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="inputEmail4">Comments</label>
-                        <textarea type="text" class="form-control" id="phone" name="comment" value="">
-              </div>
-                <div class="form-group col-md-6">
-                    <label for="inputEmail4">Status</label>
-                    <input type="text" class="form-control" id="hod_fullname" name="status" value="">
+                        <label for="inputEmail4">Comment</label>
+                        <input type="text" class="form-control" id="phone" name="comment" value="">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Status</label>
+                        <input type="text" class="form-control" id="hod_fullname" name="status" value="">
+                    </div>
+                    
+                    
                 </div>
-                
-               
-            </div>
 
 
-            <div style="margin-top: 5%">
-                <button type="submit" class="btn btn-primary">Add</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+                <div style="margin-top: 5%">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
 
-        </form>
-
-        </div>
-
-
-        </div>
+            </form>
+            
+        
     </div>
+</div>
+</div>
+</div>
+
 @stop

@@ -81,6 +81,23 @@
                         {{-- <li><a href="#">My Leaves</a></li> --}}
                     </ul>
                 </li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle">
+                        <span class="micon dw dw-flask"></span><span class="mtext"> Fuel Entry</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a  href="{{route('fuel-Entry')}}">Fuel Entries</a></li>
+{{-- 
+                        <li><a href="{{route('assiged-vehicle')}}">Assignment New Vehicle</a></li>
+
+                        <li><a href="{{route('assig-history')}}">Assignment History</a></li> --}}
+
+                        {{-- <li><a href="#">Department Leaves</a></li> --}}
+
+                        {{-- <li><a href="#">My Leaves</a></li> --}}
+                    </ul>
+                </li>
                 <li>
                     <a href="#" class="dropdown-toggle no-arrow">
                         <span class="micon fa fa-file"></span><span class="mtext">Report</span>
