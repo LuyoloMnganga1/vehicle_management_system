@@ -88,10 +88,10 @@
                     <ul class="submenu">
 
                         <li><a  href="{{route('fuel-Entry')}}">Fuel Entries</a></li>
-{{-- 
-                        <li><a href="{{route('assiged-vehicle')}}">Assignment New Vehicle</a></li>
 
-                        <li><a href="{{route('assig-history')}}">Assignment History</a></li> --}}
+                        <li><a href="{{route('councillors')}}">councillors</a></li>
+
+                        {{--<li><a href="{{route('assig-history')}}">Assignment History</a></li> --}}
 
                         {{-- <li><a href="#">Department Leaves</a></li> --}}
 

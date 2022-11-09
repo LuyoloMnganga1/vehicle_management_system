@@ -216,6 +216,12 @@ class VehicleController extends Controller
         return view('fuelEntry');
     }
 
+    public function councillors()
+    {
+        
+        return view('councillors');
+    }
+
     public function addFuel(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -223,14 +229,13 @@ class VehicleController extends Controller
             'start_datte' => ['required', 'string' , 'max:225'],
             'odometer' => ['required', 'string' , 'max:225'],
             'partial_fuel' => ['required', 'string' , 'max:225'],
-            'price' => ['required', 'double' , 'max:100000'],
+            'price' => ['required'],
             'vendor' => ['required', 'string' , 'max:100000'],
-            'invoice_no' => ['required', 'string' , 'max:100000'],
-           
+            'invoice_no' => ['required', 'string' , 'max:100000']           
 
         ]);
         $file ='';
-        if ($request->vehicle_image == null){
+        if ($request->invoice_upload == null){
             return redirect()->back()
             ->withErrors("File upload required")
             ->withInput();
@@ -254,7 +259,7 @@ class VehicleController extends Controller
             'price' => $request->price,
             'vendor' => $request->vendor,
             'invoice_no' => $request->invoice_no,
-            'invoice_upload' => $file,
+            'invoice_upload' => $file
         ];
         Fuel::create($data);
         return redirect()->back()->with('success','Vehicle  has been assigned successfully');

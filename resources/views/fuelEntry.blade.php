@@ -60,7 +60,7 @@
                             <div class="custom-file">
                                 <label class="custom-file-label" for="customFile">Choose file</label>
                                 <input type="file" class="custom-file-input rounded-circle" id="customFile"
-                                    name="issue_image" accept=".jpg,.jpeg,.bmp,.png,.gif,.jfif"
+                                    name="invoice_upload" accept=".jpg,.jpeg,.bmp,.png,.gif,.jfif"
                                     onchange="displayImg(this,$(this))">
 
 

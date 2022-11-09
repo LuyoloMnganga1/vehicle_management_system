@@ -65,6 +65,7 @@ Route::post('updateFuel/{id}',[VehicleController::class, 'updateFuel'])->name('u
 
 Route::get('deleteFuel/{id}',[VehicleController::class, 'deleteFuel'])->name('deleteFuel');
 
+Route::get('councillors',[VehicleController::class, 'councillors'])->name('councillors');
 
 Route::get('passwordCreate/{id}/{token}',[RegisterUserController::class, 'passwordCreate'])->name('passwordCreate');
 Route::post('password/{id}',[RegisterUserController::class, 'password'])->name('password');
