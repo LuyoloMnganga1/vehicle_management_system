@@ -57,6 +57,27 @@
 
                         <li><a href="{{route('assiged-vehicle')}}">Assign Vehicle</a></li>
 
+                        {{-- <li><a href="{{route('assig-history')}}">Assign History</a></li> --}}
+
+                        
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="{{route('vehicle-driver')}}" class="dropdown-toggle no-arrow">
+                        <span class="micon dw dw-house-1"></span><span class="mtext">Driver</span>
+                    </a>
+
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle">
+                        <span class="micon dw dw-car"></span><span class="mtext"> Booking</span>
+                    </a>
+                    <ul class="submenu">
+
+                        {{-- <li><a  href="{{route('vehicle')}}">Vehicles</a></li> --}}
+
+                        <li><a href="{{route('assiged-vehicle')}}">Assign Vehicle</a></li>
+
                         <li><a href="{{route('assig-history')}}">Assign History</a></li>
 
                         {{-- <li><a href="#">Department Leaves</a></li> --}}

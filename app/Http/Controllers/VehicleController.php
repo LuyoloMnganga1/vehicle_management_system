@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Validator;
+Use Illuminate\Support\Facades\DB;
 
 use App\Models\Vehicle;
 
 use App\Models\Assign;
-
-use App\Models\Fuel;
+use App\Models\Driver;
 
 class VehicleController extends Controller
 {
@@ -135,18 +135,24 @@ class VehicleController extends Controller
 
     public function assigned()
     {
-        return view('assignedVehicle');
+        $driver = DB::table('drivers')->get();
+        $assigned = Assign::all();
+        $i =1;
+        return view('assignedVehicle')->with(["assigned"=>$assigned, 'i'=>$i, 'driver' => $driver]);
     }
 
     public function addAssigned(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'vehicle_name' => ['required', 'string' , 'max:100000'],
             'assignee' => ['required', 'string' , 'max:225'],
-            'start_datte' => ['required', 'string' , 'max:225'],
+            'email' => ['required', 'string' , 'max:225'],
+            'licence_no' => ['required', 'string' , 'max:225'],
+            'department' => ['required', 'string' , 'max:225'],
+            'Registration_no' => ['required', 'string' , 'max:225'],
             'odometer' => ['required', 'string' , 'max:225'],
-            'comment' => ['required', 'string' , 'max:225'],
-            'status' => ['required', 'string' , 'max:100000'],
+            'assigned_status' => ['required', 'string' , 'max:100000'],
+            'comment' => ['required', 'string' , 'max:100000'],
+           
            
 
         ]);
@@ -157,26 +163,33 @@ class VehicleController extends Controller
                         ->withInput();
         }
         $data = [
-            'vehicle_name' => $request->vehicle_name,
+            
             'assignee' => $request->assignee,
-            'start_datte' => $request->start_datte,
+            'email' => $request->email,
+            'licence_no' => $request->licence_no,
+            'department' => $request->department,
+            'Registration_no' => $request->Registration_no,
             'odometer' => $request->odometer,
+            'assigned_status' => $request->assigned_status,
             'comment' => $request->comment,
-            'status' => $request->status,
+    
         ];
         Assign::create($data);
-        return redirect()->back()->with('success','Vehicle  has been assigned successfully');
+        return redirect()->back()->with('success','Vehicle has been assigned successfully');
     }
 
     public function updateAssigned(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'vehicle_name' => ['required', 'string' , 'max:100000'],
             'assignee' => ['required', 'string' , 'max:225'],
-            'start_datte' => ['required', 'string' , 'max:225'],
+            'email' => ['required', 'string' , 'max:225'],
+            'licence_no' => ['required', 'string' , 'max:225'],
+            'department' => ['required', 'string' , 'max:225'],
+            'Registration_no' => ['required', 'string' , 'max:225'],
             'odometer' => ['required', 'string' , 'max:225'],
-            'comment' => ['required', 'string' , 'max:225'],
-            'status' => ['required', 'string' , 'max:100000'],
+            'assigned_status' => ['required', 'string' , 'max:100000'],
+            'comment' => ['required', 'string' , 'max:100000'],
+           
            
 
         ]);
@@ -187,15 +200,17 @@ class VehicleController extends Controller
                         ->withInput();
         }
         $data = [
-            'vehicle_name' => $request->vehicle_name,
             'assignee' => $request->assignee,
-            'start_datte' => $request->start_datte,
+            'email' => $request->email,
+            'licence_no' => $request->licence_no,
+            'department' => $request->department,
+            'Registration_no' => $request->Registration_no,
             'odometer' => $request->odometer,
+            'assigned_status' => $request->assigned_status,
             'comment' => $request->comment,
-            'status' => $request->status,
         ];
         Assign::whereId($id)->update($data);
-        return redirect()->back()->with('success','Assignment has been updated');
+        return redirect()->back()->with('success','Assignment vehicle has been updated successfully');
     }
 
     public function deleteAssigned(){
@@ -209,111 +224,13 @@ class VehicleController extends Controller
         return view('VehicleHistory')->with(["assigned"=>$assigned, 'i'=>$i]);
     }
 
-    public function fuelEntry()
-    {
-        // $assigned = Assign::all();
-        // $i =1; ->with(["assigned"=>$assigned, 'i'=>$i])
-        return view('fuelEntry');
-    }
-
     public function councillors()
     {
         
         return view('councillors');
     }
 
-    public function addFuel(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'vehicle_name' => ['required', 'string' , 'max:100000'],
-            'start_datte' => ['required', 'string' , 'max:225'],
-            'odometer' => ['required', 'string' , 'max:225'],
-            'partial_fuel' => ['required', 'string' , 'max:225'],
-            'price' => ['required'],
-            'vendor' => ['required', 'string' , 'max:100000'],
-            'invoice_no' => ['required', 'string' , 'max:100000']           
-
-        ]);
-        $file ='';
-        if ($request->invoice_upload == null){
-            return redirect()->back()
-            ->withErrors("File upload required")
-            ->withInput();
-        }else{
-            if($request->hasFile('invoice_upload')){
-                $fileName = auth()->id() . '_' . time() . '.'. $request->invoice_upload->extension();
-                $request->invoice_upload->move('files/img', $fileName);
-                $file = 'files/img/'.$fileName;
-            }
-        }
-        if ($validator->fails()) {
-            return redirect()->back()
-                        ->withErrors($validator)
-                        ->withInput();
-        }
-        $data = [
-            'vehicle_name' => $request->vehicle_name,
-            'start_datte' => $request->start_datte,
-            'odometer' => $request->odometer,
-            'partial_fuel' => $request->partial_fuel,
-            'price' => $request->price,
-            'vendor' => $request->vendor,
-            'invoice_no' => $request->invoice_no,
-            'invoice_upload' => $file
-        ];
-        Fuel::create($data);
-        return redirect()->back()->with('success','Vehicle  has been assigned successfully');
-    }
-
-    public function updateFuel(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'vehicle_name' => ['required', 'string' , 'max:100000'],
-            'start_datte' => ['required', 'string' , 'max:225'],
-            'odometer' => ['required', 'string' , 'max:225'],
-            'partial_fuel' => ['required', 'string' , 'max:225'],
-            'price' => ['required', 'double' , 'max:100000'],
-            'vendor' => ['required', 'string' , 'max:100000'],
-            'invoice_no' => ['required', 'string' , 'max:100000'],
-           
-
-        ]);
-        $file ='';
-        if ($request->vehicle_image == null){
-            return redirect()->back()
-            ->withErrors("File upload required")
-            ->withInput();
-        }else{
-            if($request->hasFile('invoice_upload')){
-                $fileName = auth()->id() . '_' . time() . '.'. $request->invoice_upload->extension();
-                $request->invoice_upload->move('files/img', $fileName);
-                $file = 'files/img/'.$fileName;
-            }
-        }
-        if ($validator->fails()) {
-            return redirect()->back()
-                        ->withErrors($validator)
-                        ->withInput();
-        }
-        $data = [
-            'vehicle_name' => $request->vehicle_name,
-            'start_datte' => $request->start_datte,
-            'odometer' => $request->odometer,
-            'partial_fuel' => $request->partial_fuel,
-            'price' => $request->price,
-            'vendor' => $request->vendor,
-            'invoice_no' => $request->invoice_no,
-            'invoice_upload' => $file,
-        ];
-        Fuel::whereId($id)->update($data);
-        return redirect()->back()->with('success','Vehicle  has been assigned successfully');
-    }
-
-    public function deleteFuel($id)
-    {
-        Fuel::destroy($id);
-        return redirect()->back()->with('success','Record has been deleted');
-    }
+   
 
 
 }

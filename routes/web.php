@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\IssueController;
+use App\Http\Controllers\FuelController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,7 +30,19 @@ Route::group(['middleware' => ['auth', 'verifyOTP']], function(){
 });
 Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('driver',[DriverController::class, 'driver'])->name('driver');
+
+//Driver routes
+Route::get('vehicle-driver',[DriverController::class, 'driver'])->name('vehicle-driver');
+
+Route::post('addDriver',[DriverController::class, 'addDriver'])->name('addDriver');
+
+Route::post('update-Driver/{id}',[DriverController::class, 'updateDriver'])->name('update-Driver');
+
+Route::get('delete-Driver/{id}',[DriverController::class, 'deleteDriver'])->name('delete-Driver');
+
+//end driver routes
+
+//start vehicles routes
 
 Route::get('vehicle',[VehicleController::class, 'vehicle'])->name('vehicle');
 
@@ -49,6 +62,8 @@ Route::get('deleteAssigned/{id}',[VehicleController::class, 'deleteAssigned'])->
 
 Route::get('assig-history',[VehicleController::class, 'assigedhistory'])->name('assig-history');
 
+//End vehicles routes
+
 Route::get('issue',[IssueController::class, 'issue'])->name('issue');
 
 Route::post('addIssue',[IssueController::class, 'addIssue'])->name('addIssue');
@@ -57,13 +72,13 @@ Route::post('updateIssue/{id}',[IssueController::class, 'updateIssue'])->name('u
 
 Route::get('deleteIssue/{id}',[IssueController::class, 'deleteIssue'])->name('deleteIssue');
 
-Route::get('fuel-Entry',[VehicleController::class, 'fuelEntry'])->name('fuel-Entry');
+Route::get('fuel-Entry',[FuelController::class, 'fuelEntry'])->name('fuel-Entry');
 
-Route::post('addFuel',[VehicleController::class, 'addFuel'])->name('addFuel');
+Route::post('addFuel',[FuelController::class, 'addFuel'])->name('addFuel');
 
-Route::post('updateFuel/{id}',[VehicleController::class, 'updateFuel'])->name('updateFuel');
+Route::post('updateFuel/{id}',[FuelController::class, 'updateFuel'])->name('updateFuel');
 
-Route::get('deleteFuel/{id}',[VehicleController::class, 'deleteFuel'])->name('deleteFuel');
+Route::get('deleteFuel/{id}',[FuelController::class, 'deleteFuel'])->name('deleteFuel');
 
 Route::get('councillors',[VehicleController::class, 'councillors'])->name('councillors');
 

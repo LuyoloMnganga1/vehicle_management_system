@@ -138,11 +138,11 @@
         <div class="card-header card-header-text">
             <div class="row">
                 <div class="col-md-9">
-                    <h4 class="card-title">Manage Vehicle</h4>
+                    <h4 class="card-title">List of Vehicles</h4>
                 </div>
                 <div class="col-md-3">
                     <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal"
-                        data-target="#exampleModalCenter"> <i class="fa fa-plus"></i> Add New</button>
+                        data-target="#exampleModalCenter"> <i class="fa fa-plus"></i> Add New Vehicle</button>
                 </div>
             </div>
         </div>
@@ -177,9 +177,9 @@
                 </thead>
                 <tbody>
                     @if ($vehicle->count() == 0)
-                    <tr>
-                        <td colspan="5" class="text-center">No data available in table.</td>
-                    </tr>
+                        <tr>
+                            <td colspan="5" class="text-center">No data available in table.</td>
+                        </tr>
                     @endif
                     @foreach($vehicle as $vehicle )
                     <tr>
@@ -215,7 +215,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="" method="post">
+                                    <form action="{{route('updateVehicle',$vehicle->id)}}" method="post">
                                         {!! csrf_field() !!}
                                         <div class="row">
                                           <div class="form-group col-md-12">

@@ -15,12 +15,14 @@ return new class extends Migration
     {
         Schema::create('assigns', function (Blueprint $table) {
             $table->id();
-            $table->string('vehicle_name');
             $table->string('assignee');
-            $table->string('start_datte');
+            $table->string('email');
+            $table->string('licence_no');
+            $table->string('department');
+            $table->string('Registration_no');
             $table->string('odometer');
-            $table->string('comment');
             $table->string('status');
+            $table->string('comment');
             $table->timestamps();
         });
     }

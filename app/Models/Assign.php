@@ -9,11 +9,14 @@ class Assign extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'vehicle_name',
         'assignee',
-        'start_datte',
+        'email',
+        'licence_no',
+        'department',
+        'Registration_no',
         'odometer',
+        'assigned_status',
         'comment',
-        'status'
+        
     ];
 }
