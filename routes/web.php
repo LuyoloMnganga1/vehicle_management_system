@@ -37,7 +37,7 @@ Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard')
 
 
 //Driver routes
-Route::get('vehicle-driver',[DriverController::class, 'driver'])->name('vehicle-driver');
+Route::view('vehicle-driver','driver')->name('vehicle-driver');
 
 Route::get('/driver/list',[DriverController::class, 'getdrivers'])->name('driver.list');
 

@@ -12,10 +12,10 @@ use DataTables;
 
 class DriverController extends Controller
 {
-    public function driver()
-    {
+  
+    public static function getUsers(){
         $users = User::orderBy('name', 'ASC')->get();
-        return view('driver')->with('users',$users);
+        return $users;
     }
     public function getdrivers(Request $request){
         if($request->ajax()){

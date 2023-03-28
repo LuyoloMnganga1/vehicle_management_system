@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('title')
-Dashboard
+Drivers
 @endsection
 @section('content')
 
@@ -19,7 +19,9 @@ Dashboard
                 <form action="{{route('addDriver')}}" method="post">
                     {!! csrf_field() !!}
                     <!-- {!! method_field('GET') !!}  -->
-
+                    @php
+                        $users = \App\Http\Controllers\DriverController::getUsers();
+                    @endphp
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Driver Name</label>
@@ -121,11 +123,12 @@ Dashboard
         </div>
         @endif
         <div class="card-content table-responsive">
-            <table class="table table-hover" id="driver_list" cellspacing="0">
+            <table class="table table-hover data-table" cellspacing="0">
                 <thead class="text-primary">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Full Name</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Surname</th>
                         <th scope="col">Department</th>
                         <th scope="col">Email Address</th>
                         <th scope="col">Contact No.</th>
@@ -147,9 +150,13 @@ Dashboard
         </div>
 @endsection
 @section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script>
     $(document).ready(function () {
-        var table = $('#driver_list').DataTable({
+        var table = $('.data-table').DataTable({
             buttons: [{
                 text: 'My button',
                 action: function(e, dt, button, config) {
