@@ -22,12 +22,11 @@ use App\Http\Controllers\FuelController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+    return redirect()->route('login');
 });
 
 Route::group(['middleware' => ['auth', 'verifyOTP']], function(){
-    // Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
-});
+
 Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
 
 
@@ -82,8 +81,16 @@ Route::get('deleteFuel/{id}',[FuelController::class, 'deleteFuel'])->name('delet
 
 Route::get('councillors',[VehicleController::class, 'councillors'])->name('councillors');
 
+//
+Route::post('image/update',[RegisterUserController::class, 'profile_image'])->name('image/update');
+Route::post('signature',[RegisterUserController::class, 'signature'])->name('signature');
+Route::get('profile',[DashboardController::class, 'profile'])->name('profile');
+
+});
+
 Route::get('passwordCreate/{id}/{token}',[RegisterUserController::class, 'passwordCreate'])->name('passwordCreate');
 Route::post('password/{id}',[RegisterUserController::class, 'password'])->name('password');
+
 // Route::get('register',[RegisterUserController::class, 'create'])->name('register');
 // Route::post('register/store',[RegisterUserController::class, 'store'])->name('register/store');
 Route::get('login',[LoginController::class, 'create'])->name('login');

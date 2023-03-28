@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use App\Models\User; 
 use Carbon\Carbon; 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
-use App\Mail\forgotPassword;
+use App\Http\Controllers\EmailGatewayController;
+use App\Http\Controllers\EmailBodyController;
 
 
 class ForgotPasswordController extends Controller
@@ -39,7 +39,9 @@ class ForgotPasswordController extends Controller
            'created_at' => Carbon::now()]
       );
       $id = User::where('email',$request->email)->value('id');
-      Mail::to($request->email)->send( new forgotPassword($id,$token));
+      
+      $mail = new EmailGatewayController();
+      $mail->sendEmail($request->email,'ICT Choice | Vehicle Manangement System - Forgot Password', EmailBodyController::forgotpassword($id, $token));
 
       return back()->with('message', 'A fresh verification link has been sent to your email address!');
   }
