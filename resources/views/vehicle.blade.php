@@ -1,4 +1,7 @@
 @extends('layouts.main')
+@section('title')
+Vehicle
+@endsection
 @section('content')
 
 <!-- Modal -->
@@ -336,18 +339,29 @@
 </div>
 </div>
 </div>
+@endsection
+@section('scripts')
 
 <script>
-    function displayImg2(input, _this) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#timg').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
+    function displayImg(input,_this) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#timg1').attr('src',e.target.result);
         }
-    }
-</script>
 
-@stop
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+function displayImg2(input,_this) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#timg').attr('src',e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+@endsection

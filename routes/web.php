@@ -10,6 +10,7 @@ use App\Http\Controllers\DriverController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\FuelController;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,7 +23,12 @@ use App\Http\Controllers\FuelController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    if(Auth::check()){
+        return redirect()->route('dashboard');
+    }else{
+        return redirect()->route('login');
+    }
+
 });
 
 Route::group(['middleware' => ['auth', 'verifyOTP']], function(){
@@ -32,6 +38,8 @@ Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard')
 
 //Driver routes
 Route::get('vehicle-driver',[DriverController::class, 'driver'])->name('vehicle-driver');
+
+Route::get('/driver/list',[DriverController::class, 'getdrivers'])->name('driver.list');
 
 Route::post('addDriver',[DriverController::class, 'addDriver'])->name('addDriver');
 

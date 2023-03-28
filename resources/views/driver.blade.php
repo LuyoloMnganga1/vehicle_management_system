@@ -1,4 +1,7 @@
 @extends('layouts.main')
+@section('title')
+Dashboard
+@endsection
 @section('content')
 
 <!-- Modal -->
@@ -18,60 +21,61 @@
                     <!-- {!! method_field('GET') !!}  -->
 
                     <div class="row">
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
                             <label for="inputEmail4">Driver Name</label>
-                            <input type="text" class="form-control" id="hod_fullname" name="name" value="">
+                            <select name="name" id="driver_name" class="form-control">
+                                <option value="" selected>select driver</option>
+                                @foreach($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Driver Surname</label>
-                            <input type="text" class="form-control" id="hod_fullname" name="surname" value="">
+                            <input type="text" class="form-control"  name="surname" id="driver_surname">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Department</label>
-                            <input type="text" class="form-control" name="department" value="">
+                            <input type="text" class="form-control" name="department" id="driver_department">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Email Address</label>
-                            <input type="email" class="form-control" name="email" value="">
+                            <input type="email" class="form-control" name="email" id="driver_email">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Contact No</label>
-                            <input type="text" class="form-control" id="phone" name="phone" value="">
+                            <input type="text" class="form-control" id="phone" name="phone" id="driver_phone">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">User Type</label>
-                            <input type="text" class="form-control" id="hod_fullname" name="user_type" value="">
+                            <input type="text" class="form-control" id="hod_fullname" name="user_type" id="driver_role">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">License Number</label>
-                            <input type="text" class="form-control" id="phone" name="licence_no" value="">
+                            <input type="text" class="form-control" id="phone" name="licence_no" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Licenpce Class</label>
-                            <input type="text" class="form-control" id="hod_fullname" name="licence_class" value="">
+                            <input type="text" class="form-control" id="hod_fullname" name="licence_class" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">License State/Province/Region</label>
-                            <input type="text" class="form-control" id="phone" name="license_state" value="">
+                            <input type="text" class="form-control" id="phone" name="license_state" id="driver_location">
                         </div>
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
                             <label for="inputEmail4">License Image</label>
                             <div class="custom-file">
                                 <label class="custom-file-label" for="customFile">Choose file</label>
                                 <input type="file" class="custom-file-input rounded-circle" id="customFile"
                                     name="license_image" accept=".jpg,.jpeg,.bmp,.png,.gif,.jfif"
                                     onchange="displayImg2(this,$(this))">
-
-
                             </div>
                         </div>
-
-
-
                     </div>
-
-
                     <div class="modal-footer">
+                    <div class="modal-footer">
+                                            
+                    <div class="modal-footer">                    
                                             
                       <button type="submit" class="btn btn-primary">Add Driver</button>
                       <button type="button" class="btn btn-secondary"
@@ -117,7 +121,7 @@
         </div>
         @endif
         <div class="card-content table-responsive">
-            <table class="table table-hover" id="list" cellspacing="0">
+            <table class="table table-hover" id="driver_list" cellspacing="0">
                 <thead class="text-primary">
                     <tr>
                         <th scope="col">#</th>
@@ -133,131 +137,141 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($driver->count() == 0)
-                    <tr>
-                        <td colspan="5" class="text-center">No data available in table.</td>
-                    </tr>
-                    @endif
-                    @foreach($driver as $driver )
-                    <tr>
-                        <td width="5%">{{$i++}}</td>
-                        <td>{{ $driver->name}} {{$driver->surname}}</td>
-                        <td>{{ $driver->department}}</td>
-                        <td>{{ $driver->email}}</td>
-                        <td>{{ $driver->phone}}</td>
-                        <td>{{ $driver->user_type}}</td>
-                        <td>{{ $driver->licence_no}}</td>
-                        <td>{{ $driver->licence_class}}</td>
-                        <td>{{ $driver->license_state}}</td>
-                        <td>
-                            <form action="{{route('delete-Driver',$driver->id)}}" method="get">
-                                <a class="btn bg-transparent btn-outline-info" data-toggle="modal"
-                                    data-target="#edit"><i style="color:#5bc0de;" class="material-icons">edit</i> </a>
-                                @csrf
-                                {{ method_field('GET') }}
-
-                                <button type="submit" name="archive" onclick="archiveFunction()"
-                                    class="btn bg-transparent btn-outline-danger"><i
-                                        style="color:red; padding-bottom: -50%;" class="material-icons">delete</i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    <!-- Modal -->
-                    <div class="modal fade" id="edit" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Department</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="{{route('update-Driver', $driver->id)}}" method="post">
-                                        {!! csrf_field() !!}
-                                        <div class="row">
-                                          <div class="form-group col-md-12">
-                                            <label for="inputEmail4">Driver Name</label>
-                                            <input type="text" class="form-control" id="hod_fullname" name="name"  value="{{$driver->name}}">
-                                        </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Driver Surname</label>
-                                                <input type="text" class="form-control" id="hod_fullname" name="surname"
-                                                    value="{{$driver->surname}}">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Department</label>
-                                                <input type="text" class="form-control" name="department"
-                                                    value="{{$driver->department}}">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Email Address</label>
-                                                <input type="email" class="form-control" name="email"
-                                                    value="{{$driver->email}}">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Contact No</label>
-                                                <input type="text" class="form-control" id="phone" name="phone"
-                                                    value="{{$driver->phone}}">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail4">User Type</label>
-                                                <input type="text" class="form-control" id="hod_fullname"
-                                                    name="user_type" value="{{$driver->user_type}}">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail4">License Number</label>
-                                                <input type="text" class="form-control" id="phone" name="licence_no"
-                                                    value="{{$driver->licence_no}}">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Licenpce Class</label>
-                                                <input type="text" class="form-control" id="hod_fullname"
-                                                    name="licence_class" value="{{$driver->licence_class}}">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail4">License State/Province/Region</label>
-                                                <input type="text" class="form-control" id="phone" name="license_state"
-                                                    value="{{$driver->license_state}}">
-                                            </div>
-                                            <div class="form-group col-md-12">
-                                                <label for="inputEmail4">License Image</label>
-                                                <div class="custom-file">
-                                                    <label class="custom-file-label" for="customFile">Choose
-                                                        file</label>
-                                                    <input type="file" class="custom-file-input rounded-circle"
-                                                        id="customFile" name="license_image"
-                                                        accept=".jpg,.jpeg,.bmp,.png,.gif,.jfif"
-                                                        onchange="displayImg2(this,$(this))">
-
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-
-                                            <button type="submit" class="btn btn-primary">Update Driver</button>
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Cancel</button>
-                                        </div>
-                                </div>
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
+                </tbody>
+                <tfoot>
+                </tfoot>
+                </table>
+            </div>
         </div>
-        @endforeach
-        </tbody>
-        </table>
-        <div class="d-flex">
-            {{-- {{ $dep->links() }} --}}
         </div>
-    </div>
-</div>
-</div>
-</div>
+        </div>
+@endsection
+@section('scripts')
+<script>
+    $(document).ready(function () {
+        var table = $('#driver_list').DataTable({
+            buttons: [{
+                text: 'My button',
+                action: function(e, dt, button, config) {
+                    var info = dt.buttons.exportInfo();
+                }
+            }],
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('driver.list') }}",
+        columns: [
+            {
+                data: 'DT_RowIndex',
+                name: 'DT_RowIndex',
+                orderable: false,
+                searchable: false,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'name',
+                name: 'name',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'surname',
+                name: 'surname',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'department',
+                name: 'department',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'email', 
+                name: 'email',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'phone', 
+                name: 'phone',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'usertype', 
+                name: 'usertype',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'licenceno', 
+                name: 'licenceno',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'licenceclass', 
+                name: 'licenceclass',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'licensestate', 
+                name: 'licensestate',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'action', 
+                name: 'action',
+                orderable: false,
+                searchable: false,
+                print: false,
+                className: 'text-center'
+            }
+        ]
+    });
+    });
+</script>
+<script>
+    function displayImg(input,_this) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#timg1').attr('src',e.target.result);
+        }
 
-@stop
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+function displayImg2(input,_this) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#timg').attr('src',e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+@endsection

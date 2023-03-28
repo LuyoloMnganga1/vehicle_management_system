@@ -3,7 +3,7 @@
 <head>
 	<!-- Basic Page Info -->
 	<meta charset="utf-8">
-	<title>Vehicle Management System - Dashboard</title>
+	<title>@yield('title')</title>
 
 	<!-- Site favicon -->
     <link rel="icon" href="images/logo.png" sizes="16x16" type="images/logo.png">
