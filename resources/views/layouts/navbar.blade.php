@@ -18,12 +18,12 @@
             <div class="dropdown">
                 <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                     <span class="user-icon">
-                        <img src="vendors/images/photo5.jpg" alt="">
+                        <img src="{{ Auth::user()->profile }}" alt="">
                     </span>
-                    <span class="user-name">Admin</span>
+                    <span class="user-name">{{ Auth::user()->name }} {{ Auth::user()->surname }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                    <a class="dropdown-item" href ="#"><i class="dw dw-user1"></i> Profile</a>
+                    <a class="dropdown-item" href ="{{ route('profile') }}"><i class="dw dw-user1"></i> Profile</a>
 
                     {{-- <a class="dropdown-item" href ="#"><i class="dw dw-file-3"></i> User Activity Feeds</a>
                     <a class="dropdown-item" href ="#"><i class="dw dw-file-4"></i> Reports</a> --}}

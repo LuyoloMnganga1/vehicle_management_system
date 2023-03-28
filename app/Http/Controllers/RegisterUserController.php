@@ -9,7 +9,8 @@ use App\Models\Department;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\EmailGatewayController;
+use App\Http\Controllers\EmailBodyController;
 use App\Mail\UserAccount;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
@@ -73,33 +74,14 @@ class RegisterUserController extends Controller
             'role' => $request->role,
             'location' => $request->location,
         ]);
-        $appointment = Carbon::parse($request->apointment_date);
-        $vacation = 15;
-        $diffYears = Carbon::now()->diffInYears($appointment);
-        if($diffYears > 10){
-            $vacation = 19;
-        }else if ($diffYears > 5){
-            $vacation = 17;
-        }else{
-            $vacation = 15;
-        }
-
-        // $leave_per_user = leave_per_user::create([
-        //     'email' => $request->email,
-        //     'vacation' =>  $vacation,
-        //     'sick'  => 12,
-        //     'family' => 3,
-        //     'study'  => 10,
-        //     'paternity'=>10,
-        //     'maternity'  => 90,
-        //     'unpaid' =>  ''
-        // ]);
+               
 
         $name = User::where('email',$request->email)->value('name');
         $surname = User::where('email',$request->email)->value('surname');
         $id = User::where('email',$request->email)->value('id');
         $token = Str::random(20);
         $user->attachRole($request->role);
+        $mail = new EmailGatewayController();
 
         $sms = new  sendSMS();
         $phone = User::where('email',$request->email)->value('phone');;
@@ -109,12 +91,12 @@ class RegisterUserController extends Controller
         Adminstrator ";
 
         if ($request->communication == 'Email'){
-            Mail::to($validated['email'])->send(new UserAccount($name,$surname,$id,$token));
+            $mail->sendEmail($request->email,'ICT Choice | Vehicle Management System - User Account Created',EmailBodyController::useraccount($name,$surname,$id,$token));
         }else if($request->communication == 'SMS') {
             $results = $sms->sendSMS($phone,$mesg);
         }else{
             $results = $sms->sendSMS($phone,$mesg);
-            Mail::to($validated['email'])->send(new UserAccount($name,$surname,$id,$token));
+            $mail->sendEmail($request->email,'ICT Choice | Vehicle Management System - User Account Created',EmailBodyController::useraccount($name,$surname,$id,$token));
         }
         $task = "Staff Member : $request->name  $request->surname";
         $event ="registered";
@@ -181,7 +163,6 @@ class RegisterUserController extends Controller
         return redirect()->back()->with('success', 'Image updated successfully');
     }
     public function signature(Request $request){
-        // dd($request->all());
         $id = Auth::user()->id;
         User::whereId($id)->update(['signature'=>$request->signature]);
         return redirect()->back()->with('success', 'Signature captured successfully');

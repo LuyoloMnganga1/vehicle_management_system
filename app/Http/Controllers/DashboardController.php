@@ -8,7 +8,6 @@ use DateTime;
 use App\Models\User;
 use App\Models\feeds;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\Services\sendSMS;
 use App\Mail\AccountUpdated;
@@ -36,6 +35,11 @@ class DashboardController extends Controller
             ]
         );
         return true;
+    }
+    public function profile()
+    {
+     $user = User::all();
+     return view('profile')->with('user',$user);
     }
 
 }

@@ -8,6 +8,7 @@
 	<!-- Site favicon -->
     <link rel="icon" href="images/logo.png" sizes="16x16" type="images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<!-- Mobile Specific Metas -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<!-- Google Font -->
@@ -21,6 +22,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
  <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+ <script type="text/javascript">
+  function preventBack() { window.history.forward(); }
+  setTimeout("preventBack()", 0);
+  window.onunload = function () { null };
+</script>
 </head>
 <style>
      .dataTables_wrapper .dataTables_paginate .paginate_button.current {

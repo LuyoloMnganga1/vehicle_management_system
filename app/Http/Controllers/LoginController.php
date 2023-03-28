@@ -8,10 +8,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Services\sendSMS;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\emailOTP;
 use Carbon\Carbon;
 use App\Models\user_passwords;
+use App\Http\Controllers\EmailGatewayController;
+use App\Http\Controllers\EmailBodyController;
 
 class LoginController extends Controller
 {
@@ -119,14 +119,15 @@ class LoginController extends Controller
         User::whereId($id)->update(['one_time_pin'=>$one_time_pin,'one_time_pin_date'=>$one_time_pin_date,]);
         $mesg = " Leave System OTP: ". $one_time_pin . " . This OTP will expire in 2 minutes";
         $sms = new  sendSMS();
+        $mail = new EmailGatewayController();
         if (Auth::user()->communication == 'Email'){
-            Mail::to($email)->send(new emailOTP($name,$surname, $mesg));
+            $mail->sendEmail($email,'ICT Choice | Vehicle Manangement System - OTP verification',EmailBodyController::sendotp($name,$surname,$mesg));
             $results = true;
         }else if(Auth::user()->communication == 'SMS') {
             $results = $sms->sendSMS($phone,$mesg);
         }else{
             $results = $sms->sendSMS($phone,$mesg);
-            Mail::to($email)->send(new emailOTP($name,$surname, $mesg));
+            $mail->sendEmail($email,'ICT Choice | Vehicle Manangement System - OTP verification',EmailBodyController::sendotp($name,$surname,$mesg));
         }
         return $results;
     }
