@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Models\Driver;
 
+use Excel;
+
+use App\Imports\ImportDriver;
+
 class DriverController extends Controller
 {
     public function driver()
@@ -67,6 +71,13 @@ class DriverController extends Controller
         return redirect()->back()->with('success','Driver  has been added successfully');
     }
 
+    public function importDriver (Request $request){
+        
+        Excel::import(new ImportDriver($request->file));
+
+        return redirect('/')->with('success', 'Drivers successfully added !');
+    }
+ 
     public function updateDriver(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [

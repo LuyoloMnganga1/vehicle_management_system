@@ -40,6 +40,8 @@ Route::post('update-Driver/{id}',[DriverController::class, 'updateDriver'])->nam
 
 Route::get('delete-Driver/{id}',[DriverController::class, 'deleteDriver'])->name('delete-Driver');
 
+Route::post('import-driver',[DriverController::class, 'importDriver'])->name('import-driver');
+
 //end driver routes
 
 //start vehicles routes

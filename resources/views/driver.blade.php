@@ -85,6 +85,36 @@
     </div>
 </div>
 <!-- end moal -->
+ <!-- import staff Modal -->
+ <div class="modal fade" id="importStaff" tabindex="-1" role="dialog"
+ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered" role="document">
+     <div class="modal-content">
+         <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLongTitle">Import Drivers</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+             </button>
+         </div>
+         <div class="modal-body">
+            
+             <form action="{{route('import-driver')}}" method="post" enctype="multipart/form-data">
+                 <div class="col-md-12 mb-3">
+                     <label for="formFile"  id = "file" name="file" class="form-label" >Excel Spreadsheet</label>
+                     <input style="background: white; color:dark;" class="form-control" type="file" name="file" id="chooseFile" accept =".csv,.doc,.docs.txt,.xlx,.xls,.pdf">
+                 </div>                                    
+               
+         </div>
+         <div class="modal-footer">
+             <button type="button"  type="submit" class="btn btn-primary">Import</button>
+             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+         </div>
+        </form>
+     </div>
+ </div>
+</div>
+{{-- end import staff modal --}}
 
 
 <div class="col-lg-12 col-md-12">
@@ -95,6 +125,8 @@
                     <h4 class="card-title">List of Drivers</h4>
                 </div>
                 <div class="col-md-3">
+                    <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#importStaff"><i
+                        class="fa fa-plus"></i> Import Drivers</button>
                     <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal"
                         data-target="#exampleModalCenter"> <i class="fa fa-plus"></i> Add New Driver</button>
                 </div>
