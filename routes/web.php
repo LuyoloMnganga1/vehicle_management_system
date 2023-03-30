@@ -43,9 +43,11 @@ Route::get('/driver/list',[DriverController::class, 'getdrivers'])->name('driver
 
 Route::post('addDriver',[DriverController::class, 'addDriver'])->name('addDriver');
 
-Route::post('update-Driver/{id}',[DriverController::class, 'updateDriver'])->name('update-Driver');
+Route::post('update-Driver',[DriverController::class, 'updateDriver'])->name('update-Driver');
 
-Route::get('delete-Driver/{id}',[DriverController::class, 'deleteDriver'])->name('delete-Driver');
+Route::get('delete-Driver/{email}',[DriverController::class, 'deleteDriver'])->name('delete-Driver');
+Route::get('find-user/{id}',[DriverController::class, 'finduser'])->name('find-user');
+Route::get('find-driver/{id}',[DriverController::class, 'finddriver'])->name('find-driver');
 
 //end driver routes
 

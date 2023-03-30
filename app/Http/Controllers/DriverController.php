@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Driver;
 use App\Models\User;
 use DataTables;
+use Carbon\Carbon;
 
 class DriverController extends Controller
 {
@@ -17,9 +18,21 @@ class DriverController extends Controller
         $users = User::orderBy('name', 'ASC')->get();
         return $users;
     }
+    public function finduser(Request $request,$id){
+        if($request->ajax()){
+            $user = User::find($id);
+            return response()->json($user);
+        }
+    }
+    public function finddriver(Request $request,$id){
+        if($request->ajax()){
+            $driver = Driver::join('users','drivers.user_id','=','users.id')->where('drivers.user_id',$id)->select('users.*','drivers.*')->first();
+            return  response()->json($driver);
+        }
+    }
     public function getdrivers(Request $request){
         if($request->ajax()){
-            $data = Driver::latest()->get();
+            $data = Driver::join('users','drivers.user_id','=','users.id')->latest('drivers.created_at')->get();
             return Datatables::of($data)
             //**********INDEX COLUMN ************/
             ->addIndexColumn()
@@ -48,12 +61,12 @@ class DriverController extends Controller
                 return $phone;
             })
              //**********END OF PHONE COLUMN ************/
-              //**********USERTYPE COLUMN ************/
-            ->addColumn('usertype', function($row){
-                $user_type = $row->user_type;
-                return $user_type;
+              //**********DEPARTMENT COLUMN ************/
+            ->addColumn('department', function($row){
+                $department = $row->department;
+                return $department;
             })
-             //**********END OF USERTYPE COLUMN ************/
+             //**********END OF DEPARTMENT COLUMN ************/
             //**********LICENCE COLUMN ************/
             ->addColumn('licenceno', function($row){
                 $licence_no = $row->licence_no;
@@ -66,25 +79,19 @@ class DriverController extends Controller
                 return $licence_class;
             })
              //**********END OF LICENCE COLUMN ************/
-             //**********LICENCE COLUMN ************/
-            ->addColumn('licensestate', function($row){
-                $license_state = $row->license_state;
-                return $license_state;
-            })
-             //**********END OF LICENCE COLUMN ************/
-               //**********LICENCE COLUMN ************/
-            ->addColumn('licenseimage', function($row){
-                $license_image = '<img src="'.$row->license_image.'" style="width: 50px;height: 50px;" class="border-3 border border-secondary" alt="licence image">';
-                return $license_image;
+                          //**********LICENCE COLUMN ************/
+            ->addColumn('licenseexpirydate', function($row){
+                $licenseexpirydate = Carbon::parse($row->license_expiry_date)->formatLocalized('%d, %B %Y');
+                return $licenseexpirydate;
             })
              //**********END OF LICENCE COLUMN ************/
                 //**********ACTION COLUMN ************/
             ->addColumn('action', function($row){
-                $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                $actionBtn = '<a href="javascript:void(0)" class="view btn btn-info btn-sm" data-id = "'.$row->id.'">View</a> <a href="javascript:void(0)" class="edit btn btn-success btn-sm" data-id = "'.$row->id.'">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm" id="delete" data-href ="/delete-Driver/'.$row->email.'">Delete</a>';
                 return $actionBtn;
             })
               //**********END OF ACTION COLUMN ************/
-            ->rawColumns(['name','surname','department','email','phone', 'usertype', 'licenceno','licenceclass','licensestate','action'])
+            ->rawColumns(['name','surname','department','email','phone','licenceno','licenceclass','licenseexpirydate','action'])
             ->make(true);
 
         }
@@ -94,16 +101,11 @@ class DriverController extends Controller
     public function addDriver(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string' , 'max:100000'],
-            'surname' => ['required', 'string' , 'max:225'],
-            'department' => ['required', 'string' , 'max:225'],
-            'email' => ['required', 'string' , 'max:225'],
-            'phone' => ['required', 'string' , 'max:225'],
-            'user_type' => ['required', 'string' , 'max:100000'],
-            'licence_no' => ['required', 'string' , 'max:225'],
+            'user_id' => ['required', 'string' , 'unique:drivers,user_id'],
+            'licence_no' => ['required', 'string' , 'unique:drivers,licence_no'],
             'licence_class' => ['required', 'string' , 'max:225'],
             'license_state' => ['required', 'string' , 'max:100000'],
-
+            'license_expiry_date'=>['required', 'string']
         ]);
         $img ='';
         if ($request->license_image == null){
@@ -123,42 +125,29 @@ class DriverController extends Controller
                         ->withInput();
         }
         $data = [
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'department' => $request->department,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'user_type' => $request->user_type,
+            'user_id' => $request->user_id,
             'licence_no' => $request->licence_no,
-            'licence_no' => $request->licence_no,
-            'fuel_type' => $request->fuel_type,
             'licence_class' => $request->licence_class,
             'license_state' => $request->license_state,
             'license_image' => $img,
+            'license_expiry_date'=>$request->license_expiry_date,
         ];
+        // dd($data);
         Driver::create($data);
         return redirect()->back()->with('success','Driver  has been added successfully');
     }
 
-    public function updateDriver(Request $request, $id)
+    public function updateDriver(Request $request)
     {
+        $id = $request->id;
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string' , 'max:100000'],
-            'surname' => ['required', 'string' , 'max:225'],
-            'department' => ['required', 'string' , 'max:225'],
-            'email' => ['required', 'string' , 'max:225'],
-            'phone' => ['required', 'string' , 'max:225'],
-            'user_type' => ['required', 'string' , 'max:100000'],
-            'licence_no' => ['required', 'string' , 'max:225'],
-            'licence_class' => ['required', 'string' , 'max:225'],
+            'licence_no' => ['required', 'string' , 'unique:drivers,licence_no,'.$id],
             'license_state' => ['required', 'string' , 'max:100000'],
-
+            'license_expiry_date'=>['required', 'string']
         ]);
         $img ='';
-        if ($request->vehicle_image == null){
-            return redirect()->back()
-            ->withErrors("License images required")
-            ->withInput();
+        if ($request->license_image == null){
+            $img = $request->previous_image;
         }else{
             if($request->hasFile('license_image')){
                 $fileName = auth()->id() . '_' . time() . '.'. $request->license_image->extension();
@@ -172,24 +161,20 @@ class DriverController extends Controller
                         ->withInput();
         }
         $data = [
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'department' => $request->department,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'user_type' => $request->user_type,
             'licence_no' => $request->licence_no,
             'licence_class' => $request->licence_class,
             'license_state' => $request->license_state,
             'license_image' => $img,
+            'license_expiry_date'=>$request->license_expiry_date,
         ];
         Driver::whereId($id)->update($data);
         return redirect()->back()->with('success','Vehicle has been updated');
     }
 
-    public function deleteDriver($id)
+    public function deleteDriver($email)
     {
-        Driver::destroy($id);
+        $id = User::where('email',$email)->value('id');
+        Driver::where('user_id','=',$id)->delete();
         return redirect()->back()->with('success','Driver has been deleted successfully');
     }
 }
