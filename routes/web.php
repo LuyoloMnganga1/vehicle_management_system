@@ -37,7 +37,7 @@ Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard')
 
 
 //Driver routes
-Route::view('vehicle-driver','driver')->name('vehicle-driver');
+Route::view('vehicle-driver','driver.driver')->name('vehicle-driver');
 
 Route::get('/driver/list',[DriverController::class, 'getdrivers'])->name('driver.list');
 
@@ -52,8 +52,9 @@ Route::get('find-driver/{id}',[DriverController::class, 'finddriver'])->name('fi
 //end driver routes
 
 //start vehicles routes
+Route::view('vehicle','vehicle.vehicle')->name('vehicle');
 
-Route::get('vehicle',[VehicleController::class, 'vehicle'])->name('vehicle');
+Route::post('/vehicle/list',[VehicleController::class, 'getvehicles'])->name('vehicle-list');
 
 Route::post('addVehicle',[VehicleController::class, 'addVehicle'])->name('addVehicle');
 

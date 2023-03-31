@@ -8,17 +8,36 @@ use Illuminate\Support\Facades\Validator;
 Use Illuminate\Support\Facades\DB;
 
 use App\Models\Vehicle;
-
+use DataTables;
 use App\Models\Assign;
 use App\Models\Driver;
 
 class VehicleController extends Controller
 {
-    public function Vehicle()
+    public function getvehicles(Request $request)
     {
-        $vehicle = Vehicle::all();
-        $i =1;
-        return view('Vehicle')->with(['vehicle'=>$vehicle, 'i'=>$i]);
+       if($request->ajax()){
+            $data = Vehicle::all()->latest();
+            return DataTables::of($data)
+             //**********INDEX COLUMN ************/
+             ->addIndexColumn()
+             //**********END OF INDEX COLUMN ************/
+             //**********IMAGE COLUMN ************/
+             ->addColumn('vehicle_image', function($row){
+                $vehicle_image = '<img src="'.$row->vehicle_image.'" alt="vehicle image" style="width: 70px;height: 100px;"/>';
+                return $vehicle_image;
+             })
+             //**********END OF IMAGE COLUMN ************/
+                //**********ACTION COLUMN ************/
+            ->addColumn('action', function($row){
+                $actionBtn = '<a href="javascript:void(0)" class="view btn btn-info btn-sm" data-id = "'.$row->id.'"><i class="fa fa-eye text-light"></i></a> <a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm" id="delete" data-href ="/deleteVehicle/'.$row->id.'"><i class="fa fa-trash text-light"></i></a>';
+                return $actionBtn;
+            })
+              //**********END OF ACTION COLUMN ************/
+            ->rawColumns(['vehicle_type','vehicle_name','vehicle_model','year','vehicle_image','Registration_no','action'])
+            ->make(true);
+       }
+       return view('vehicle.vehicle');
     }
 
     public function addVehicle(Request $request)
@@ -138,7 +157,7 @@ class VehicleController extends Controller
         $driver = DB::table('drivers')->get();
         $assigned = Assign::all();
         $i =1;
-        return view('assignedVehicle')->with(["assigned"=>$assigned, 'i'=>$i, 'driver' => $driver]);
+        return view('vehicle.assignedVehicle')->with(["assigned"=>$assigned, 'i'=>$i, 'driver' => $driver]);
     }
 
     public function addAssigned(Request $request)
@@ -221,7 +240,7 @@ class VehicleController extends Controller
     {
         $assigned = Assign::all();
         $i =1;
-        return view('VehicleHistory')->with(["assigned"=>$assigned, 'i'=>$i]);
+        return view('vehicle.VehicleHistory')->with(["assigned"=>$assigned, 'i'=>$i]);
     }
 
     public function councillors()

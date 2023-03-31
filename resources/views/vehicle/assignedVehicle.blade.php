@@ -21,13 +21,12 @@ aria-hidden="true">
         <div class="modal-body">
             <form action="" method="post">
                 {!! csrf_field() !!}
-                <!-- {!! method_field('GET') !!}  -->
+               
 
                 <div class="row">
-                    {{-- <div class="form-group col-md-6">
-                        <label for="inputEmail4">Driver Full Name</label>
-                        <input type="text" class="form-control" id="hod_fullname" name="assignee" value="{{$driver->name}}{{$driver->surname}}" readonly>
-                    </div> --}}
+                  @php
+                      $driver = \App\Models\Driver::all();
+                  @endphp
                     <div class="form-group col-md-6">
                         <label for="inputEmail4">Driver Full Name</label>
                         <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"

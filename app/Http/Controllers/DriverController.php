@@ -87,7 +87,7 @@ class DriverController extends Controller
              //**********END OF LICENCE COLUMN ************/
                 //**********ACTION COLUMN ************/
             ->addColumn('action', function($row){
-                $actionBtn = '<a href="javascript:void(0)" class="view btn btn-info btn-sm" data-id = "'.$row->id.'">View</a> <a href="javascript:void(0)" class="edit btn btn-success btn-sm" data-id = "'.$row->id.'">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm" id="delete" data-href ="/delete-Driver/'.$row->email.'">Delete</a>';
+                $actionBtn = '<a href="javascript:void(0)" class="view btn btn-info btn-sm" data-id = "'.$row->id.'"><i class="fa fa-eye text-light"></i></a> <a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm" id="delete" data-href ="/delete-Driver/'.$row->email.'"><i class="fa fa-trash text-light"></i></a>';
                 return $actionBtn;
             })
               //**********END OF ACTION COLUMN ************/
@@ -95,7 +95,7 @@ class DriverController extends Controller
             ->make(true);
 
         }
-        return view('driver');
+        return view('driver.driver');
     }
 
     public function addDriver(Request $request)
