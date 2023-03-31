@@ -1,4 +1,7 @@
 @extends('layouts.main')
+@section('title')
+Councillors
+@endsection
 @section('content')
 
     <div class="row">
@@ -26,6 +29,6 @@
         <div class="col-4"></div>
     </div>
 
-   
-
-@endsection
+    @endsection
+    @section('scripts')
+    @endsection

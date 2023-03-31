@@ -1,4 +1,7 @@
 @extends('layouts.main')
+@section('title')
+Vehicle history
+@endsection
 @section('content')
 
 
@@ -285,5 +288,6 @@ aria-hidden="true">
 </div>
 </div>
 </div>
-
-@stop
+@endsection
+@section('scripts')
+@endsection

@@ -11,16 +11,12 @@ class Driver extends Model
     use HasFactory;
     protected $fillable = [
         
-        'name',
-        'surname',
-        'department',
-        'email',
-        'phone',
-        'user_type',
+        'user_id',
         'licence_no',
         'licence_class',
         'license_state',
-        'license_image'
+        'license_image',
+        'license_expiry_date'
     ];
 
     public static function getAllDrivers() {

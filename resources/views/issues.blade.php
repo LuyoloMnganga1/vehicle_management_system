@@ -1,4 +1,7 @@
 @extends('layouts.main')
+@section('title')
+Issues
+@endsection
 @section('content')
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -231,6 +234,7 @@
 </div>
 </div>
 </div>
+@section('scripts')
 
 <script>
     function displayImg(input,_this) {
@@ -254,7 +258,5 @@ function displayImg2(input,_this) {
     }
 }
 </script>
-
-
-@stop
+@endsection
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\DriverController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\FuelController;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,7 +23,12 @@ use App\Http\Controllers\FuelController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    if(Auth::check()){
+        return redirect()->route('dashboard');
+    }else{
+        return redirect()->route('login');
+    }
+
 });
 
 Route::group(['middleware' => ['auth', 'verifyOTP']], function(){
@@ -31,21 +37,26 @@ Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard')
 
 
 //Driver routes
-Route::get('vehicle-driver',[DriverController::class, 'driver'])->name('vehicle-driver');
+Route::view('vehicle-driver','driver.driver')->name('vehicle-driver');
+
+Route::get('/driver/list',[DriverController::class, 'getdrivers'])->name('driver.list');
 
 Route::post('addDriver',[DriverController::class, 'addDriver'])->name('addDriver');
 
-Route::post('update-Driver/{id}',[DriverController::class, 'updateDriver'])->name('update-Driver');
+Route::post('update-Driver',[DriverController::class, 'updateDriver'])->name('update-Driver');
 
-Route::get('delete-Driver/{id}',[DriverController::class, 'deleteDriver'])->name('delete-Driver');
+Route::get('delete-Driver/{email}',[DriverController::class, 'deleteDriver'])->name('delete-Driver');
+Route::get('find-user/{id}',[DriverController::class, 'finduser'])->name('find-user');
+Route::get('find-driver/{id}',[DriverController::class, 'finddriver'])->name('find-driver');
 
 Route::post('import-driver',[DriverController::class, 'importDriver'])->name('import-driver');
 
 //end driver routes
 
 //start vehicles routes
+Route::view('vehicle','vehicle.vehicle')->name('vehicle');
 
-Route::get('vehicle',[VehicleController::class, 'vehicle'])->name('vehicle');
+Route::post('/vehicle/list',[VehicleController::class, 'getvehicles'])->name('vehicle-list');
 
 Route::post('addVehicle',[VehicleController::class, 'addVehicle'])->name('addVehicle');
 
