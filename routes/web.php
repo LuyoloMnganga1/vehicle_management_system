@@ -58,7 +58,7 @@ Route::post('import-driver',[DriverController::class, 'importDriver'])->name('im
 //start vehicles routes
 Route::view('vehicle','vehicle.vehicle')->name('vehicle');
 
-Route::post('/vehicle/list',[VehicleController::class, 'getvehicles'])->name('vehicle-list');
+Route::get('/vehicle/list',[VehicleController::class, 'getvehicles'])->name('vehicle-list');
 
 Route::post('addVehicle',[VehicleController::class, 'addVehicle'])->name('addVehicle');
 
@@ -74,6 +74,8 @@ Route::post('updateAssigned/{id}',[VehicleController::class, 'updateAssigned'])-
 
 Route::get('deleteAssigned/{id}',[VehicleController::class, 'deleteAssigned'])->name('deleteAssigned');
 
+Route::get('find-vehicle/{id}',[VehicleController::class, 'findvehicle'])->name('find-vehicle');
+
 Route::get('assig-history',[VehicleController::class, 'assigedhistory'])->name('assig-history');
 
 //End vehicles routes
@@ -85,7 +87,11 @@ Route::view('assigned-drivers','driver.assign')->name('assigned-drivers');
 
 Route::get('issue',[IssueController::class, 'issue'])->name('issue');
 
+Route::get('getissues',[IssueController::class, 'getIssues'])->name('getissues');
+
 Route::post('addIssue',[IssueController::class, 'addIssue'])->name('addIssue');
+
+Route::get('find-issue/{id}',[IssueController::class, 'findissue'])->name('find-issue');
 
 Route::post('updateIssue/{id}',[IssueController::class, 'updateIssue'])->name('updateIssue');
 
