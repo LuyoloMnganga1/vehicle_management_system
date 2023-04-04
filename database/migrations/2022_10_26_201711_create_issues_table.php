@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('issues', function (Blueprint $table) {
             $table->id();
-            $table->string('vehicle_name');
+            $table->string('vehicle_id');
             $table->string('assignee');
             $table->string('title');
             $table->string('description');

@@ -80,7 +80,11 @@ Route::get('assig-history',[VehicleController::class, 'assigedhistory'])->name('
 
 Route::get('issue',[IssueController::class, 'issue'])->name('issue');
 
+Route::get('getissues',[IssueController::class, 'getIssues'])->name('getissues');
+
 Route::post('addIssue',[IssueController::class, 'addIssue'])->name('addIssue');
+
+Route::get('find-issue/{id}',[IssueController::class, 'findissue'])->name('find-issue');
 
 Route::post('updateIssue/{id}',[IssueController::class, 'updateIssue'])->name('updateIssue');
 

@@ -174,7 +174,7 @@ Vehicle
 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Add</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     </div>
 
                 </form>
@@ -297,7 +297,7 @@ Vehicle
                   </div>
                   <div class="modal-footer">
                     <button type="submit" id="btn_update" class="btn btn-primary">Update</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </form>
         </div>
@@ -368,7 +368,7 @@ Vehicle
                     </div>                                            
                     <div class="modal-footer">                                       
                       <button type="button" class="btn btn-secondary"
-                          data-dismiss="modal">Cancel</button>
+                          data-dismiss="modal">Close</button>
                   </div>
 
                 </form>
@@ -512,7 +512,6 @@ Vehicle
 
          /*delete  driver */
          $('body').on('click', '#delete', function() {
-            alert($('#delete').data('id'));
            $('#delete_record').modal('show');
            $('#yes').on('click',function(){
                var id = $('#delete').data('id');

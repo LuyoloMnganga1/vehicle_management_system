@@ -9,7 +9,7 @@ class Issue extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'vehicle_name',
+        'vehicle_id',
         'assignee',
         'title',
         'description',
