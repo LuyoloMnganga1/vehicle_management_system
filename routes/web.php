@@ -53,6 +53,8 @@ Route::post('import-driver',[DriverController::class, 'importDriver'])->name('im
 
 //end driver routes
 
+
+
 //start vehicles routes
 Route::view('vehicle','vehicle.vehicle')->name('vehicle');
 
@@ -75,6 +77,11 @@ Route::get('deleteAssigned/{id}',[VehicleController::class, 'deleteAssigned'])->
 Route::get('assig-history',[VehicleController::class, 'assigedhistory'])->name('assig-history');
 
 //End vehicles routes
+
+// assignment vehicles routes
+Route::view('assigned-drivers','driver.assign')->name('assigned-drivers');
+
+// end assignment routes
 
 Route::get('issue',[IssueController::class, 'issue'])->name('issue');
 
