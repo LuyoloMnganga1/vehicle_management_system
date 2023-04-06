@@ -12,6 +12,7 @@ class Fuel extends Model
         'vehicle_name',
         'start_datte',
         'odometer',
+        'volume',
         'partial_fuel',
         'price',
         'vendor',

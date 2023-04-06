@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('vehicle_name');
             $table->date('start_datte');
             $table->string('odometer');
+            $table->string('volume');
             $table->string('partial_fuel');
             $table->double('price');
             $table->string('vendor');

@@ -97,17 +97,23 @@ Route::post('updateIssue/{id}',[IssueController::class, 'updateIssue'])->name('u
 
 Route::get('deleteIssue/{id}',[IssueController::class, 'deleteIssue'])->name('deleteIssue');
 
+// fuel routes
 Route::get('fuel-Entry',[FuelController::class, 'fuelEntry'])->name('fuel-Entry');
+
+Route::get('fuel/list',[FuelController::class, 'getFuel'])->name('fuel.list');
 
 Route::post('addFuel',[FuelController::class, 'addFuel'])->name('addFuel');
 
-Route::post('updateFuel/{id}',[FuelController::class, 'updateFuel'])->name('updateFuel');
+Route::get('find/fuel/{id}',[FuelController::class, 'find_invoice'])->name('find.fuel');
 
-Route::get('deleteFuel/{id}',[FuelController::class, 'deleteFuel'])->name('deleteFuel');
+Route::post('update-Fuel/{id}',[FuelController::class, 'updateFuel'])->name('update-Fuel');
+
+Route::get('delete-Fuel/{id}',[FuelController::class, 'deleteFuel'])->name('delete-Fuel');
 
 Route::get('councillors',[VehicleController::class, 'councillors'])->name('councillors');
 
-//
+// end fuel routes
+
 Route::post('image/update',[RegisterUserController::class, 'profile_image'])->name('image/update');
 Route::post('signature',[RegisterUserController::class, 'signature'])->name('signature');
 Route::get('profile',[DashboardController::class, 'profile'])->name('profile');
