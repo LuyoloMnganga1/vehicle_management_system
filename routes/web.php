@@ -10,6 +10,7 @@ use App\Http\Controllers\DriverController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\FuelController;
+use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
@@ -113,6 +114,19 @@ Route::get('delete-Fuel/{id}',[FuelController::class, 'deleteFuel'])->name('dele
 Route::get('councillors',[VehicleController::class, 'councillors'])->name('councillors');
 
 // end fuel routes
+
+// Bookings Routes
+Route::get('bookings',[BookingController::class, 'bookings'])->name('bookings');
+Route::get('log-book',[BookingController::class, 'logBook'])->name('log-book');
+Route::get('booking-history',[BookingController::class, 'bookHistory'])->name('booking-history');
+
+
+
+
+
+// End Booking Routes
+
+
 
 Route::post('image/update',[RegisterUserController::class, 'profile_image'])->name('image/update');
 Route::post('signature',[RegisterUserController::class, 'signature'])->name('signature');

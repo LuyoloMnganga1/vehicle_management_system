@@ -41,8 +41,9 @@
                         <span class="micon dw dw-book"></span><span class="mtext"> Booking</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="{{route('assiged-vehicle')}}">Book a vehicle</a></li>
-                        <li><a href="{{route('assig-history')}}">Booking History</a></li>
+                        <li><a href="{{route('bookings')}}">Book a vehicle</a></li>
+                        <li><a href="{{route('log-book')}}">Log Book</a></li>
+                        <li><a href="{{route('booking-history')}}">Booking History</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -70,7 +71,7 @@
 
                         <li><a  href="{{route('fuel-Entry')}}">Fuel Entries</a></li>
 
-                        <li><a href="{{route('councillors')}}">councillors</a></li>
+                        {{-- <li><a href="{{route('councillors')}}">councillors</a></li> --}}
 
                         {{--<li><a href="{{route('assig-history')}}">Assignment History</a></li> --}}
 
