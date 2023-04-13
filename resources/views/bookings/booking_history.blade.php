@@ -91,17 +91,21 @@ Booking History
                       </div>
                     </div>
                     <div class="mb-3 row">
+                        @php
+                            $vehicle = App\Models\Vehicle::orderBy('Registration_no', 'ASC')->get();
+                        @endphp
                       <label for="staticEmail" class="col-sm-2 col-form-label">Destination</label>
                         <div class="input-group input-group-sm col-sm-4">
                             <input type="text" class="form-control" id="update_destination" name="destination">
                         </div>
                       <label for="staticEmail" class="col-sm-2 col-form-label">Available Vehicles</label>
-                      <select class="form-control form-control-sm col-sm-4" id="update_Registration_no" name="Registration_no">
-                          <option>Select Available Vehicles</option>
-                          <option value="001 ICT EC">001 ICT EC</option>
-                          <option value="002 ICT EC">002 ICT EC</option>
-                          <option value="003 ICT EC">003 ICT EC</option>
-                      </select>
+                      <input type="hidden" name="vehicle_id" id="update_vehicle_id">
+                      <select  id="update_reg_no" class="form-control col-sm-4" required>
+                        <option value="" disabled selected id="update_vehicle_id_placeholder"></option>
+                        @foreach($vehicle as $item )
+                            <option value="{{ $item->id }}">{{ $item->Registration_no }}</option>
+                        @endforeach
+                    </select>
                       
                   </div>
                     <div class="form-group col-md-12">
@@ -167,8 +171,8 @@ Booking History
                 className: 'text-center'
             },
             {
-                data: 'Registration_no',
-                name: 'Registration_no',
+                data: 'vehicle_plate',
+                name: 'vehicle_plate',
                 orderable: true,
                 searchable: true,
                 print: true,
@@ -191,6 +195,7 @@ Booking History
     $('body').on('click', '.edit', function () {
        var booking_id = $(this).data('id');
        $.get('find/booking/' + booking_id, function (data) {
+        console.log(data);
            $('#modelHeading').html("Update Booking");
            $('#saveBtn').val("edit-booking");
            $('#booking_id').val(data.id);
@@ -199,8 +204,10 @@ Booking History
            $('#update_trip_start_date').val(data.trip_start_date);
            $('#update_return_date').val(data.return_date);
            $('#update_destination').val(data.destination);
-           $('#update_Registration_no').val(data.Registration_no);
-           $('#update_trip_datails').val(data.trip_datails);
+           $('#update_reg_no').val(data.vehicle_plate);
+           $('#update_vehicle_id_placeholder').append(data.vehicle_plate);
+           $('#update_vehicle_id').val(data.vehicle_id);
+           $('textarea#update_trip_datails').val(data.trip_datails);
            var url = "{{route('update-Booking', ['id'=>':id'])}}";
            url.replace(':id', booking_id);
            $('#update_booking_form').attr('action',url);

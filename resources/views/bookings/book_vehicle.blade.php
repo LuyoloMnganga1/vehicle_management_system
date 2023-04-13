@@ -45,24 +45,27 @@ Booking Entry
                 
                 <label for="staticEmail" class="col-sm-2 col-form-label">Booking Date </label>
                 <div class="input-group input-group-sm col-sm-4">
-                    <input type="date" class="form-control" id="trip_start_date" name="trip_start_date">
+                    <input type="datetime-local" class="form-control" id="trip_start_date" name="trip_start_date">
                 </div>
                 <label for="staticEmail" class="col-sm-2 col-form-label">Returning Date</label>
               <div class="input-group input-group-sm col-sm-4">
-                  <input type="date" class="form-control" id="return_date" name="return_date">
+                  <input type="datetime-local" class="form-control" id="return_date" name="return_date">
               </div>
             </div>
             <div class="mb-3 row">
+                @php
+                    $vehicle = App\Models\Vehicle::orderBy('Registration_no', 'ASC')->get();
+                @endphp
               <label for="staticEmail" class="col-sm-2 col-form-label">Destination</label>
                 <div class="input-group input-group-sm col-sm-4">
                     <input type="text" class="form-control" id="destination" name="destination">
                 </div>
               <label for="staticEmail" class="col-sm-2 col-form-label">Available Vehicles</label>
-              <select class="form-control form-control-sm col-sm-4" name="Registration_no">
+              <select class="form-control form-control-sm col-sm-4" name="vehicle_id">
                   <option>Select Available Vehicles</option>
-                  <option value="001 ICT EC">001 ICT EC</option>
-                  <option value="002 ICT EC">002 ICT EC</option>
-                  <option value="003 ICT EC">003 ICT EC</option>
+                  @foreach($vehicle as $item )
+                    <option value="{{ $item->id }}">{{ $item->Registration_no }}</option>
+                  @endforeach
               </select>
               
           </div>

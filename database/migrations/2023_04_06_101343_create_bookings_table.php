@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('trip_start_date');
             $table->date('return_date');
             $table->string('destination');
-            $table->string('Registration_no');
+            $table->string('vehicle_id');
             $table->string('trip_datails');
             $table->string('status');
             $table->string('comment');
