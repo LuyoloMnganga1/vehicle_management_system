@@ -117,10 +117,20 @@ Route::get('councillors',[VehicleController::class, 'councillors'])->name('counc
 
 // Bookings Routes
 Route::get('bookings',[BookingController::class, 'bookings'])->name('bookings');
+
 Route::get('log-book',[BookingController::class, 'logBook'])->name('log-book');
+
 Route::get('booking-history',[BookingController::class, 'bookHistory'])->name('booking-history');
 
+Route::post('book',[BookingController::class, 'bookVehicle'])->name('book');
 
+Route::get('find/booking/{id}',[BookingController::class, 'findBooking'])->name('find.booking');
+
+Route::get('booking/list',[BookingController::class, 'getBookings'])->name('booking.list');
+
+Route::post('update-Booking/{id}',[BookingController::class, 'updateBooking'])->name('update-Booking');
+
+Route::get('delete-Booking/{id}',[BookingController::class, 'deleteBooking'])->name('delete-Booking');
 
 
 

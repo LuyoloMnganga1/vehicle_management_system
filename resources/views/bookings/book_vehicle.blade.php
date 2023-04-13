@@ -11,15 +11,33 @@ Booking Entry
         <h2 style="color: white">Booking Details</h2>
     </div>
     <div class="card-body">
-        <form action="" method="post">
+      @if ($errors->any())
+      <div class="alert alert-danger alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <ul>
+              @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+      @endif
+      @if ($message = Session::get('success'))
+      <div class="alert alert-success alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <p>{{ $message }}</p>
+      </div>
+      @endif
+        <form action="{{route('book')}}" method="post">
+          {!! csrf_field() !!}
+
             <div class="mb-3 row">
               <label for="staticEmail" class="col-sm-2 col-form-label">Full Name</label>
                 <div class="input-group input-group-sm col-sm-4">
-                    <input type="text" class="form-control" id="name" readonly value="{{ Auth::user()->name }} {{ Auth::user()->surname }}">
+                    <input type="text" class="form-control" id="name" name="full_name" readonly value="{{ Auth::user()->name }} {{ Auth::user()->surname }}">
                 </div>
                 <label for="staticEmail" class="col-sm-2 col-form-label">Email Address</label>
                 <div class="input-group input-group-sm col-sm-4">
-                    <input type="text" class="form-control" id="email" readonly value="{{ Auth::user()->email }} ">
+                    <input type="text" class="form-control" id="email" readonly value="{{ Auth::user()->email }} " name="email">
                 </div> 
                 
             </div>
@@ -40,24 +58,23 @@ Booking Entry
                     <input type="text" class="form-control" id="destination" name="destination">
                 </div>
               <label for="staticEmail" class="col-sm-2 col-form-label">Available Vehicles</label>
-              <select class="form-control form-control-sm col-sm-4">
+              <select class="form-control form-control-sm col-sm-4" name="Registration_no">
                   <option>Select Available Vehicles</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
+                  <option value="001 ICT EC">001 ICT EC</option>
+                  <option value="002 ICT EC">002 ICT EC</option>
+                  <option value="003 ICT EC">003 ICT EC</option>
               </select>
               
           </div>
             <div class="mb-3 row">
                 <div class="col-sm-12">
                     <label for="exampleFormControlTextarea1" class="form-label">Trip Details</label>
-                    <textarea type="text" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea type="text" name="trip_datails" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
 
             </div>
 
-            <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
-                <i class="fa fa-plus"></i> Add New</button>
+            <button type="submit" class="btn btn-primary btn-sm" ><i class="fa fa-plus"></i> Add New</button>
         </form>
 
     </div>

@@ -3,8 +3,6 @@
 Booking History
 @endsection
 @section('content')
-
-<h3 class="display-4">Trip Entry</h3>
 <div class="col-lg-12 col-md-12">
     <div class="card">
         <div class="card-header card-header-text">
@@ -13,7 +11,7 @@ Booking History
                     <h4 class="card-title">List of Bookings</h4>
                 </div>
                 <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary btn-sm" href="{{route('bookings')}}"> <i class="fa fa-plus"></i> Add New</button>
+                    <button type="button" class="btn btn-primary btn-sm" href="{{route('bookings')}}"> <i class="fa fa-plus"></i> Add New</button>
                 </div>
             </div>
         </div>
@@ -38,14 +36,10 @@ Booking History
                 <thead class="text-light bg bg-primary">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Vehicle Registration Number</th>
-                        <th scope="col">Fill Up Date</th>
-                        <th scope="col">Odometer</th>
-                        <th scope="col">Volume (L) </th>
-                        <th scope="col">Partial Fuel Up</th> 
-                        <th scope="col">Price</th>
-                        <th scope="col">Vendor</th>
-                        <th scope="col">Invoice</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Booking Date</th>
+                        <th scope="col">Destination</th>
+                        <th scope="col">Vehicle</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -59,83 +53,63 @@ Booking History
 </div>
 
 <!-- Update Invoice Modal -->
-<div class="modal fade" id="updateInvoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="updateBooking" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Update Invoice</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Update Booking</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form  id="update_fuel_form" method="post" enctype="multipart/form-data">
+                <form  action="" id="update_booking_form" method="post" enctype="multipart/form-data">
                     {!! csrf_field() !!}
     
-                    <div class="row">
-    
-                        <div class="form-group col-md-6">
-                            <label for="inputEmail4">Vehicle Registration Number</label>
-                            <input type="text" class="form-control" id="update_vehicle_name" name="vehicle_name" value="">
+
+                    <div class="mb-3 row">
+                
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Full Name </label>
+                        <div class="input-group input-group-sm col-sm-4">
+                            <input type="text" class="form-control" id="update_full_name" name="full_name" readonly value="{{ Auth::user()->name }} {{ Auth::user()->surname }}">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputEmail4">Fill Up Date</label>
-                            <input type="date" class="form-control" id="update_date" name="start_datte" value="">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Email Address</label>
+                      <div class="input-group input-group-sm col-sm-4">
+                        <input type="text" class="form-control" id="update_email" readonly value="{{ Auth::user()->email }} " name="email">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputEmail4">Odometer</label>
-                            <input type="text" class="form-control" id="update_odometer" name="odometer" value="">
+                    </div>
+                    <div class="mb-3 row">
+            
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Booking Date </label>
+                        <div class="input-group input-group-sm col-sm-4">
+                            <input type="date" class="form-control" id="update_trip_start_date" name="trip_start_date">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputEmail4">Volume (L)</label>
-                            <input type="text" class="form-control" id="update_volume" name="volume" value="">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Returning Date</label>
+                      <div class="input-group input-group-sm col-sm-4">
+                          <input type="date" class="form-control" id="update_return_date" name="return_date">
+                      </div>
+                    </div>
+                    <div class="mb-3 row">
+                      <label for="staticEmail" class="col-sm-2 col-form-label">Destination</label>
+                        <div class="input-group input-group-sm col-sm-4">
+                            <input type="text" class="form-control" id="update_destination" name="destination">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputEmail4">Partial Fuel Up</label> <br>
-    
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="partial_fuel" id="update_partial_fuel"
-                                    value="Yes">
-                                <label class="form-check-label" for="inlineRadio1">Yes</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="partial_fuel" id="update_partial_fuel"
-                                    value="No">
-                                <label class="form-check-label" for="inlineRadio2">No</label>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputEmail4">Price/Unit</label>
-                            <input type="text" class="form-control" id="update_price" name="price" value="">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputEmail4">Vendor</label>
-                            <input type="text" class="form-control" id="update_vendor" name="vendor" value="">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputEmail4">Invoice Number</label>
-                            <input type="text" class="form-control" id="update_invoice_no" name="invoice_no" value="">
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="inputEmail4">Invoice Upload</label>
-                            <div class="custom-file">
-                                <label class="custom-file-label" for="customFile">Choose file</label>
-                                <input type="file" class="custom-file-input rounded-circle" id=""
-                                    name="invoice_upload" accept=".jpg,.jpeg,.bmp,.png,.gif,.jfif"
-                                    onchange="displayImg(this,$(this))">
-    
-    
-                            </div>
-                        </div>
-                        <input type="hidden" name="previous_invoice_upload" id="previous_invoice_upload">
-                        <div class="form-group d-flex justify-content-center col-md-12">
-                            <img src=""  alt="selected image" name="invoice_upload" id="timg1" class="img-fluid img-thumbnail" style="width: 250px;height:300px">
-                        </div>
-    
+                      <label for="staticEmail" class="col-sm-2 col-form-label">Available Vehicles</label>
+                      <select class="form-control form-control-sm col-sm-4" id="update_Registration_no" name="Registration_no">
+                          <option>Select Available Vehicles</option>
+                          <option value="001 ICT EC">001 ICT EC</option>
+                          <option value="002 ICT EC">002 ICT EC</option>
+                          <option value="003 ICT EC">003 ICT EC</option>
+                      </select>
+                      
+                  </div>
+                    <div class="form-group col-md-12">
+                        <label for="inputEmail4">Trip Details</label>
+                        <textarea type="text"  class="form-control" id="update_trip_details" value="trip_datails" name="trip_datails" rows="3"></textarea>
                     </div>
                     <div style="margin-top: 5%">
-                        <button type="submit" id="saveBtn" class="btn btn-primary">Update Invoice</button>
+                        <button type="submit" id="saveBtn" class="btn btn-primary">Update Booking</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     </div>
     
@@ -147,5 +121,106 @@ Booking History
     </div>
 </div>
 {{-- end Update modal --}}
+
+@endsection
+
+@section('scripts')
+
+<script>
+    $(function () {
+      
+      var table = $('.data-table').DataTable({
+          processing: true,
+          serverSide: true,
+          ajax:"{{route('booking.list')}}",
+          columns: [
+            {
+                data: 'DT_RowIndex',
+                name: 'DT_RowIndex',
+                orderable: false,
+                searchable: false,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'full_name',
+                name: 'full_name',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'trip_start_date',
+                name: 'trip_start_date',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'destination',
+                name: 'destination',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'Registration_no',
+                name: 'Registration_no',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },            
+            {
+                data: 'action', 
+                name: 'action', 
+                orderable: false, 
+                searchable: false,
+            },
+          ]
+      });
+      
+    });
+  </script>
+
+<script>
+    /* edit booking */
+    $('body').on('click', '.edit', function () {
+       var booking_id = $(this).data('id');
+       $.get('find/booking/' + booking_id, function (data) {
+           $('#modelHeading').html("Update Booking");
+           $('#saveBtn').val("edit-booking");
+           $('#booking_id').val(data.id);
+           $('#update_full_name').val(data.full_name);
+           $('#update_email').val(data.email);
+           $('#update_trip_start_date').val(data.trip_start_date);
+           $('#update_return_date').val(data.return_date);
+           $('#update_destination').val(data.destination);
+           $('#update_Registration_no').val(data.Registration_no);
+           $('#update_trip_datails').val(data.trip_datails);
+           var url = "{{route('update-Booking', ['id'=>':id'])}}";
+           url.replace(':id', booking_id);
+           $('#update_booking_form').attr('action',url);
+           $('#updateBooking').modal('show');
+       })
+   });
+
+     /*delete  booking */
+     $('body').on('click', '#delete', function() {
+          $('#delete_record').modal('show');
+          $('#yes').on('click',function(){
+              var url= '/delete-Booking/' + $('#delete').data('id');
+              location.href = url;
+          })
+       });
+
+
+
+    
+
+ </script>
 
 @endsection
