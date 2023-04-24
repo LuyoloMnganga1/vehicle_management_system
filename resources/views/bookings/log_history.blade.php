@@ -8,10 +8,10 @@ Booking History
         <div class="card-header card-header-text">
             <div class="row">
                 <div class="col-md-10">
-                    <h4 class="card-title">List of Bookings</h4>
+                    <h4 class="card-title">List of Vehicle Logs</h4>
                 </div>
                 <div class="col-md-2">
-                    <a  class="btn btn-primary btn-sm" href="{{route('bookings')}}"> <i class="fa fa-plus"></i> New Booking</a>
+                    <a  class="btn btn-primary btn-sm" href="{{route('log-book')}}"> <i class="fa fa-plus"></i> Log Book</a>
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@ Booking History
                         </div>
                         <label for="staticEmail" class="col-sm-2 col-form-label">Email Address</label>
                       <div class="input-group input-group-sm col-sm-4">
-                        <input type="text" class="form-control" id="update_email" readonly value="{{ Auth::user()->email }}" name="email">
+                        <input type="text" class="form-control" id="update_email" readonly value="{{ Auth::user()->email }} " name="email">
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -125,109 +125,5 @@ Booking History
     </div>
 </div>
 {{-- end Update modal --}}
-
-@endsection
-
-@section('scripts')
-
-<script>
-    $(function () {
-      
-      var table = $('.data-table').DataTable({
-          processing: true,
-          serverSide: true,
-          ajax:"{{route('booking.list')}}",
-          columns: [
-            {
-                data: 'DT_RowIndex',
-                name: 'DT_RowIndex',
-                orderable: false,
-                searchable: false,
-                print: true,
-                className: 'text-center'
-            },
-            {
-                data: 'full_name',
-                name: 'full_name',
-                orderable: true,
-                searchable: true,
-                print: true,
-                className: 'text-center'
-            },
-            {
-                data: 'trip_start_date',
-                name: 'trip_start_date',
-                orderable: true,
-                searchable: true,
-                print: true,
-                className: 'text-center'
-            },
-            {
-                data: 'destination',
-                name: 'destination',
-                orderable: true,
-                searchable: true,
-                print: true,
-                className: 'text-center'
-            },
-            {
-                data: 'vehicle_plate',
-                name: 'vehicle_plate',
-                orderable: true,
-                searchable: true,
-                print: true,
-                className: 'text-center'
-            },            
-            {
-                data: 'action', 
-                name: 'action', 
-                orderable: false, 
-                searchable: false,
-            },
-          ]
-      });
-      
-    });
-  </script>
-
-<script>
-    /* edit booking */
-    $('body').on('click', '.edit', function () {
-       var booking_id = $(this).data('id');
-       $.get('find/booking/' + booking_id, function (data) {
-        console.log(data);
-           $('#modelHeading').html("Update Booking");
-           $('#saveBtn').val("edit-booking");
-           $('#booking_id').val(data.id);
-           $('#update_full_name').val(data.full_name);
-           $('#update_email').val(data.email);
-           $('#update_trip_start_date').val(data.trip_start_date);
-           $('#update_return_date').val(data.return_date);
-           $('#update_destination').val(data.destination);
-           $('#update_reg_no').val(data.vehicle_plate);
-           $('#update_vehicle_id_placeholder').append(data.vehicle_plate);
-           $('#update_vehicle_id').val(data.vehicle_id);
-           $('textarea#update_trip_datails').val(data.trip_datails);
-           var url = "{{route('update-Booking', ['id'=>':id'])}}";
-           url.replace(':id', booking_id);
-           $('#update_booking_form').attr('action',url);
-           $('#updateBooking').modal('show');
-       })
-   });
-
-     /*delete  booking */
-     $('body').on('click', '#delete', function() {
-          $('#delete_record').modal('show');
-          $('#yes').on('click',function(){
-              var url= '/delete-Booking/' + $('#delete').data('id');
-              location.href = url;
-          })
-       });
-
-
-
-    
-
- </script>
 
 @endsection

@@ -42,34 +42,28 @@
                     </a>
                     <ul class="submenu">
                         <li><a href="{{route('bookings')}}">Book a vehicle</a></li>
-                        <li><a href="{{route('log-book')}}">Log Book</a></li>
                         <li><a href="{{route('booking-history')}}">Booking History</a></li>
+                        <li><a href="{{route('log-book')}}">Log Book</a></li>
+                        <li><a href="{{route('Log-history')}}">Log Book History</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="javascript:void(0);" class="dropdown-toggle">
-                        <span class="micon fa fa-question-circle"></span><span class="mtext"> Issues</span>
+                    <a href="{{route('issue')}}" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-question-circle "></span><span class="mtext"> Issues</span>
                     </a>
-                    <ul class="submenu">
+                    {{-- <ul class="submenu">
 
                         <li><a  href="{{route('issue')}}">Issues</a></li>
-{{-- 
-                        <li><a href="{{route('assiged-vehicle')}}">Assignment New Vehicle</a></li>
 
-                        <li><a href="{{route('assig-history')}}">Assignment History</a></li> --}}
-
-                        {{-- <li><a href="#">Department Leaves</a></li> --}}
-
-                        {{-- <li><a href="#">My Leaves</a></li> --}}
-                    </ul>
+                    </ul> --}}
                 </li>
                 <li class="dropdown">
-                    <a href="javascript:void(0);" class="dropdown-toggle">
+                    <a href="{{route('fuel-Entry')}}" class="dropdown-toggle no-arrow">
                         <span class="micon material-icons">local_gas_station</span><span class="mtext"> Fuel Entry</span>
                     </a>
-                    <ul class="submenu">
+                    {{-- <ul class="submenu">
 
-                        <li><a  href="{{route('fuel-Entry')}}">Fuel Entries</a></li>
+                        <li><a  href="{{route('fuel-Entry')}}">Fuel Entries</a></li> --}}
 
                         {{-- <li><a href="{{route('councillors')}}">councillors</a></li> --}}
 
@@ -78,7 +72,7 @@
                         {{-- <li><a href="#">Department Leaves</a></li> --}}
 
                         {{-- <li><a href="#">My Leaves</a></li> --}}
-                    </ul>
+                    {{-- </ul> --}}
                 </li>
                 <li>
                     <a href="#" class="dropdown-toggle no-arrow">

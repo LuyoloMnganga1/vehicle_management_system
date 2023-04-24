@@ -132,6 +132,11 @@ Route::post('update-Booking/{id}',[BookingController::class, 'updateBooking'])->
 
 Route::get('delete-Booking/{id}',[BookingController::class, 'deleteBooking'])->name('delete-Booking');
 
+Route::get('log/list',[BookingController::class, 'getLogBook'])->name('log.list');
+
+Route::get('Log-history',[BookingController::class, 'logHistory'])->name('Log-history');
+
+
 
 
 // End Booking Routes
