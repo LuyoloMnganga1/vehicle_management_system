@@ -51,32 +51,15 @@
                     <a href="{{route('issue')}}" class="dropdown-toggle no-arrow">
                         <span class="micon fa fa-question-circle "></span><span class="mtext"> Issues</span>
                     </a>
-                    {{-- <ul class="submenu">
-
-                        <li><a  href="{{route('issue')}}">Issues</a></li>
-
-                    </ul> --}}
                 </li>
                 <li class="dropdown">
                     <a href="{{route('fuel-Entry')}}" class="dropdown-toggle no-arrow">
                         <span class="micon material-icons">local_gas_station</span><span class="mtext"> Fuel Entry</span>
                     </a>
-                    {{-- <ul class="submenu">
-
-                        <li><a  href="{{route('fuel-Entry')}}">Fuel Entries</a></li> --}}
-
-                        {{-- <li><a href="{{route('councillors')}}">councillors</a></li> --}}
-
-                        {{--<li><a href="{{route('assig-history')}}">Assignment History</a></li> --}}
-
-                        {{-- <li><a href="#">Department Leaves</a></li> --}}
-
-                        {{-- <li><a href="#">My Leaves</a></li> --}}
-                    {{-- </ul> --}}
                 </li>
                 <li>
                     <a href="#" class="dropdown-toggle no-arrow">
-                        <span class="micon fa fa-file"></span><span class="mtext">Report</span>
+                        <span class="micon fa fa-line-chart"></span><span class="mtext">Report</span>
                     </a>
                 </li>
             </ul>
