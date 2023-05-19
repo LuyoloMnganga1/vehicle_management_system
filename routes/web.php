@@ -61,6 +61,10 @@ Route::view('vehicle','vehicle.vehicle')->name('vehicle');
 
 Route::get('/vehicle/list',[VehicleController::class, 'getvehicles'])->name('vehicle-list');
 
+Route::get('getAssignedDrivers',[VehicleController::class, 'getAssignedDrivers'])->name('getAssignedDrivers');
+
+Route::get('findAssignment/{id}',[VehicleController::class, 'findAssignment'])->name('findAssignment');
+
 Route::post('addVehicle',[VehicleController::class, 'addVehicle'])->name('addVehicle');
 
 Route::post('updateVehicle/{id}',[VehicleController::class, 'updateVehicle'])->name('updateVehicle');
@@ -73,7 +77,7 @@ Route::post('addAssigned',[VehicleController::class, 'addAssigned'])->name('addA
 
 Route::post('updateAssigned/{id}',[VehicleController::class, 'updateAssigned'])->name('updateAssigned');
 
-Route::get('deleteAssigned/{id}',[VehicleController::class, 'deleteAssigned'])->name('deleteAssigned');
+Route::get('/delete-assigment/{email}',[VehicleController::class, 'deleteAssigned'])->name('deleteAssigned');
 
 Route::get('find-vehicle/{id}',[VehicleController::class, 'findvehicle'])->name('find-vehicle');
 

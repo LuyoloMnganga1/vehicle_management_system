@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('department');
             $table->string('Registration_no');
             $table->string('odometer');
-            $table->string('status');
+            $table->string('status')->default('Active');
             $table->string('comment');
             $table->timestamps();
         });

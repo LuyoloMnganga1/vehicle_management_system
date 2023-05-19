@@ -14,6 +14,8 @@ use Carbon\Carbon;
 use Excel;
 
 use App\Imports\ImportDriver;
+use App\Http\Controllers\EmailGatewayController;
+use App\Http\Controllers\EmailBodyController;
 
 class DriverController extends Controller
 {
@@ -136,8 +138,12 @@ class DriverController extends Controller
             'license_image' => $img,
             'license_expiry_date'=>$request->license_expiry_date,
         ];
-        // dd($data);
+        
         Driver::create($data);
+        $mail = new EmailGatewayController();
+        $user = User::where('id',$request->user_id)->first();
+        $mail->sendEmail($user->email,'ICT Choice | Vehicle Manangement System - Driver Add Confirmation',EmailBodyController::driveradd($user));
+
         return redirect()->back()->with('success','Driver  has been added successfully');
     }
 
@@ -186,6 +192,11 @@ class DriverController extends Controller
     {
         $id = User::where('email',$email)->value('id');
         Driver::where('user_id','=',$id)->delete();
+
+        $mail = new EmailGatewayController();
+        $user = User::where('id',$id)->first();
+        $mail->sendEmail($user->email,'ICT Choice | Vehicle Manangement System - Driver Removed Confirmation',EmailBodyController::driverremoved($user));
+        
         return redirect()->back()->with('success','Driver has been deleted successfully');
     }
 }

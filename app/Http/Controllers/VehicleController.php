@@ -11,6 +11,8 @@ use App\Models\Vehicle;
 use DataTables;
 use App\Models\Assign;
 use App\Models\Driver;
+use App\Http\Controllers\EmailGatewayController;
+use App\Http\Controllers\EmailBodyController;
 
 class VehicleController extends Controller
 {
@@ -211,15 +213,20 @@ class VehicleController extends Controller
             'odometer' => ['required', 'string' , 'max:225'],
             'assigned_status' => ['required', 'string' , 'max:100000'],
             'comment' => ['required', 'string' , 'max:100000'],
-           
-           
-
         ]);
        
         if ($validator->fails()) {
             return redirect()->back()
                         ->withErrors($validator)
                         ->withInput();
+        }
+        $driver = Assign::where('email',$request->email)->count();
+        $vehicle = Assign::where('Registration_no',$request->Registration_no)->count();
+        if($driver > 0){
+            return redirect()->back()->withErrors('Oops! the driver has already been assigned to another vehicle.')->withInput();
+        }
+        if($vehicle > 0){
+            return redirect()->back()->withErrors('Oops! the vehicle has already been assigned to another driver.')->withInput();
         }
         $data = [
             
@@ -229,11 +236,14 @@ class VehicleController extends Controller
             'department' => $request->department,
             'Registration_no' => $request->Registration_no,
             'odometer' => $request->odometer,
-            'assigned_status' => $request->assigned_status,
+            'status' => $request->assigned_status,
             'comment' => $request->comment,
     
         ];
         Assign::create($data);
+        $mail = new EmailGatewayController();
+        $mail->sendEmail($request->email,'ICT Choice | Vehicle Manangement System - Driver Assigned To Vehicle',EmailBodyController::driverAssignedToVehicle($data));
+
         return redirect()->back()->with('success','Vehicle has been assigned successfully');
     }
 
@@ -271,9 +281,16 @@ class VehicleController extends Controller
         Assign::whereId($id)->update($data);
         return redirect()->back()->with('success','Assignment vehicle has been updated successfully');
     }
-
-    public function deleteAssigned(){
-
+    public function findAssignment($id){
+        $data = Assign::where('id',$id)->first();
+        return response()->json($data);
+    }
+    public function deleteAssigned($email){
+        $data = Assign::where('email',$email)->first();
+        Assign::where('email',$email)->delete();
+        $mail = new EmailGatewayController();
+        $mail->sendEmail($data->email,'ICT Choice | Vehicle Manangement System - Driver Removed To Vehicle',EmailBodyController::RemovedriverAssignedToVehicle($data));
+        return redirect()->back()->with('success','Assignment vehicle has been deleted successfully');
     }
 
     public function assigedhistory()
@@ -288,8 +305,58 @@ class VehicleController extends Controller
         
         return view('councillors');
     }
+    public function getAssignedDrivers(Request $request){
+        if($request->ajax()){
+            $data = Assign::latest('created_at')->get();
+            return Datatables::of($data)
+            //**********INDEX COLUMN ************/
+            ->addIndexColumn()
+              //**********END OF INDEX COLUMN ************/
+               //**********NAME COLUMN ************/
+            ->addColumn('assignee', function($row){
+                $assignee = $row->assignee;
+                return $assignee;
+            })
+             //**********END OF NAME COLUMN ************/
+               //**********LICENCE COLUMN ************/
+            ->addColumn('licence_no', function($row){
+                $licence_no = $row->licence_no;
+                return $licence_no;
+            })
+             //**********END OF LICENCE COLUMN ************/
+               //**********DATE COLUMN ************/
+            ->addColumn('updated_at', function($row){
+                $updated_at = $row->updated_at;
+                return $updated_at;
+            })
+             //**********END OF DATE COLUMN ************/
+             //**********REG COLUMN ************/
+            ->addColumn('Registration_no', function($row){
+                $Registration_no = $row->Registration_no;
+                return $Registration_no;
+            })
+             //**********END OF REG COLUMN ************/
+              //**********STATUS COLUMN ************/
+            ->addColumn('assigned_status', function($row){
+                 if($row->status == 'Inactive'){
+                    $status = '<span class="badge badge-danger">'.$row->status.'</span>';
+                 }else{
+                    $status = '<span class="badge badge-success">'.$row->status.'</span>';
+                 }
+                return $status;
+            })
+             //**********END OF STATUS COLUMN ************/
+                //**********ACTION COLUMN ************/
+            ->addColumn('action', function($row){
+                $actionBtn = '<a href="javascript:void(0)" class="view btn btn-info btn-sm" data-id = "'.$row->id.'"><i class="fa fa-eye text-light"></i></a> <a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm" id="delete" data-href ="/delete-assigment/'.$row->email.'"><i class="fa fa-trash text-light"></i></a>';
+                return $actionBtn;
+            })
+              //**********END OF ACTION COLUMN ************/
+            ->rawColumns(['assignee','licence_no','updated_at','Registration_no','assigned_status','action'])
+            ->make(true);
 
-   
-
+        }
+        return view('vehicle.assignedVehicle');
+    }
 
 }
