@@ -115,6 +115,46 @@ class EmailBodyController extends Controller
             </tr>';
         return $body;
     }
+    public static function vehiclebooking($user,$admin){
+        $body = '
+        <tr>
+            <td align="center" style="padding:0;">
+                    <tr>
+                        <td style="padding:36px 30px 42px 30px;">
+                                <tr>
+                                    <td style="padding:0 0 36px 0;color:#153643;">
+                                        <p style="font-weight:bold;margin:30px 0 20px 0;font-family:Arial,sans-serif;">
+                                            Good day '.$admin['name'].' '.$admin['surname'].',
+                                        <p
+                                            style="margin:0 0 12px 0;font-size:14px;line-height:24px;font-family:Arial,sans-serif;">
+                                            The is a new vehicle booking on the system by '.$user['name'].' '.$user['surname'].'. 
+                                            Please check the system for more information. <br><br>
+                                        </p>
+                                        </p>
+                                        <p style="text-align: center;">
+                                          <a   href="http://127.0.0.1:8000/dashboard" tagert="_blank"  style=" margin: 10px 0px;
+                                          border-radius: 4px;
+                                          text-decoration: none;
+                                          color: #fff !important;
+                                          height: 46px;
+                                          padding: 10px 20px;
+                                          font-size: 16px;
+                                          font-weight: 600;
+                                          background-color: #021d68 !important;">Access system</a>
+                                      </p>
+                                        <p style="margin:20px 0 12px 0;font-size:14px;font-family:Arial,sans-serif;">
+                                            Thank
+                                            you, </p>
+                                        <p style="margin:0 0 12px 0;font-size:14px;font-family:Arial,sans-serif;">
+                                            VMS </p>
+                                    </td>
+                                </tr>
+                        </td>
+                    </tr>
+            </td>
+        </tr>';
+    return $body;
+    }
     public static function driverAssignedToVehicle($user){
         $body = '
         <tr>
@@ -197,7 +237,7 @@ class EmailBodyController extends Controller
                                                 </div>
                                         </p>
                                         <p style="text-align: center;">
-                                        <a   href="http://127.0.0.1:8000//resetPassword/'.$id.'/'.$token.'" tagert="_blank"  style=" margin: 10px 0px;
+                                        <a   href="http://127.0.0.1:8000/resetPassword/'.$id.'/'.$token.'" tagert="_blank"  style=" margin: 10px 0px;
                                             border-radius: 4px;
                                             text-decoration: none;
                                             color: #fff !important;

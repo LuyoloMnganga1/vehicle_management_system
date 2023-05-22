@@ -12,10 +12,13 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Booking;
 
 use App\Models\Vehicle;
+use App\Models\User;
 
 use DataTables;
 
 use Carbon\Carbon;
+use App\Http\Controllers\EmailGatewayController;
+use App\Http\Controllers\EmailBodyController;
 
 class BookingController extends Controller
 {
@@ -33,10 +36,6 @@ class BookingController extends Controller
             'destination' => ['required', 'string' , 'max:225'],
             'vehicle_id' => ['required', 'string' , 'max:100000'],
             'trip_datails' => ['required', 'string' , 'max:100000'],
-            'status' => ['max:100000'],
-            'comment' => ['max:100000'],
-            
-
         ]);
         if ($validator->fails()) {
             return redirect()->back()
@@ -52,11 +51,17 @@ class BookingController extends Controller
             'destination' => $request->destination,
             'vehicle_id' => $request->vehicle_id,
             'trip_datails' => $request->trip_datails,
-            'status' => 'N/A',
+            'status' => 'Pending',
             'comment' => 'N/A',
             
         ];
         Booking::create($data);
+
+        $mail = new EmailGatewayController();
+        $booker = User::where('email',$request->email)->first();
+        $admin = User::where('role','Admin')->first();
+        $mail->sendEmail($admin->email,'ICT Choice | Vehicle Manangement System - Vehicle booking',EmailBodyController::vehiclebooking($booker, $admin));
+
         return redirect()->back()->with('success','Vehicle  has been booked successfully');
     }
 
@@ -283,5 +288,11 @@ class BookingController extends Controller
                     ->make(true);
         }
         return view('bookings.log_history');
+    }
+    public function find_available_car($start,$end){
+        $bookings = Booking::whereBetween('trip_start_date', [$start, $end])
+            ->whereBetween('return_date', [$start, $end])->select('vehicle_id')->get();
+         $available_cars = Vehicle::whereNotIn('id',$bookings)->get();
+        return response()->json($available_cars);
     }
 }

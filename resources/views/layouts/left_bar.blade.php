@@ -18,7 +18,7 @@
                     </a>
 
                 </li>
-                
+                @if(Auth::user()->hasRole('Admin') || Auth::user()->hasRole('General-Manager') || Auth::user()->hasRole('SuperAdmin'))
                 <li class="dropdown">
                     <a href="javascript:void(0);" class="dropdown-toggle">
                         <span class="micon dw dw-car"></span><span class="mtext"> Vehicles</span>
@@ -30,12 +30,13 @@
                         <li><a href="{{route('assiged-vehicle')}}">Assign Vehicle</a></li>                        
                     </ul>
                 </li>
+              
                 <li class="dropdown">
                     <a href="{{route('vehicle-driver')}}" class="dropdown-toggle no-arrow">
                         <span class="micon fa fa-users"></span><span class="mtext">Drivers</span>
                     </a>
-
                 </li>
+                @endif
                 <li class="dropdown">
                     <a href="javascript:void(0);" class="dropdown-toggle">
                         <span class="micon dw dw-book"></span><span class="mtext"> Booking</span>

@@ -85,6 +85,122 @@ Dashboard
 
     </div>
 </div>
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-primary"> List of Bookings </h2>
+            </div>
+            <div class="card-body">
+                <div class="card-content table-responsive">
+                    <table class="table table-hover data-table" style="width: 100%;">
+                        <thead class="text-light bg bg-primary">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Full Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Vehicle</th>
+                                <th scope="col">Booking Date</th>
+                                <th scope="col">Trip Duration</th>
+                                <th scope="col">Destination</th>  
+                                <th scope="col">Booking Status</th>  
+                                 <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                 </div>
+            
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('scripts')
+<script>
+    $(function () {
+      
+      var table = $('.data-table').DataTable({
+          processing: true,
+          serverSide: true,
+          ajax:"{{route('booking-list')}}",
+          columns: [
+            {
+                data: 'DT_RowIndex',
+                name: 'DT_RowIndex',
+                orderable: false,
+                searchable: false,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'full_name',
+                name: 'full_name',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'email',
+                name: 'email',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'vehicle_plate',
+                name: 'vehicle_plate',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },      
+            {
+                data: 'created_at',
+                name: 'created_at',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },      
+            {
+                data: 'duration',
+                name: 'duration',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },      
+            {
+                data: 'destination',
+                name: 'destination',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'status',
+                name: 'status',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },                 
+            {
+                data: 'action', 
+                name: 'action', 
+                orderable: false, 
+                searchable: false,
+            },
+          ]
+      });
+      
+    });
+  </script>
 @endsection

@@ -122,7 +122,11 @@ Route::get('councillors',[VehicleController::class, 'councillors'])->name('counc
 // Bookings Routes
 Route::get('bookings',[BookingController::class, 'bookings'])->name('bookings');
 
+Route::get('find-available-car/{start}/{end}',[BookingController::class, 'find_available_car'])->name('find_available_car');
+
 Route::get('log-book',[BookingController::class, 'logBook'])->name('log-book');
+
+Route::get('booking-list',[DashboardController::class, 'booking_list'])->name('booking-list');
 
 Route::get('booking-history',[BookingController::class, 'bookHistory'])->name('booking-history');
 

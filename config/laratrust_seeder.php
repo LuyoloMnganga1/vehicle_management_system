@@ -29,7 +29,7 @@ return [
             'payments' => 'c,r,u,d',
             'profile' => 'r,u',
         ],
-        'role_name' => [
+        'General-Manager' => [
             'module_1_name' => 'c,r,u,d',
         ]
     ],

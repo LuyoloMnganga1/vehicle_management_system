@@ -3,11 +3,8 @@
 Booking Entry
 @endsection
 @section('content')
-
-<h3 class="display-4">Vehicle Booking</h3>
-
 <div class="card">
-    <div class="card-header text-center" style="background-color: navy; color: white">
+    <div class="card-header text-center" style="background-color: #18345D; color: white">
         <h2 style="color: white">Booking Details</h2>
     </div>
     <div class="card-body">
@@ -29,7 +26,6 @@ Booking Entry
       @endif
         <form action="{{route('book')}}" method="post">
           {!! csrf_field() !!}
-
             <div class="mb-3 row">
               <label for="staticEmail" class="col-sm-2 col-form-label">Full Name</label>
                 <div class="input-group input-group-sm col-sm-4">
@@ -53,35 +49,56 @@ Booking Entry
               </div>
             </div>
             <div class="mb-3 row">
-                @php
-                    $vehicle = App\Models\Vehicle::orderBy('Registration_no', 'ASC')->get();
-                @endphp
               <label for="staticEmail" class="col-sm-2 col-form-label">Destination</label>
                 <div class="input-group input-group-sm col-sm-4">
                     <input type="text" class="form-control" id="destination" name="destination">
                 </div>
               <label for="staticEmail" class="col-sm-2 col-form-label">Available Vehicles</label>
-              <select class="form-control form-control-sm col-sm-4" name="vehicle_id">
-                  <option>Select Available Vehicles</option>
-                  @foreach($vehicle as $item )
-                    <option value="{{ $item->id }}">{{ $item->Registration_no }}</option>
-                  @endforeach
+              <select class="form-control form-control-sm col-sm-4" name="vehicle_id" id="vehicle_id">
+                <option value="" selected disabled>Select Available Vehicles</option>
               </select>
-              
           </div>
             <div class="mb-3 row">
                 <div class="col-sm-12">
                     <label for="exampleFormControlTextarea1" class="form-label">Trip Details</label>
                     <textarea type="text" name="trip_datails" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
-
             </div>
-
-            <button type="submit" class="btn btn-primary btn-sm" ><i class="fa fa-plus"></i> Add New</button>
+            <button type="submit" class="btn btn-primary btn-sm" ><i class="fa fa-plus"></i> Book vehicle</button>
         </form>
 
     </div>
 </div>
 <br>
+@endsection
+@section('scripts')
+<script>
+    $(document).ready(function () {
+        var min = new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"));
+        $('#trip_start_date').attr('min',min);
 
+        $('#trip_start_date').on('change', function(){
+            var end_min = new Date($(this).val()).toISOString().slice(0,new Date().toISOString().lastIndexOf(":"));
+            $('#return_date').attr('min',end_min);
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#return_date').on('change', function(){
+            var enddate = $(this).val();
+            var startdate = $('#trip_start_date').val();
+            url  = "{{ route('find_available_car',['start'=>':start','end'=>':end']) }}";
+            url = url.replace(':start',startdate);
+            url = url.replace(':end',enddate);
+            $.get(url, function(data){
+                    $('#vehicle_id').empty();
+                    $('#vehicle_id').append( '<option value="" selected disabled>Select Available Vehicles</option>');
+                $.each(data, function(index, value) {
+                    $('#vehicle_id').append( '<option value=\"' + value.id + '\">' + value.Registration_no + '</option>' );
+                });
+            });
+        })
+    });
+</script>
 @endsection
