@@ -10,6 +10,7 @@ use App\Models\Vehicle;
 use App\Models\Driver;
 use App\Models\Booking;
 use App\Models\feeds;
+use App\Models\Issue;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use App\Services\sendSMS;
@@ -28,9 +29,13 @@ class DashboardController extends Controller
     {
         $vehicles = Vehicle::all();
         $drivers = Driver::all();
+        $bookings = Booking::all();
+        $issues = Issue::all();
         return view('dashboard')->with([
             'vehicles' => $vehicles,
             'drivers' => $drivers,
+            'bookings' => $bookings,
+            'issues' => $issues,
         ]);
     }
     public function booking_list(Request $request){
@@ -93,7 +98,10 @@ class DashboardController extends Controller
                             ->addColumn('action', function($row){
                                 $actionBtn = '';
                                 if(Auth::user()->hasRole('Admin')){
-                                $actionBtn = '<a href="javascript:void(0)" class="view btn btn-info btn-sm" data-id = "'.$row->id.'"><i class="fa fa-eye text-light"></i></a> <a href="javascript:void(0)" class="edit btn btn-secondary btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a>';
+                                $actionBtn = '<a href="javascript:void(0)" class="view btn btn-info btn-sm" data-id = "'.$row->id.'"><i class="fa fa-eye text-light"></i></a>';
+                                 if($row->status == 'Pending'){
+                                    $actionBtn = $actionBtn .' <a href="javascript:void(0)" class="edit btn btn-primary btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a>';
+                                 }
                                 }
                                 return $actionBtn;
                             })

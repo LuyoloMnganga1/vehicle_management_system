@@ -59,7 +59,7 @@ Dashboard
             <div class="card-box height-100-p widget-style3">
                 <div class="d-flex flex-wrap">
                     <div class="widget-data">
-                        <div class="weight-700 font-24 text-dark">0</div>
+                        <div class="weight-700 font-24 text-dark">{{ $bookings->count() }}</div>
                         <div class="font-14 text-secondary weight-500">Bookings</div>
                     </div>
                     <div class="widget-icon">
@@ -73,7 +73,7 @@ Dashboard
             <div class="card-box height-100-p widget-style3">
                 <div class="d-flex flex-wrap">
                     <div class="widget-data">
-                        <div class="weight-700 font-24 text-dark">0</div>
+                        <div class="weight-700 font-24 text-dark">{{ $issues->count() }}</div>
                         <div class="font-14 text-secondary weight-500">Issues</div>
                     </div>
                     <div class="widget-icon">
@@ -91,6 +91,22 @@ Dashboard
             <div class="card-header">
                 <h2 class="text-primary"> List of Bookings </h2>
             </div>
+            @if ($errors->any())
+      <div class="alert alert-danger alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <ul>
+              @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+      @endif
+      @if ($message = Session::get('success'))
+      <div class="alert alert-success alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <p>{{ $message }}</p>
+      </div>
+      @endif
             <div class="card-body">
                 <div class="card-content table-responsive">
                     <table class="table table-hover data-table" style="width: 100%;">
@@ -118,6 +134,126 @@ Dashboard
         </div>
     </div>
 </div>
+
+{{-- view modal  --}}
+<div class="modal fade" id="view_booking_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Booking Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="">Full Name :</label>
+                        <span class="view_info" id="view_full_name"></span>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="">Email Address :</label>
+                        <span class="view_info" id="view_email"></span>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="">Vehicle :</label>
+                        <span class="view_info" id="view_vehicle"></span>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="">Trip Details :</label>
+                        <span class="view_info" id="view_trip_details"></span>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="">Start Date :</label>
+                        <span class="view_info" id="view_trip_start_date"></span>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="">End Date :</label>
+                        <span class="view_info" id="view_return_date"></span>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="">Destination :</label>
+                        <span class="view_info" id="view_destination"></span>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="">Status :</label>
+                        <span class="view_info" id="view_status"></span>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="">Comment :</label>
+                        <span class="view_info" id="view_comment"></span>
+                    </div>
+                </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{{-- end of view modal --}}
+{{-- take action modal  --}}
+<div class="modal fade" id="take_action_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Take Action</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="" method="POST" id="take_action_form">
+                {!! csrf_field() !!}
+            <div class="col-md-8" style="margin-left: 15%">
+                <label for="Name" class="form-label">Booking Status</label>
+                <select  name ="status" id="status" class="form-control form-select form-select-lg mb-1 h-50"  required autofucus>
+                    <option  value ="" selected disabled>Select status</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+                </div>
+              <div class="col-md-12">
+                <label for="surname" class="form-label">Comments</label>
+                <textarea name="comment"  cols="30" rows="3" class="form-control" ></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
+{{-- end of take action modal --}}
 @endsection
 @section('scripts')
 <script>
@@ -203,4 +339,44 @@ Dashboard
       
     });
   </script>
+  <script>
+    $(document).ready(function () {
+       
+        /* take action */
+        $('body').on('click', '.edit', function() {
+            var booking_id = $(this).data('id');
+            url = "{{ route('TakeAction',['id'=>':id']) }}";
+            url = url.replace(':id',booking_id);
+            $('#take_action_form').attr('action', url);
+            $('#take_action_modal').modal('show');
+        });
+
+        /* view booking */
+        $('body').on('click', '.view', function() {
+            var booking_id = $(this).data('id');
+            var status_data;
+            $('.view_info').empty();
+            $.get('find/booking/' + booking_id, function (data) {
+                $('#view_full_name').append(data.full_name);
+                $('#view_email').append(data.email);
+                $('#view_vehicle').append(data.vehicle_plate);
+                $('#view_trip_details').append(data.trip_details);
+                $('#view_trip_start_date').append(data.trip_start_date);
+                $('#view_return_date').append(data.return_date);
+                $('#view_destination').append(data.destination);
+                if(data.status == 'Pending'){
+                    status_data = '<span class="badge badge-warning text-light">'+data.status+'</span>';
+                }else if(data.status == 'Approved'){
+                    status_data = '<span class="badge badge-success text-light">'+data.status+'</span>';
+                }else{
+                    status_data = '<span class="badge badge-danger text-light">'+data.status+'</span>';
+                }
+                $('#view_status').append(status_data);
+                $('#view_comment').append(data.comment);
+                $('#view_booking_modal').modal('show');
+           });
+        });
+    });
+  </script>
 @endsection
+ 

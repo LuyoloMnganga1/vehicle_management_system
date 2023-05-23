@@ -144,6 +144,8 @@ Route::get('log/list',[BookingController::class, 'getLogBook'])->name('log.list'
 
 Route::get('Log-history',[BookingController::class, 'logHistory'])->name('Log-history');
 
+Route::post('Booking-action/{id}',[BookingController::class, 'bookingAction'])->name('TakeAction');
+
 
 
 

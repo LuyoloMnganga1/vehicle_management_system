@@ -115,6 +115,53 @@ class EmailBodyController extends Controller
             </tr>';
         return $body;
     }
+    public static function vehiclebookingupdate($user){
+        $body = '
+        <tr>
+            <td align="center" style="padding:0;">
+                    <tr>
+                        <td style="padding:36px 30px 42px 30px;">
+                                <tr>
+                                    <td style="padding:0 0 36px 0;color:#153643;">
+                                        <p style="font-weight:bold;margin:30px 0 20px 0;font-family:Arial,sans-serif;">
+                                            Good day '.$user['full_name'].',
+                                        <p
+                                            style="margin:0 0 12px 0;font-size:14px;line-height:24px;font-family:Arial,sans-serif;">
+                                              This serve has to inform you that your vehicle booking is <strong>'.$user['status'].'</strong><br>
+                                              <ul>
+                                                    <li><strong> Vehicle : </strong>'.$user['Registration_no'].'</li>
+                                                    <li><strong> Trip duration : </strong>'.$user['trip_start_date'].' to '.$user['return_date'].' </li>
+                                                    <li><strong> Destination : </strong>'.$user['destination'].'</li>
+                                                    <li><strong> Trip Details : </strong>'.$user['trip_datails'].'</li>
+                                                    <li><strong> Comment : </strong>'.$user['comment'].'</li>
+                                              </ul>
+                                        </p>
+                                        <br>
+                                        </p>
+                                        <p style="text-align: center;">
+                                          <a   href="http://127.0.0.1:8000/dashboard" tagert="_blank"  style=" margin: 10px 0px;
+                                          border-radius: 4px;
+                                          text-decoration: none;
+                                          color: #fff !important;
+                                          height: 46px;
+                                          padding: 10px 20px;
+                                          font-size: 16px;
+                                          font-weight: 600;
+                                          background-color: #021d68 !important;">Access system</a>
+                                      </p>
+                                        <p style="margin:20px 0 12px 0;font-size:14px;font-family:Arial,sans-serif;">
+                                            Thank
+                                            you, </p>
+                                        <p style="margin:0 0 12px 0;font-size:14px;font-family:Arial,sans-serif;">
+                                            VMS </p>
+                                    </td>
+                                </tr>
+                        </td>
+                    </tr>
+            </td>
+        </tr>';
+    return $body;
+    }
     public static function vehiclebooking($user,$admin){
         $body = '
         <tr>

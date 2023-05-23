@@ -94,7 +94,7 @@ class BookingController extends Controller
             'destination' => $request->destination,
             'vehicle_id' => $request->vehicle_id,
             'trip_datails' => $request->trip_datails,
-            'status' => 'N/A',
+            'status' => 'Pending',
             'comment' => 'N/A',
             
         ];
@@ -102,7 +102,29 @@ class BookingController extends Controller
         return redirect()->back()->with('success','Booking  has been updated successfully');
 
     }
+    public function bookingAction(Request $request,$id) {
+        $validator = Validator::make($request->all(), [
+            'status' => ['required','string'],
+            'comment' => ['string']
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
 
+        $data = [
+            'status' =>$request->status,
+            'comment'=>$request->comment ? $request->comment : 'N/A',
+        ];
+
+        Booking::whereId($id)->update($data);
+
+        $mail = new EmailGatewayController();
+        $booker = Booking::join('vehicles','bookings.vehicle_id','=','vehicles.id')->select('bookings.*','vehicles.Registration_no')->where('bookings.id',$id)->first();
+        $mail->sendEmail($booker->email,'ICT Choice | Vehicle Manangement System - Vehicle booking update',EmailBodyController::vehiclebookingupdate($booker));
+        return redirect()->back()->with('success','Status has been updated successfully');
+    }
 
     public function bookHistory(){
         return view('bookings.booking_history');
@@ -113,6 +135,7 @@ class BookingController extends Controller
             $data = Booking::orderBy('created_at', 'DESC')->get();
             return Datatables::of($data)
                     //**********INDEX COLUMN ************/
+                  
                     ->addIndexColumn()
                     //**********END OF INDEX COLUMN ************/
                      //**********FULL NAME COLUMN ************/
