@@ -5,13 +5,10 @@ Booking History
 @section('content')
 <div class="col-lg-12 col-md-12">
     <div class="card">
-        <div class="card-header card-header-text">
+        <div class="card-header card-header-text mb-2">
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <h4 class="card-title">List of Bookings</h4>
-                </div>
-                <div class="col-md-2">
-                    <a  class="btn btn-primary btn-sm" href="{{route('bookings')}}"> <i class="fa fa-plus"></i> New Booking</a>
                 </div>
             </div>
         </div>
@@ -72,45 +69,35 @@ Booking History
                 
                         <label for="staticEmail" class="col-sm-2 col-form-label">Full Name </label>
                         <div class="input-group input-group-sm col-sm-4">
-                            <input type="text" class="form-control" id="update_full_name" name="full_name" readonly value="{{ Auth::user()->name }} {{ Auth::user()->surname }}">
+                            <input type="text" class="form-control update_info" id="update_full_name" name="full_name" readonly>
                         </div>
                         <label for="staticEmail" class="col-sm-2 col-form-label">Email Address</label>
                       <div class="input-group input-group-sm col-sm-4">
-                        <input type="text" class="form-control" id="update_email" readonly value="{{ Auth::user()->email }}" name="email">
+                        <input type="text" class="form-control update_info" id="update_email" readonly name="email">
                         </div>
                     </div>
                     <div class="mb-3 row">
             
                         <label for="staticEmail" class="col-sm-2 col-form-label">Booking Date </label>
                         <div class="input-group input-group-sm col-sm-4">
-                            <input type="date" class="form-control" id="update_trip_start_date" name="trip_start_date">
+                            <input type="date" class="form-control update_info" id="update_trip_start_date" name="trip_start_date">
                         </div>
                         <label for="staticEmail" class="col-sm-2 col-form-label">Returning Date</label>
                       <div class="input-group input-group-sm col-sm-4">
-                          <input type="date" class="form-control" id="update_return_date" name="return_date">
+                          <input type="date" class="form-control update_info"  id="update_return_date" name="return_date">
                       </div>
                     </div>
                     <div class="mb-3 row">
-                        @php
-                            $vehicle = App\Models\Vehicle::orderBy('Registration_no', 'ASC')->get();
-                        @endphp
                       <label for="staticEmail" class="col-sm-2 col-form-label">Destination</label>
                         <div class="input-group input-group-sm col-sm-4">
-                            <input type="text" class="form-control" id="update_destination" name="destination">
+                            <input type="text" class="form-control update_info" id="update_destination" name="destination">
                         </div>
                       <label for="staticEmail" class="col-sm-2 col-form-label">Available Vehicles</label>
-                      <input type="hidden" name="vehicle_id" id="update_vehicle_id">
-                      <select  id="update_reg_no" class="form-control col-sm-4" required>
-                        <option value="" disabled selected id="update_vehicle_id_placeholder"></option>
-                        @foreach($vehicle as $item )
-                            <option value="{{ $item->id }}">{{ $item->Registration_no }}</option>
-                        @endforeach
-                    </select>
-                      
+                      <input  type="text" id="update_vehicle_id"  name="vehicle_id" class="form-control col-sm-4 update_info" readonly>                      
                   </div>
                     <div class="form-group col-md-12">
                         <label for="inputEmail4">Trip Details</label>
-                        <textarea type="text"  class="form-control" id="update_trip_details" value="trip_datails" name="trip_datails" rows="3"></textarea>
+                        <textarea type="text"  class="form-control update_info" id="update_trip_details"  name="trip_datails" rows="3"></textarea>
                     </div>
                     <div style="margin-top: 5%">
                         <button type="submit" id="saveBtn" class="btn btn-primary">Update Booking</button>
@@ -194,22 +181,17 @@ Booking History
     /* edit booking */
     $('body').on('click', '.edit', function () {
        var booking_id = $(this).data('id');
+       var url = "{{ route('update-Booking', ['id'=> ':id' ]) }}";
+        url = url.replace(':id', booking_id);
        $.get('find/booking/' + booking_id, function (data) {
-        console.log(data);
-           $('#modelHeading').html("Update Booking");
-           $('#saveBtn').val("edit-booking");
            $('#booking_id').val(data.id);
            $('#update_full_name').val(data.full_name);
            $('#update_email').val(data.email);
            $('#update_trip_start_date').val(data.trip_start_date);
            $('#update_return_date').val(data.return_date);
            $('#update_destination').val(data.destination);
-           $('#update_reg_no').val(data.vehicle_plate);
-           $('#update_vehicle_id_placeholder').append(data.vehicle_plate);
-           $('#update_vehicle_id').val(data.vehicle_id);
-           $('textarea#update_trip_datails').val(data.trip_datails);
-           var url = "{{route('update-Booking', ['id'=>':id'])}}";
-           url.replace(':id', booking_id);
+           $('#update_vehicle_id').val(data.vehicle_plate);
+           $('textarea#update_trip_details').val(data.trip_datails);
            $('#update_booking_form').attr('action',url);
            $('#updateBooking').modal('show');
        })

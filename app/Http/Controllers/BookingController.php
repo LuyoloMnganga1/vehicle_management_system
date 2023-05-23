@@ -73,12 +73,7 @@ class BookingController extends Controller
             'trip_start_date' => ['required', 'string' , 'max:225'],
             'return_date' => ['required', 'string' , 'max:225'],
             'destination' => ['required', 'string' , 'max:225'],
-            'vehicle_id' => ['required', 'string' , 'max:100000'],
-            'trip_datails' => ['required', 'string' , 'max:100000'],
-            'status' => ['max:100000'],
-            'comment' => ['max:100000'],
-            
-
+            'trip_datails' => ['required', 'string' , 'max:100000'],            
         ]);
         if ($validator->fails()) {
             return redirect()->back()
@@ -86,16 +81,12 @@ class BookingController extends Controller
                         ->withInput();
         }
         $data = [
-            
             'full_name' => $request->full_name,
             'email' => $request->email,
             'trip_start_date' => $request->trip_start_date,
             'return_date' => $request->return_date,
             'destination' => $request->destination,
-            'vehicle_id' => $request->vehicle_id,
             'trip_datails' => $request->trip_datails,
-            'status' => 'Pending',
-            'comment' => 'N/A',
             
         ];
         Booking::whereId($id)->update($data);
@@ -132,7 +123,11 @@ class BookingController extends Controller
 
     public function getBookings(Request $request){
         if ($request->ajax()) {
-            $data = Booking::orderBy('created_at', 'DESC')->get();
+            if(Auth::user()->hasRole('Admin')){
+                $data = Booking::orderBy('created_at', 'DESC')->get();
+            }else{
+                $data = Booking::where('email',Auth::user()->email)->orderBy('created_at', 'DESC')->get();
+            }
             return Datatables::of($data)
                     //**********INDEX COLUMN ************/
                   
