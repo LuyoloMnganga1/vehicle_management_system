@@ -12,6 +12,7 @@ use App\Http\Controllers\IssueController;
 use App\Http\Controllers\FuelController;
 use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\StaffController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -151,8 +152,16 @@ Route::post('Booking-action/{id}',[BookingController::class, 'bookingAction'])->
 
 // End Booking Routes
 
+// staff routes 
+Route::post('staffUpdate/{id}', [StaffController::class, 'staffUpdate'])->name('staffUpdate');
+
+Route::get('staffdestroy/{id}',[StaffController::class, 'staffdestroy'])->name('staffdestroy');
+
+Route::get('staff', [StaffController::class, 'staff'])->name('staff');
+// end of staff routes
 
 
+Route::post('registerStore',[RegisterUserController::class, 'store'])->name('registerStore');
 Route::post('image/update',[RegisterUserController::class, 'profile_image'])->name('image/update');
 Route::post('signature',[RegisterUserController::class, 'signature'])->name('signature');
 Route::get('profile',[DashboardController::class, 'profile'])->name('profile');

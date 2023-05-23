@@ -53,6 +53,13 @@
                         <span class="micon fa fa-question-circle "></span><span class="mtext"> Issues</span>
                     </a>
                 </li>
+                @if(Auth::user()->hasRole('Admin') || Auth::user()->hasRole('General-Manager') || Auth::user()->hasRole('SuperAdmin'))
+                <li class="dropdown">
+                    <a href="{{route('staff')}}" class="dropdown-toggle no-arrow">
+                        <span class="micon material-icons">people</span><span class="mtext">Users</span>
+                    </a>
+                </li>
+                @endif
                 <li class="dropdown">
                     <a href="{{route('fuel-Entry')}}" class="dropdown-toggle no-arrow">
                         <span class="micon material-icons">local_gas_station</span><span class="mtext"> Fuel Entry</span>
