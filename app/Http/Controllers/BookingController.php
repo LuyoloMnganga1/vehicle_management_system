@@ -13,7 +13,7 @@ use App\Models\Booking;
 
 use App\Models\Vehicle;
 use App\Models\User;
-
+use App\Models\LogBook;
 use DataTables;
 
 use Carbon\Carbon;
@@ -96,7 +96,7 @@ class BookingController extends Controller
     public function bookingAction(Request $request,$id) {
         $validator = Validator::make($request->all(), [
             'status' => ['required','string'],
-            'comment' => ['string']
+            'comment' =>['max:50000'],
         ]);
         if ($validator->fails()) {
             return redirect()->back()
@@ -208,54 +208,50 @@ class BookingController extends Controller
     }
 
     public function logBook(){
+
         $fullname = Auth::user()->name . " ". Auth::user()->surname;
+        $email = Auth::user()->email;
         $today = Carbon::today()->format('Y-m-d');
-        $loog = Booking::where('full_name','LIKE', '%'.$fullname.'%')->where('trip_start_date', $today)->first();
+        $loog = Booking::where('email',$email)->where('trip_start_date', $today)->where('status','Approved')->first();
+        $loogbook = LogBook::where('full_name',$fullname)->where('trip_start_date', $today)->first();
         if($loog){
             $reg_no = Vehicle::where('id', $loog->vehicle_id)->value('Registration_no');
         }else{
             $reg_no = null;
         }
        
-        return view('bookings.log_book')->with('reg_no', $reg_no);
+        return view('bookings.log_book')->with(
+            [
+                'loog'=>$loog,
+                'loogbook'=>$loogbook,
+                'reg_no'=> $reg_no
+            ]);
     }
 
     public function addLogBook(Request $request){
         $validator = Validator::make($request->all(), [
-            'vehicle_id' => ['required', 'string' , 'max:100000'],
-            'full_name' => ['required', 'string' , 'max:225'],
-            'trip_start_date' => ['required', 'string' , 'max:225'],
-            'trip_end_date' => ['required', 'string' , 'max:225'],
-            'start_odometer' => ['required', 'string' , 'max:225'],
-            'kilometers' => ['required', 'string' , 'max:100000'],
-            'destination_start' => ['required', 'string' , 'max:100000'],
-            'destination_end' => ['required', 'string' , 'max:225'],
-            'trip_datails' => ['required', 'string' , 'max:100000'],
-            'petrol' => ['required', 'string' , 'max:225'],
-            'oil' => ['required', 'string' , 'max:225'],
-            'start_comment' => ['required', 'string' , 'max:225'],
-            'return_date_out' => ['required', 'string' , 'max:100000'],
-            'return_date_in' => ['required', 'string' , 'max:100000'],
-            'petrol' => ['required', 'string' , 'max:225'],
-            'oil' => ['required', 'string' , 'max:225'],
-            'start_comment' => ['required', 'string' , 'max:225'],
-            'return_date_out' => ['required', 'string' , 'max:100000'],
-            'return_date_in' => ['required', 'string' , 'max:100000'],
-            'return_odometer' => ['required', 'string' , 'max:225'],
-            'return_oil' => ['required', 'string' , 'max:225'],
-            'start_comment' => ['required', 'string' , 'max:225'],
-            'return_date_out' => ['required', 'string' , 'max:100000'],
-            'return_date_in' => ['required', 'string' , 'max:100000'],
-            
-
+            'vehicle_id' => ['required',  'max:100000'],
+            'full_name' => ['required',  'max:225'],
+            'trip_start_date' => ['required',  'max:225'],
+            'trip_end_date' => ['required',  'max:225'],
+            'start_odometer' => ['required',  'max:225'],
+            'kilometers' => ['required',  'max:100000'],
+            'destination_start' => ['required',  'max:100000'],
+            'destination_end' => ['required',  'max:225'],
+            'trip_details' => ['required',  'max:100000'],
+            'petrol' => ['max:225'],
+            'oil' => ['max:225'],
+            'start_comment' => ['max:225'],
         ]);
         if ($validator->fails()) {
             return redirect()->back()
                         ->withErrors($validator)
                         ->withInput();
         }
+        
+        $vehicle_id = Vehicle::where('Registration_no',$request->vehicle_id)->value('id');
         $data = [
-            'vehicle_id' => $request->vehicle_id,
+            'vehicle_id' => $vehicle_id,
             'full_name' => $request->full_name,
             'email' => $request->email,
             'trip_start_date' => $request->trip_start_date,
@@ -264,20 +260,43 @@ class BookingController extends Controller
             'kilometers' => $request->kilometers,
             'destination_start' => $request->destination_start,
             'destination_end' => $request->destination_end,
-            'trip_datails' => $request->trip_datails,
+            'trip_details' => $request->trip_details,
             'petrol' => $request->petrol,            
             'oil' => $request->oil,
             'start_comment' => $request->start_comment,
-            'return_date_out' => $request->return_date_out,
-            'return_date_in' => $request->return_date_in,
-            'return_odometer' => $request->return_odometer,            
-            'return_oil' => $request->return_oil,
-            'start_comment' => $request->start_comment,
-            'return_date_out' => $request->return_date_out,            
-            'return_date_in' => $request->return_date_in,
             
         ];
-        Booking::create($data);
+        
+        LogBook::create($data);
+        return redirect()->back()->with('success','Details  has been logged successfully');
+    }
+
+    public function returnLogBook(Request $request){
+        $validator = Validator::make($request->all(), [
+            'return_date_out' => ['required',  'max:100000'],
+            'return_date_in' => ['required',  'max:100000'],
+            'return_odometer' => ['required',  'max:225'],
+            'return_kilometers' => ['required',  'max:225'],
+            'return_petrol' => ['max:225'],
+            'return_oil' => [ 'max:225'],
+            'return_comment' => ['max:225'],         
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        $id = $request->rowID;
+        $data = [
+            'return_date_out' => $request->return_date_out,
+            'return_date_in' => $request->return_date_in,
+            'return_odometer' => $request->return_odometer,  
+            'return_kilometers' => $request->return_kilometers,  #
+            'return_petrol' => $request->return_petrol,          
+            'return_oil' => $request->return_oil,
+            'return_comment' => $request->return_comment,            
+        ];
+        LogBook::where('id',$id)->update($data);
         return redirect()->back()->with('success','Vehicle  has been booked successfully');
     }
 

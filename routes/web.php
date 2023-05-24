@@ -123,6 +123,10 @@ Route::get('councillors',[VehicleController::class, 'councillors'])->name('counc
 // Bookings Routes
 Route::get('bookings',[BookingController::class, 'bookings'])->name('bookings');
 
+Route::post('add-log-book',[BookingController::class, 'addLogBook'])->name('add-log-book');
+
+Route::post('return-log-book',[BookingController::class, 'returnLogBook'])->name('return-log-book');
+
 Route::get('find-available-car/{start}/{end}',[BookingController::class, 'find_available_car'])->name('find_available_car');
 
 Route::get('log-book',[BookingController::class, 'logBook'])->name('log-book');

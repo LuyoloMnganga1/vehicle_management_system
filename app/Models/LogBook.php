@@ -17,7 +17,7 @@ class LogBook extends Model
         'kilometers',
         'destination_start',
         'destination_end',
-        'trip_datails',
+        'trip_details',
         'petrol',
         'oil',
         'start_comment',
