@@ -24,9 +24,7 @@ Log  Book
             <p>{{ $message }}</p>
         </div>
         @endif
-     @if($loog == null ) 
-     <p class="text-center mt-5 mb-5">Sorry you haven't made any vehicle booking</p>
-     @elseif($loogbook == null) 
+     @if($loogbook == null && $loog != null) 
     <div class="card-body">
         <form action="{{ route('add-log-book') }}" method="post">
             @csrf
@@ -103,7 +101,7 @@ Log  Book
 
     </div>
 </div>
-    @else
+    @elseif($loogbook != null)
     @if($loogbook->return_date_out == null) 
     <div class="card mt-5">
     <div class="card-header text-center" style="background-color: #18345D; color: white">
@@ -168,6 +166,8 @@ Log  Book
         </form>
     </div>
 </div>
+@else
+<h1 class="text-center mt-5 mb-5">Sorry you haven't made any vehicle booking.</h1>  
 @endif
 @endif
 <br>
