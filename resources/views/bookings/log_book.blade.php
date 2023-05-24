@@ -167,7 +167,7 @@ Log  Book
     </div>
 </div>
 @else
-<h1 class="text-center mt-5 mb-5">Sorry you haven't made any vehicle booking.</h1>  
+<h2 class="text-center mt-5 mb-5">Sorry you haven't made any vehicle booking.</h2>   
 @endif
 @endif
 <br>
