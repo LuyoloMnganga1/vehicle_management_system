@@ -206,6 +206,7 @@ class BookingController extends Controller
         Booking::destroy($id);
         return redirect()->back()->with('success','Booking has been deleted successfully');
     }
+//  start of log book functions
 
     public function logBook(){
 
@@ -219,6 +220,8 @@ class BookingController extends Controller
         }else{
             $reg_no = null;
         }
+
+        // dd($reg_no);
        
         return view('bookings.log_book')->with(
             [

@@ -13,7 +13,7 @@ Dashboard
                     <h6 style="margin-bottom: 0.5%;" class="card-title">Welcome Back</h6>
                     <h4>{{ Auth::user()->name }} {{ Auth::user()->surname }}</h4>
                     <p style="margin-top: 1%;" class="card-text">ICT Choice strives for service excellence and being the preferred provider of choice for innovative information and communication technology solutions and services.</p>
-                <a class="btn btn-sm btn-primary" href="{{ route('bookings') }}">Book Vehicle</a> <a class="btn btn-sm btn-secondary" href="{{ route('log-book') }}"> logbook</a>
+                <a class="btn btn-sm btn-primary" href="{{ route('bookings') }}">Book Vehicle</a> <a class="btn btn-sm btn-secondary" href="{{ route('log-book') }}"> Log Book</a>
                 </div>
             </div>
         </div>

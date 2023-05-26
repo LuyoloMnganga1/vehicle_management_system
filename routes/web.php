@@ -13,6 +13,10 @@ use App\Http\Controllers\FuelController;
 use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ReminderController;
+use App\Http\Controllers\MaintenanceController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -164,6 +168,18 @@ Route::get('staffdestroy/{id}',[StaffController::class, 'staffdestroy'])->name('
 Route::get('staff', [StaffController::class, 'staff'])->name('staff');
 // end of staff routes
 
+// reminder routes
+Route::get('reminders', [ReminderController::class, 'reminders'])->name('reminders');
+// end of reminders routes
+
+// mintenance routes
+Route::get('maintenance', [MaintenanceController::class, 'maintenance'])->name('maintenance');
+
+// end of maintenance routes
+// report routes
+Route::get('report', [ReportController::class, 'report'])->name('report');
+
+// end report routes
 
 Route::post('registerStore',[RegisterUserController::class, 'store'])->name('registerStore');
 Route::post('image/update',[RegisterUserController::class, 'profile_image'])->name('image/update');

@@ -42,7 +42,7 @@
                         <span class="micon dw dw-book"></span><span class="mtext"> Booking</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="{{route('bookings')}}">Book a vehicle</a></li>
+                        <li><a href="{{route('bookings')}}">Book Vehicle</a></li>
                         <li><a href="{{route('booking-history')}}">Booking History</a></li>
                         <li><a href="{{route('log-book')}}">Log Book</a></li>
                         <li><a href="{{route('Log-history')}}">Log Book History</a></li>
@@ -55,6 +55,16 @@
                 </li>
                 @if(Auth::user()->hasRole('Admin') || Auth::user()->hasRole('General-Manager') || Auth::user()->hasRole('SuperAdmin'))
                 <li class="dropdown">
+                    <a href="{{route('maintenance')}}" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-wrench"></span><span class="mtext"> Maintenance</span>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="{{route('reminders')}}" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-bell "></span><span class="mtext"> Reminders</span>
+                    </a>
+                </li>
+                <li class="dropdown">
                     <a href="{{route('staff')}}" class="dropdown-toggle no-arrow">
                         <span class="micon material-icons">people</span><span class="mtext">Users</span>
                     </a>
@@ -66,7 +76,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="dropdown-toggle no-arrow">
+                    <a href="{{route('report')}}" class="dropdown-toggle no-arrow">
                         <span class="micon fa fa-line-chart"></span><span class="mtext">Report</span>
                     </a>
                 </li>
