@@ -145,15 +145,15 @@ Route::post('update-Booking/{id}',[BookingController::class, 'updateBooking'])->
 
 Route::get('delete-Booking/{id}',[BookingController::class, 'deleteBooking'])->name('delete-Booking');
 
-Route::get('log/list',[BookingController::class, 'getLogBook'])->name('log.list');
-
 Route::get('Log-history',[BookingController::class, 'logHistory'])->name('Log-history');
 
 Route::post('Booking-action/{id}',[BookingController::class, 'bookingAction'])->name('TakeAction');
 
+Route::get('get-log-histroy',[BookingController::class, 'getLogHistory'])->name('get-log-histroy');
 
+Route::get('deleloginfo/{id}',[BookingController::class, 'deleloginfo'])->name('deleloginfo');
 
-
+Route::get('findlogDetails/{id}',[BookingController::class, 'findlogDetails'])->name('findlogDetails');
 // End Booking Routes
 
 // staff routes 

@@ -213,7 +213,7 @@ class BookingController extends Controller
         $email = Auth::user()->email;
         $today = Carbon::today()->format('Y-m-d');
         $loog = Booking::where('email',$email)->where('trip_start_date', $today)->where('status','Approved')->first();
-        $loogbook = LogBook::where('full_name',$fullname)->where('trip_start_date', $today)->first();
+        $loogbook = LogBook::where('full_name',$fullname)->where('trip_start_date','<=', $today)->first();
         if($loog){
             $reg_no = Vehicle::where('id', $loog->vehicle_id)->value('Registration_no');
         }else{
@@ -264,10 +264,13 @@ class BookingController extends Controller
             'petrol' => $request->petrol,            
             'oil' => $request->oil,
             'start_comment' => $request->start_comment,
-            
         ];
-        
-        LogBook::create($data);
+        $id = $request->rowID ? $request->rowID : null;
+        if($id != null){
+            LogBook::where('id',$id)->update($data);
+        }else{
+            LogBook::create($data);
+        }
         return redirect()->back()->with('success','Details  has been logged successfully');
     }
 
@@ -275,6 +278,8 @@ class BookingController extends Controller
         $validator = Validator::make($request->all(), [
             'return_date_out' => ['required',  'max:100000'],
             'return_date_in' => ['required',  'max:100000'],
+            'return_destination_start'=>['required', 'max:100000'],
+            'return_destination_end'=>['required', 'max:100000'],
             'return_odometer' => ['required',  'max:225'],
             'return_kilometers' => ['required',  'max:225'],
             'return_petrol' => ['max:225'],
@@ -291,13 +296,15 @@ class BookingController extends Controller
             'return_date_out' => $request->return_date_out,
             'return_date_in' => $request->return_date_in,
             'return_odometer' => $request->return_odometer,  
-            'return_kilometers' => $request->return_kilometers,  #
+            'return_kilometers' => $request->return_kilometers,
+            'return_destination_start'=> $request->return_destination_start,
+            'return_destination_end'=> $request->return_destination_end,
             'return_petrol' => $request->return_petrol,          
             'return_oil' => $request->return_oil,
             'return_comment' => $request->return_comment,            
         ];
         LogBook::where('id',$id)->update($data);
-        return redirect()->back()->with('success','Vehicle  has been booked successfully');
+        return redirect()->back()->with('success','Return log has been captured successfully');
     }
 
 
@@ -305,31 +312,89 @@ class BookingController extends Controller
     public function logHistory(){
         return view('bookings.log_history');
     }
-
-    public function getLogBook(Request $request){
-        if ($request->ajax()) {
-            $data = Booking::orderBy('created_at', 'DESC')->get();
-            return Datatables::of($data)
-                    //**********INDEX COLUMN ************/
-                    ->addIndexColumn()
-                    //**********END OF INDEX COLUMN ************/
-                   
-                    
-                    
-                    ->addColumn('action', function($row){
-                        $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a> 
-                        <a href="javascript:void(0)" class="delete btn btn-danger btn-sm" id="delete" data-id ="'.$row->id.'"><i class="fa fa-trash text-light"></i></a>';
-                        return $actionBtn;
-                    })
-                    ->rawColumns(['full_name','trip_start_date','destination','vehicle_plate','action'])
-                    ->make(true);
-        }
-        return view('bookings.log_history');
-    }
     public function find_available_car($start,$end){
         $bookings = Booking::whereBetween('trip_start_date', [$start, $end])
             ->whereBetween('return_date', [$start, $end])->select('vehicle_id')->get();
          $available_cars = Vehicle::whereNotIn('id',$bookings)->get();
         return response()->json($available_cars);
+    }
+    public function deleloginfo($id){
+        LogBook::where('id',$id)->delete();
+        return redirect()->back()->with('success','LogBook info deleted successfully');
+    }
+    public function getLogHistory(Request $request){
+        if ($request->ajax()) {
+                $data = LogBook::orderBy('created_at', 'DESC')->get();
+            return Datatables::of($data)
+                    //**********INDEX COLUMN ************/
+                  
+                    ->addIndexColumn()
+                    //**********END OF INDEX COLUMN ************/
+                     //**********FULL NAME COLUMN ************/
+                    ->addColumn('full_name', function($row){
+                    $full_name = $row->full_name;
+                    return $full_name;
+                    })
+                    //**********END OF FULL NAME COLUMN ************/
+                   //**********BOOKING DATE COLUMN ************/
+                   ->addColumn('trip_start_date', function($row){
+                    $trip_start_date = Carbon::parse($row->trip_start_date)->toDayDateTimeString();;
+                    return $trip_start_date;
+                    })
+                /**********END OF BOOKING DATE COLUMN ************/
+                    //**********BOOKING DATE COLUMN ************/
+                    ->addColumn('destination_end', function($row){
+                        $destination_end = $row->destination_end;
+                        return $destination_end;
+                        })
+                    /**********END OF BOOKING DATE COLUMN ************/
+                    ->addColumn('vehicle_plate', function($row){
+                        $vehicle_plate = Vehicle::where('id', $row->vehicle_id)->value('Registration_no');
+                        return $vehicle_plate;
+                        })
+                    //**********END OF PLATE COLUMN ************/
+                    
+                    
+                    ->addColumn('action', function($row){
+                        $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a> ';
+                        if(Auth::user()->hasRole('Admin')){
+                            $actionBtn = $actionBtn .' <a href="javascript:void(0)" class="delete btn btn-danger btn-sm" id="delete" data-id ="'.$row->id.'"><i class="fa fa-trash text-light"></i></a>';
+                        }
+                        
+                        return $actionBtn;
+                    })
+                    ->rawColumns(['full_name','trip_start_date','destination_end','vehicle_plate','action'])
+                    ->make(true);
+        }
+        return view('bookings.log_history');
+    }
+    public function findlogDetails($id){
+        $log = LogBook::find($id);
+        $vehicle_place = Vehicle::where('id',$log->vehicle_id)->value('Registration_no');
+        $data = [
+            'vehicle_place' => $vehicle_place,
+            'vehicle_id'=>$log->vehicle_id,
+            'full_name' => $log->full_name,
+            'trip_start_date' => $log->trip_start_date,
+            'trip_end_date' => $log->trip_end_date,
+            'start_odometer' => $log->start_odometer,            
+            'kilometers' => $log->kilometers,
+            'destination_start' => $log->destination_start,
+            'destination_end' => $log->destination_end,
+            'trip_details' => $log->trip_details,
+            'petrol' => $log->petrol,            
+            'oil' => $log->oil,
+            'start_comment' => $log->start_comment,
+            'return_date_out' => $log->return_date_out,
+            'return_date_in' => $log->return_date_in,
+            'return_odometer' => $log->return_odometer,  
+            'return_kilometers' => $log->return_kilometers,
+            'return_destination_start'=> $log->return_destination_start,
+            'return_destination_end'=> $log->return_destination_end,
+            'return_petrol' => $log->return_petrol,          
+            'return_oil' => $log->return_oil,
+            'return_comment' => $log->return_comment,     
+        ];
+        return response()->json($data);
     }
 }

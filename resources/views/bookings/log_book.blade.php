@@ -128,7 +128,7 @@ Log  Book
                 </div>
                 <label for="staticEmail" class="col-sm-2 col-form-label">Kilometers</label>
                 <div class="input-group input-group-sm col-sm-4">
-                    <input type="date" class="form-control" id="return_kilometers" name="return_kilometers">
+                    <input type="number" min="0" class="form-control" id="return_kilometers" name="return_kilometers">
                 </div>
             </div>
            
