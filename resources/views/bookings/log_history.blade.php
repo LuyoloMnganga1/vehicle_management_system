@@ -74,7 +74,7 @@ Booking History
                 <form action="{{ route('add-log-book') }}" method="post">
                     @csrf
                     <div class="mb-3 row">
-                        <input type="hidden" name="rowID"  id="rowID_second">
+                        <input type="hidden" name="rowID"  id="rowID_second" class="update_info">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Registration Number</label>
                         <div class="input-group input-group-sm col-sm-4">
                             <input type="text" class="form-control update_info" name="vehicle_id" id="registration_no" readonly>
@@ -97,7 +97,7 @@ Booking History
                     <div class="mb-3 row">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Odometer</label>
                         <div class="input-group input-group-sm col-sm-4">
-                            <input type="number" class="form-control update_info" id="odometer" min="0" name="start_odometer" required>
+                            <input type="number" class="form-control update_info" id="start_odometer" min="0" name="start_odometer" required>
                         </div>
                         <label for="staticEmail" class="col-sm-2 col-form-label">Estimated Kilometers</label>
                         <div class="input-group input-group-sm col-sm-4">
@@ -108,24 +108,24 @@ Booking History
                     <div class="mb-3 row">
                         <label for="staticEmail" class="col-sm-2 col-form-label">From</label>
                         <div class="input-group input-group-sm col-sm-4">
-                            <input type="text" class="form-control update_info" id="inputPassword" name="destination_start" required>
+                            <input type="text" class="form-control update_info" id="destination_start" name="destination_start" required>
                         </div>
                         <label for="staticEmail" class="col-sm-2 col-form-label">To</label>
                         <div class="input-group input-group-sm col-sm-4">
-                            <input type="text" class="form-control update_info" id="inputPassword" name="destination_end" required>
+                            <input type="text" class="form-control update_info" id="destination_end" name="destination_end" required>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <div class="col-sm-12">
                             <label for="exampleFormControlTextarea1" class="form-label">Trip Details</label>
-                            <textarea class="form-control update_info" id="exampleFormControlTextarea1" rows="3" name="trip_details" required></textarea>
+                            <textarea class="form-control update_info" id="trip_details" rows="3" name="trip_details" required></textarea>
                         </div>
         
                     </div>
                     <div class="mb-3 row">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Petrol (L)</label>
                         <div class="input-group input-group-sm col-sm-4">
-                            <input type="number" min="0" class="form-controlupdate_info" id="petrol" name="petrol">
+                            <input type="number" min="0" class="form-control update_info" id="petrol" name="petrol">
                         </div>
                         <label for="staticEmail" class="col-sm-2 col-form-label">Oil (ML)</label>
                         <div class="input-group input-group-sm col-sm-4">
@@ -135,11 +135,11 @@ Booking History
                     <div class="mb-3 row">
                         <div class="col-sm-12">
                             <label for="exampleFormControlTextarea1" class="form-label">Trip Comments (Remarks, Accidents etc.)</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="start_comment"></textarea>
+                            <textarea class="form-control update_info" id="start_comment" rows="3" name="start_comment"></textarea>
                         </div>
         
                     </div>
-        
+
                     <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">Save Changes</button>
                 </form>
             </div>
@@ -147,52 +147,52 @@ Booking History
                 <form action="{{ route('return-log-book') }}" method="post">
                     @csrf
                     <div class="mb-3 row">
-                       <input type="hidden" name="rowID"  id="rowID">
+                       <input type="hidden" name="rowID"  id="rowID" class="update_info">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Date Time Out</label>
                         <div class="input-group input-group-sm col-sm-4">
-                            <input type="datetime-local" class="form-control" id="return_date_out" name="return_date_out">
+                            <input type="datetime-local" class="form-control update_info" id="return_date_out" name="return_date_out">
                         </div>
                         <label for="staticEmail" class="col-sm-2 col-form-label">Date Time In</label>
                         <div class="input-group input-group-sm col-sm-4">
-                            <input type="datetime-local" class="form-control" id="return_date_in" name="return_date_in">
+                            <input type="datetime-local" class="form-control update_info" id="return_date_in" name="return_date_in">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Final Odometer</label>
                         <div class="input-group input-group-sm col-sm-4">
-                            <input type="text" class="form-control" id="return_odometer" name="return_odometer">
+                            <input type="text" class="form-control update_info" id="return_odometer" name="return_odometer">
                         </div>
                         <label for="staticEmail" class="col-sm-2 col-form-label">Kilometers</label>
                         <div class="input-group input-group-sm col-sm-4">
-                            <input type="number" min="0" class="form-control" id="return_kilometers" name="return_kilometers">
+                            <input type="number" min="0" class="form-control update_info" id="return_kilometers" name="return_kilometers">
                         </div>
                     </div>
                    
                     <div class="mb-3 row">
                         <label for="staticEmail" class="col-sm-2 col-form-label">From</label>
                         <div class="input-group input-group-sm col-sm-4">
-                            <input type="text" class="form-control" id="inputPassword" name="return_destination_start">
+                            <input type="text" class="form-control update_info" id="return_destination_start" name="return_destination_start">
                         </div>
                         <label for="staticEmail" class="col-sm-2 col-form-label">To</label>
                         <div class="input-group input-group-sm col-sm-4">
-                            <input type="text" class="form-control" id="inputPassword" name="return_destination_end">
+                            <input type="text" class="form-control update_info" id="return_destination_end" name="return_destination_end">
                         </div>
                     </div>
                    
                     <div class="mb-3 row">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Petrol (L)</label>
                         <div class="input-group input-group-sm col-sm-4">
-                            <input type="text" class="form-control" id="petrol" name="return_petrol">
+                            <input type="text" class="form-control update_info" id="return_petrol" name="return_petrol">
                         </div>
                         <label for="staticEmail" class="col-sm-2 col-form-label">Oil (ML)</label>
                         <div class="input-group input-group-sm col-sm-4">
-                            <input type="text" class="form-control" id="return_oil" name="return_oil">
+                            <input type="text" class="form-control update_info" id="return_oil" name="return_oil">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <div class="col-sm-12">
                             <label for="exampleFormControlTextarea1" class="form-label">Return Trip Comments (Remarks, Accidents etc.)</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="return_comment"></textarea>
+                            <textarea class="form-control update_info" id="return_comment" rows="3" name="return_comment"></textarea>
                         </div>
         
                     </div>
@@ -277,13 +277,38 @@ Booking History
 <script>
     /* edit booking */
     $('body').on('click', '.edit', function () {
-        $('#update_logbook_modal').modal('show');
+        $('.update_info').empty();
        var log_id = $(this).data('id');
        $('#rowID').val(log_id);
        $('#rowID_second').val(log_id);
        $.get('findlogDetails/' + log_id, function (data) {
-
-           $('#updateBooking').modal('show');
+        console.log(data);
+            // basic details
+           $('#registration_no').val(data.vehicle_place);
+           $('#full_name').val(data.full_name);
+           $('#trip_start_date').val(data.trip_start_date);
+           $('#trip_end_date').val(data.trip_end_date);
+           $('#start_odometer').val(data.start_odometer);
+           $('#kilometers').val(data.kilometers);
+           $('#destination_start').val(data.destination_start);
+           $('#destination_end').val(data.destination_end);
+           $('textArea#trip_details').val(data.trip_details);
+           $('#petrol').val(data.petrol);
+           $('#oil').val(data.oil);
+           $('textArea#start_comment').val(data.start_comment);
+            //end fo base details
+            //return trip details
+            $('#return_date_out').val(data.return_date_out);
+            $('#return_date_in').val(data.return_date_in);
+            $('#return_odometer').val(data.return_odometer);
+            $('#return_kilometers').val(data.return_kilometers);
+            $('#return_destination_start').val(data.return_destination_start);
+            $('#return_destination_end').val(data.return_destination_end);
+            $('#return_petrol').val(data.return_petrol);
+            $('#return_oil').val(data.return_oil);
+            $('textArea#return_comment').val(data.return_comment);
+            //end of return details
+            $('#update_logbook_modal').modal('show');
        })
    });
 
@@ -295,11 +320,6 @@ Booking History
               location.href = url;
           })
        });
-
-
-
-    
-
  </script>
 
 @endsection

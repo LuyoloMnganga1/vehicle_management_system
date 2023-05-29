@@ -213,8 +213,8 @@ class BookingController extends Controller
         $fullname = Auth::user()->name . " ". Auth::user()->surname;
         $email = Auth::user()->email;
         $today = Carbon::today()->format('Y-m-d');
-        $loog = Booking::where('email',$email)->where('trip_start_date', $today)->where('status','Approved')->first();
-        $loogbook = LogBook::where('full_name',$fullname)->where('trip_start_date','<=', $today)->first();
+        $loog = Booking::where('email',$email)->where('trip_start_date', $today)->where('status','Approved')->orderBy('created_at', 'DESC')->first();
+        $loogbook = LogBook::where('full_name',$fullname)->where('trip_start_date','<=', $today)->orderBy('created_at', 'DESC')->first();
         if($loog){
             $reg_no = Vehicle::where('id', $loog->vehicle_id)->value('Registration_no');
         }else{
@@ -256,9 +256,8 @@ class BookingController extends Controller
         $data = [
             'vehicle_id' => $vehicle_id,
             'full_name' => $request->full_name,
-            'email' => $request->email,
-            'trip_start_date' => $request->trip_start_date,
-            'trip_end_date' => $request->trip_end_date,
+            'trip_start_date' => Carbon::parse($request->trip_start_date)->toDateTimeString(),
+            'trip_end_date' => Carbon::parse($request->trip_end_date)->toDateTimeString(),
             'start_odometer' => $request->start_odometer,            
             'kilometers' => $request->kilometers,
             'destination_start' => $request->destination_start,
@@ -296,9 +295,9 @@ class BookingController extends Controller
         }
         $id = $request->rowID;
         $data = [
-            'return_date_out' => $request->return_date_out,
-            'return_date_in' => $request->return_date_in,
-            'return_odometer' => $request->return_odometer,  
+            'return_date_out' => Carbon::parse($request->return_date_out)->toDateTimeString(),
+            'return_date_in' => Carbon::parse($request->return_date_in)->toDateTimeString(),
+            'return_odometer' => $request->return_odometer,
             'return_kilometers' => $request->return_kilometers,
             'return_destination_start'=> $request->return_destination_start,
             'return_destination_end'=> $request->return_destination_end,
@@ -378,8 +377,8 @@ class BookingController extends Controller
             'vehicle_place' => $vehicle_place,
             'vehicle_id'=>$log->vehicle_id,
             'full_name' => $log->full_name,
-            'trip_start_date' => $log->trip_start_date,
-            'trip_end_date' => $log->trip_end_date,
+            'trip_start_date' => Carbon::parse($log->trip_start_date)->toDateTimeString(),
+            'trip_end_date' => Carbon::parse($log->trip_end_date)->toDateTimeString(),
             'start_odometer' => $log->start_odometer,            
             'kilometers' => $log->kilometers,
             'destination_start' => $log->destination_start,
@@ -388,8 +387,8 @@ class BookingController extends Controller
             'petrol' => $log->petrol,            
             'oil' => $log->oil,
             'start_comment' => $log->start_comment,
-            'return_date_out' => $log->return_date_out,
-            'return_date_in' => $log->return_date_in,
+            'return_date_out' => Carbon::parse($log->return_date_out)->toDateTimeString(),
+            'return_date_in' => Carbon::parse($log->return_date_in)->toDateTimeString(),
             'return_odometer' => $log->return_odometer,  
             'return_kilometers' => $log->return_kilometers,
             'return_destination_start'=> $log->return_destination_start,
