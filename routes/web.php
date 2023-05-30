@@ -174,6 +174,10 @@ Route::get('reminders', [ReminderController::class, 'reminders'])->name('reminde
 
 // mintenance routes
 Route::get('maintenance', [MaintenanceController::class, 'maintenance'])->name('maintenance');
+Route::post('addMaintenance', [MaintenanceController::class, 'addMaintenance'])->name('addMaintenance');
+Route::post('updateMaintenance', [MaintenanceController::class, 'updateMaintenance'])->name('updateMaintenance');
+Route::get('deleteMaintenance', [MaintenanceController::class, 'deleteMaintenance'])->name('deleteMaintenance');
+
 
 // end of maintenance routes
 // report routes

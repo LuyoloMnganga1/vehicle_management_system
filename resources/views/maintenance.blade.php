@@ -13,7 +13,7 @@ Maintenance
                 </div>
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal"
-                        data-target="#exampleModalCenter"> <i class="fa fa-plus"></i> Add New Issue</button>
+                        data-target="#exampleModalCenter"> <i class="fa fa-plus"></i> Maintenance</button>
                 </div>
             </div>
         </div>
@@ -61,18 +61,24 @@ Maintenance
     <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Add Issue</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">Maintenance</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="{{ route('addIssue') }}"  enctype="multipart/form-data" method="POST">
+        <form action="{{ route('addMaintenance') }}"  enctype="multipart/form-data" method="POST">
             @csrf
         <div class="modal-body">
          <div class="row">   
             @php
                  $vehicle = App\Models\Vehicle::orderBy('Registration_no', 'ASC')->get();
             @endphp
+              <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Maintenance Date</label>
+                    <input type="date" name="maintenance_date" id="due_date" class="form-control" required>
+                </div>
+            </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="">Registration Number</label>
@@ -84,26 +90,37 @@ Maintenance
                     </select>
                 </div>
             </div>
-            <input type="hidden" name="assignee" value="">
             <div class="col-md-6">
             <div class="form-group">
-                <label for="">Issue Subject</label>
-                <input type="text" name="title" id="title" class="form-control" required>
+                <label for="">Service Provider</label>
+                <input type="text" name="service_provider" id="service_provider" class="form-control" required>
             </div>
             </div>
-            <div class="col-md-12">
-            <div class="form-group">
-                <label for="">Issue Description</label>
-                <textarea  name="description" id="description" cols="10" rows="3" class="form-control" required></textarea>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Odometer</label>
+                    <input type="text" name="odometer" id="odometer" class="form-control" required>
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="" >Current Millage </label>
+                    <input type="text" name="current_millage" id="current_millage " class="form-control" required>
+                </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="" >Next Service Millage </label>
+                        <input type="text" name="next_service_millage" id="next_service_millage " class="form-control" required>
+                    </div>
+                    </div>
+        {{-- <div class="col-md-6">
             <div class="form-group">
                 <label for="">Issue Evidence</label>
                 <input type="file" name="issue_image" id="issue_image" class="form-control" accept=".jpg,.jpeg,.bmp,.png,.gif,.jfif" required>
             </div>
-        </div>
-        <div class="col-md-6">
+        </div> --}}
+        {{-- <div class="col-md-6">
             <div class="form-group">
                 <label for="">Priority</label>
                 <select name="priority" id="priority" class="form-control" required>
@@ -113,13 +130,8 @@ Maintenance
                     <option value="high">High</option>
                 </select>
             </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <label for="">Due Date</label>
-                <input type="datetime-local" name="due_date" id="due_date" class="form-control" required>
-            </div>
-        </div>
+        </div> --}}
+      
 
         </div>
     </div>
@@ -144,60 +156,74 @@ Maintenance
         </div>
         <form  id="update_issue_form" method="POST" enctype="multipart/form-data">
             @csrf
-        <div class="modal-body">
-         <div class="row">   
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="">Registration Number</label>
-                    <input type="text" id="update_reg_no" class="form-control" readonly>
-                    <input type="hidden" name="vehicle_id" id="update_vehicle_id">
-                </div>
-            </div>
-            <input type="hidden" name="assignee" value="">
-            <div class="col-md-6">
-            <div class="form-group">
-                <label for="">Issue Subject</label>
-                <input type="text" name="title" id="update_title" class="form-control" required>
-            </div>
-            </div>
-            <div class="col-md-12">
-            <div class="form-group">
-                <label for="">Issue Description</label>
-                <textarea  name="description" id="update_description" cols="10" rows="3" class="form-control" required></textarea>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="">Issue Evidence</label>
-                <input type="file" name="issue_image" id="issue_image" class="form-control" accept=".jpg,.jpeg,.bmp,.png,.gif,.jfif">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="">Priority</label>
-                <select name="priority" id="priority" class="form-control" required>
-                    <option value="" selected> Select priority</option>
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <label for="">Due Date</label>
-                <input type="datetime-local" name="due_date" id="update_due_date" class="form-control" required>
-            </div>
-        </div>
-        <input type="hidden" name="previous_image" id="previous_image">
-         <div class="form-group">
-            <div class="col-md-12">
-            <label for="">Previous Evidence</label>
-            <img src=""  id="update_previous_image" class="form-control" alt="previous evidence" style="max-width:350px;max-height:400px;min-width:200px;min-height:350px">
-         </div>
-         </div>
-     </div>
-    </div>
+            <div class="modal-body">
+                <div class="row">   
+                   @php
+                        $vehicle = App\Models\Vehicle::orderBy('Registration_no', 'ASC')->get();
+                   @endphp
+                     <div class="col-md-6">
+                       <div class="form-group">
+                           <label for=""> Date</label>
+                           <input type="datetime-local" name="due_date" id="due_date" class="form-control" required>
+                       </div>
+                   </div>
+                   <div class="col-md-6">
+                       <div class="form-group">
+                           <label for="">Registration Number</label>
+                           <select name="vehicle_id" id="vehicle_id" class="form-control" required>
+                               <option value="" selected>Select Registration number</option>
+                               @foreach($vehicle as $item )
+                               <option value="{{ $item->id }}">{{ $item->Registration_no }}</option>
+                               @endforeach
+                           </select>
+                       </div>
+                   </div>
+                   <input type="hidden" name="assignee" value="">
+                   <div class="col-md-6">
+                   <div class="form-group">
+                       <label for="">Service Provider</label>
+                       <input type="text" name="service_provider" id="service_provider" class="form-control" required>
+                   </div>
+                   </div>
+                   <div class="col-md-6">
+                       <div class="form-group">
+                           <label for="">Odometer</label>
+                           <input type="text" name="odometer" id="odometer" class="form-control" required>
+                       </div>
+                   </div>
+                   <div class="col-md-6">
+                       <div class="form-group">
+                           <label for="" >Current Millage </label>
+                           <input type="text" name="current_millage" id="current_millage " class="form-control" required>
+                       </div>
+                       </div>
+                       <div class="col-md-6">
+                           <div class="form-group">
+                               <label for="" >Next Service Millage </label>
+                               <input type="datetime-local" name="next_service_millage" id="next_service_millage " class="form-control" required>
+                           </div>
+                           </div>
+               {{-- <div class="col-md-6">
+                   <div class="form-group">
+                       <label for="">Issue Evidence</label>
+                       <input type="file" name="issue_image" id="issue_image" class="form-control" accept=".jpg,.jpeg,.bmp,.png,.gif,.jfif" required>
+                   </div>
+               </div> --}}
+               {{-- <div class="col-md-6">
+                   <div class="form-group">
+                       <label for="">Priority</label>
+                       <select name="priority" id="priority" class="form-control" required>
+                           <option value="" selected> Select priority</option>
+                           <option value="low">Low</option>
+                           <option value="medium">Medium</option>
+                           <option value="high">High</option>
+                       </select>
+                   </div>
+               </div> --}}
+             
+       
+               </div>
+           </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Update</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
