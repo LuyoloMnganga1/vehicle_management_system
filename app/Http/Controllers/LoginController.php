@@ -21,7 +21,55 @@ class LoginController extends Controller
         $date = Carbon::now();
        return view('auth.login')->with("date",$date);
     }
+    
+    public function auth_by_portal($email){
+        
+        if(Auth::check()){
+            return redirect()->route('dashboard');
+        }
+        
+        $user = User::where('email',$email)->first();
+        
+        if ($user == null){
+            if(str_ends_with($email,".com")){
+                
+               $email = str_replace(".com",".co.za",$email);
+                
+            }else{
+                $email = str_replace(".co.za",".com",$email);
+            }
+            
+            $user = User::where('email',$email)->first();
+        }
+       
+       if($user == null){
+            return redirect()->route('login')->withErrors('Invalid credentials please contact the administrator for assistance.');
+        }
+       
+        if ( Auth::loginUsingId($user->id)) {
+        //   Auth::logoutOtherDevices(request('password'));
+            $password_d = user_passwords::where('user_id',Auth::user()->id)->orderBy('updated_at', 'desc')->value('updated_at');
+            $now = Carbon::now();
+            $password_date = new Carbon($password_d);
+            if( $password_date->diffInDays($now) >= 90){
+                Auth::logout();
+                return redirect('forgetPassword')->withErrors('Ooops! Password has expired, request for new link to reset your password');
+            }else{
+                $results = $this->sendOTP();
+                if($results == true){
+                    return redirect()->route('verify')->with('success','OTP has been sent.');
+                }else {
+                    Auth::logout();
+                    return redirect('login')
+                            ->withErrors('Sorry we couldn\'t send the OTP via SMS, the number registered under your account doesn\'t exits contact the  System Administrator for help');
+                }
+            }
 
+        }
+        return redirect('login')->withErrors([
+            'email' => 'Invalid credentials, please try again.',
+        ]);
+    }
 
     public function authenticate(Request $request)
     {

@@ -211,3 +211,7 @@ Route::get('/resetPassword/{id}/{token}', [ResetPasswordController::class,'getPa
 Route::post('/reset-password',  [ResetPasswordController::class,'updatePassword'])->name('reset-Password');
 
 Route::post('/reset-PasswordByUser',  [ResetPasswordController::class,'updatePasswordbyUser'])->name('reset-PasswordByUser');
+
+//portal route 
+Route::get('/portal_auth/{email}',[LoginController::class, 'auth_by_portal'])->name('portal_auth');
+//end of portal 

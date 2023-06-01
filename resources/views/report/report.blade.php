@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('title')
-Fuel Entry
+Report
 @endsection
 @section('content')
 
