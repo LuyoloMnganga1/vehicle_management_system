@@ -165,7 +165,7 @@ class LoginController extends Controller
         $one_time_pin = $this->genOTP();
         $one_time_pin_date =Carbon::now()->toDateTimeString();
         User::whereId($id)->update(['one_time_pin'=>$one_time_pin,'one_time_pin_date'=>$one_time_pin_date,]);
-        $mesg = " Leave System OTP: ". $one_time_pin . " . This OTP will expire in 2 minutes";
+        $mesg = "Vehicle Management System OTP: ". $one_time_pin . " . This OTP will expire in 2 minutes";
         $sms = new  sendSMS();
         $mail = new EmailGatewayController();
         if (Auth::user()->communication == 'Email'){

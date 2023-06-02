@@ -73,17 +73,17 @@ public function staffUpdate(Request $request, $id){
 
      $sms = new  sendSMS();
      $phone = User::where('email',$request->email)->value('phone');;
-     $mesg = "Good day $request->name  $request->surname,\n\nYour account details for  Leave System has been updated.\nAdministrator ";
+     $mesg = "Good day $request->name  $request->surname,\n\nYour account details for  Vehicle System has been updated.\nAdministrator ";
 
      $mail = new EmailGatewayController();
 
      if ($request->communication == 'Email'){
-        $mail->sendEmail($request->email,'ICT Choice | Leave Management System - User Account Updated',EmailBodyController::accountupdated($name,$surname));
+        $mail->sendEmail($request->email,'ICT Choice | Vehicle Management System - User Account Updated',EmailBodyController::accountupdated($name,$surname));
      }else if($request->communication == 'SMS') {
          $results = $sms->sendSMS($phone,$mesg);
      }else{
          $results = $sms->sendSMS($phone,$mesg);
-         $mail->sendEmail($request->email,'ICT Choice | Leave Management System - User Account Updated',EmailBodyController::accountupdated($name,$surname));
+         $mail->sendEmail($request->email,'ICT Choice | Vehicle Management System - User Account Updated',EmailBodyController::accountupdated($name,$surname));
      }
  return redirect()->back()->with('success','User deatails updated successfully');
 }

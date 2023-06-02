@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('reminders', function (Blueprint $table) {
             $table->id();
+            $table->string('vehicle_plate');
+            $table->string('vehicle_make');
+            $table->string('vehicle_model');
+            $table->string('reminder_type');
+            $table->string('reminder_serial_number');
+            $table->string('due_date');
             $table->timestamps();
         });
     }

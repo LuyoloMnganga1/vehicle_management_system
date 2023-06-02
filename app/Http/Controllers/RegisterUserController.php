@@ -86,7 +86,7 @@ class RegisterUserController extends Controller
         $sms = new  sendSMS();
         $phone = User::where('email',$request->email)->value('phone');;
         $mesg = "Good day $request->name  $request->surname, \n
-        Your account for Leave System has been created.\n
+        Your account for Vehicle System has been created.\n
         Use the link to set password :  http://127.0.0.1:8000/passwordCreate/{$id}/{$token} \n
         Adminstrator ";
 
