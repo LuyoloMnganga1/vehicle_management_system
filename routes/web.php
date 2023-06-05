@@ -178,6 +178,8 @@ Route::get('get_service_reminders', [ReminderController::class, 'get_service_rem
 Route::get('get_insurance_reminders', [ReminderController::class, 'get_insurance_reminders'])->name('get_insurance_reminders');
 
 Route::get('get_license_reminders', [ReminderController::class, 'get_license_reminders'])->name('get_license_reminders');
+
+Route::get('delete/reminder/{id}', [ReminderController::class, 'delete_reminder'])->name('delete_reminder');
 // end of reminders routes
 
 // mintenance routes

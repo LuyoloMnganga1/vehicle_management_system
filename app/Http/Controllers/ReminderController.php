@@ -65,11 +65,11 @@ class ReminderController extends Controller
                 ->addIndexColumn()
                 //**********END OF INDEX COLUMN ************/
                  //**********FULL NAME COLUMN ************/
-                ->addColumn('due_date', function($row){
+                 ->addColumn('due_date', function($row){
                     if (Carbon::parse($row->due_date)->isPast()){
-                        $due_date = '<badge badge-danger>'.$row->due_date.'</badge>';
+                        $due_date = '<span class="badge badge-danger">'.$row->due_date.'</span>';
                     }else{
-                        $due_date = '<badge badge-success>'.$row->due_date.'</badge>';
+                        $due_date = '<span class="badge badge-success">'.$row->due_date.'</span>';
                     }
                
                 return $due_date;
@@ -95,11 +95,11 @@ class ReminderController extends Controller
                 ->addIndexColumn()
                 //**********END OF INDEX COLUMN ************/
                  //**********FULL NAME COLUMN ************/
-                ->addColumn('due_date', function($row){
+                 ->addColumn('due_date', function($row){
                     if (Carbon::parse($row->due_date)->isPast()){
-                        $due_date = '<badge badge-danger>'.$row->due_date.'</badge>';
+                        $due_date = '<span class="badge badge-danger">'.$row->due_date.'</span>';
                     }else{
-                        $due_date = '<badge badge-success>'.$row->due_date.'</badge>';
+                        $due_date = '<span class="badge badge-success">'.$row->due_date.'</span>';
                     }
                
                 return $due_date;
@@ -108,7 +108,7 @@ class ReminderController extends Controller
                              
                 
                 ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm" data-id = "'.$row->id.'"><i class="fa fa-trash text-light"></i></a>';                    
+                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a> <a href="javascript:void(0)" class="delete2 btn btn-danger btn-sm" data-id = "'.$row->id.'"><i class="fa fa-trash text-light"></i></a>';                    
                     return $actionBtn;
                 })
                 ->rawColumns([ 'vehicle_plate','vehicle_make','vehicle_model','reminder_serial_number','due_date','action'])
@@ -127,9 +127,9 @@ class ReminderController extends Controller
                  //**********FULL NAME COLUMN ************/
                 ->addColumn('due_date', function($row){
                     if (Carbon::parse($row->due_date)->isPast()){
-                        $due_date = '<badge badge-danger>'.$row->due_date.'</badge>';
+                        $due_date = '<span class="badge badge-danger">'.$row->due_date.'</span>';
                     }else{
-                        $due_date = '<badge badge-success>'.$row->due_date.'</badge>';
+                        $due_date = '<span class="badge badge-success">'.$row->due_date.'</span>';
                     }
                
                 return $due_date;
@@ -138,12 +138,17 @@ class ReminderController extends Controller
                              
                 
                 ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm" data-id = "'.$row->id.'"><i class="fa fa-trash text-light"></i></a>';                    
+                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a> <a href="javascript:void(0)" class="delete3 btn btn-danger btn-sm" data-id = "'.$row->id.'"><i class="fa fa-trash text-light"></i></a>';                    
                     return $actionBtn;
                 })
                 ->rawColumns([ 'vehicle_plate','vehicle_make','vehicle_model','reminder_serial_number','due_date','action'])
                 ->make(true);
     }
     return view('reminders');
+    }
+
+    public function delete_reminder($id){
+        Reminder::where('id',$id)->delete();
+        return redirect()->back()->with('success', 'Reminder deleted successfully');
     }
 }

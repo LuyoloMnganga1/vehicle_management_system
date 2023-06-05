@@ -369,4 +369,59 @@ Reminders
       
     });
 </script>
+<script>
+//     /* edit fuel */
+//     $('body').on('click', '.edit', function () {
+//        var invoice_id = $(this).data('id');
+//        $.get('find/fuel/' + invoice_id, function (data) {
+//            $('#modelHeading').html("Update Invoice");
+//            $('#saveBtn').val("edit-invoice");
+//            $('#invoice_id').val(data.id);
+//            $('#update_vehicle_name').val(data.vehicle_name);
+//            $('#update_date').val(data.start_datte);
+//            $('#update_volume').val(data.volume);
+//            $('#update_odometer').val(data.odometer);
+//            $('#update_partial_fuel').val(data.partial_fuel);
+//            $('#update_price').val(data.price);
+//            $('#update_vendor').val(data.vendor);
+//            $('#update_invoice_no').val(data.invoice_no);
+//            $('#previous_invoice_upload').val(data.invoice_upload);
+//            $('#timg1').attr('src',data.invoice_upload);
+//            var url = "{{route('update-Fuel', ['id'=>':id'])}}";
+//            url.replace(':id', invoice_id);
+//            $('#update_fuel_form').attr('action',url);
+//            $('#updateInvoice').modal('show');
+//        })
+//    });
+
+     /*delete  driver */
+     $('body').on('click', '.delete', function() {
+          $('#delete_record').modal('show');
+          $('#yes').on('click',function(){
+              var url= 'delete/reminder/' + $('.delete').data('id');
+              location.href = url;
+          })
+       });
+
+       $('body').on('click', '.delete2', function() {
+          $('#delete_record').modal('show');
+          $('#yes').on('click',function(){
+              var url= 'delete/reminder/' + $('.delete2').data('id');
+              location.href = url;
+          })
+       });
+
+       $('body').on('click', '.delete3', function() {
+          $('#delete_record').modal('show');
+          $('#yes').on('click',function(){
+              var url= 'delete/reminder/' + $('.delete3').data('id');
+              location.href = url;
+          })
+       });
+
+
+
+    
+
+ </script>
 @endsection
