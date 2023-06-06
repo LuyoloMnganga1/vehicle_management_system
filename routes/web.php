@@ -187,11 +187,17 @@ Route::get('delete/reminder/{id}', [ReminderController::class, 'delete_reminder'
 // end of reminders routes
 
 // mintenance routes
-Route::get('maintenance', [MaintenanceController::class, 'maintenance'])->name('maintenance');
+Route::get('get-maintenance', [MaintenanceController::class, 'maintenance'])->name('get_maintenance');
+
 Route::post('addMaintenance', [MaintenanceController::class, 'addMaintenance'])->name('addMaintenance');
-Route::post('updateMaintenance', [MaintenanceController::class, 'updateMaintenance'])->name('updateMaintenance');
-Route::get('deleteMaintenance', [MaintenanceController::class, 'deleteMaintenance'])->name('deleteMaintenance');
-Route::get('maintenance/list', [MaintenanceController::class, 'getMaintenance'])->name('maintenance.list');
+
+Route::post('updateMaintenance/{id}', [MaintenanceController::class, 'updateMaintenance'])->name('updateMaintenance');
+
+Route::get('deleteMaintenance/{id}', [MaintenanceController::class, 'deleteMaintenance'])->name('deleteMaintenance');
+
+Route::get('find/maintenance/{id}', [MaintenanceController::class, 'findMaintenance'])->name('findMaintenance');
+
+Route::get('maintenance', [MaintenanceController::class, 'getMaintenance'])->name('maintenance');
 
 
 // end of maintenance routes
