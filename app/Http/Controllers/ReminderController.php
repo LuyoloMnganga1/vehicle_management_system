@@ -108,7 +108,7 @@ class ReminderController extends Controller
                              
                 
                 ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a> <a href="javascript:void(0)" class="delete2 btn btn-danger btn-sm" data-id = "'.$row->id.'"><i class="fa fa-trash text-light"></i></a>';                    
+                    $actionBtn = '<a href="javascript:void(0)" class="edit2 btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a> <a href="javascript:void(0)" class="delete2 btn btn-danger btn-sm" data-id = "'.$row->id.'"><i class="fa fa-trash text-light"></i></a>';                    
                     return $actionBtn;
                 })
                 ->rawColumns([ 'vehicle_plate','vehicle_make','vehicle_model','reminder_serial_number','due_date','action'])
@@ -138,13 +138,38 @@ class ReminderController extends Controller
                              
                 
                 ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a> <a href="javascript:void(0)" class="delete3 btn btn-danger btn-sm" data-id = "'.$row->id.'"><i class="fa fa-trash text-light"></i></a>';                    
+                    $actionBtn = '<a href="javascript:void(0)" class="edit3 btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a> <a href="javascript:void(0)" class="delete3 btn btn-danger btn-sm" data-id = "'.$row->id.'"><i class="fa fa-trash text-light"></i></a>';                    
                     return $actionBtn;
                 })
                 ->rawColumns([ 'vehicle_plate','vehicle_make','vehicle_model','reminder_serial_number','due_date','action'])
                 ->make(true);
     }
     return view('reminders');
+    }
+    public function find_reminder($id){
+        $reminder = Reminder::find($id);
+        return response()->json($reminder);
+    }
+
+    public function edit_reminder(Request $request,$id){
+        
+        $validator = Validator::make($request->all(), [
+            'vehicle' => ['required'],
+            'reminder_type' => ['required'],
+            'reminder_serial_number' => ['required'],
+            'due_date' => ['required'],
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $data = [
+            'reminder_serial_number' => $request->reminder_serial_number,
+            'due_date'=>$request->due_date,
+        ];
+        Reminder::where('id',$id)->update($data);
+        return redirect()->back()->with('success','Reminder updated successfully');
+
     }
 
     public function delete_reminder($id){

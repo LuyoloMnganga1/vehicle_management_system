@@ -174,6 +174,59 @@ Reminders
   </div>
   {{-- end of Add reminder modal --}}
 
+  
+{{-- edit reminder modal --}}
+<div class="modal fade" id="update_reminder_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Edit Reminder</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="" method="POST" id="update_reminder_form">
+                @csrf
+          <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="">Vehicle</label>
+                        <input type="text" name="vehicle" id="vehicle" class="form-control" readonly>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="">Reminder Type</label>
+                       <input type="text" name="reminder_type" id="update_reminder_type" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="">Policy/Serial Number</label>
+                        <input type="text" name="reminder_serial_number" id="update_reminder_serial_number" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="">Expiry/Due Date</label>
+                        <input type="date" name="due_date" class="form-control" id="update_due_date" required>
+                    </div>
+                </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
+  {{-- end of edit reminder modal --}}
+
 @endsection
 @section('scripts')
 <script>
@@ -370,29 +423,49 @@ Reminders
     });
 </script>
 <script>
-//     /* edit fuel */
-//     $('body').on('click', '.edit', function () {
-//        var invoice_id = $(this).data('id');
-//        $.get('find/fuel/' + invoice_id, function (data) {
-//            $('#modelHeading').html("Update Invoice");
-//            $('#saveBtn').val("edit-invoice");
-//            $('#invoice_id').val(data.id);
-//            $('#update_vehicle_name').val(data.vehicle_name);
-//            $('#update_date').val(data.start_datte);
-//            $('#update_volume').val(data.volume);
-//            $('#update_odometer').val(data.odometer);
-//            $('#update_partial_fuel').val(data.partial_fuel);
-//            $('#update_price').val(data.price);
-//            $('#update_vendor').val(data.vendor);
-//            $('#update_invoice_no').val(data.invoice_no);
-//            $('#previous_invoice_upload').val(data.invoice_upload);
-//            $('#timg1').attr('src',data.invoice_upload);
-//            var url = "{{route('update-Fuel', ['id'=>':id'])}}";
-//            url.replace(':id', invoice_id);
-//            $('#update_fuel_form').attr('action',url);
-//            $('#updateInvoice').modal('show');
-//        })
-//    });
+    /* edit fuel */
+    $('body').on('click', '.edit', function () {
+       var reminder_id = $(this).data('id');
+       $.get('find/reminder/' + reminder_id, function (data) {
+            $('#vehicle').val(data.vehicle_plate);
+            $('#update_reminder_type').val(data.reminder_type);
+            $('#update_reminder_serial_number').val(data.reminder_serial_number);
+            $('#update_due_date').val(data.due_date);
+            var url = '{{ route("edit_reminder", ":id") }}';
+            url = url.replace(':id', data.id);
+           $('#update_reminder_form').attr('action',url);
+           $('#update_reminder_modal').modal('show');
+       })
+   });
+
+   $('body').on('click', '.edit2', function () {
+       var reminder_id = $(this).data('id');
+       $.get('find/reminder/' + reminder_id, function (data) {
+            $('#vehicle').val(data.vehicle_plate);
+            $('#update_reminder_type').val(data.reminder_type);
+            $('#update_reminder_serial_number').val(data.reminder_serial_number);
+            $('#update_due_date').val(data.due_date);
+            var url = '{{ route("edit_reminder", ":id") }}';
+            url = url.replace(':id', data.id);
+           $('#update_reminder_form').attr('action',url);
+           $('#update_reminder_modal').modal('show');
+       })
+   });
+
+   $('body').on('click', '.edit3', function () {
+       var reminder_id = $(this).data('id');
+       $.get('find/reminder/' + reminder_id, function (data) {
+
+            $('#vehicle').val(data.vehicle_plate);
+            $('#update_reminder_type').val(data.reminder_type);
+            $('#update_reminder_serial_number').val(data.reminder_serial_number);
+            $('#update_due_date').val(data.due_date);
+            var url = '{{ route("edit_reminder", ":id") }}';
+            url = url.replace(':id', data.id);
+           $('#update_reminder_form').attr('action',url);
+           $('#update_reminder_modal').modal('show');
+       })
+   });
 
      /*delete  driver */
      $('body').on('click', '.delete', function() {

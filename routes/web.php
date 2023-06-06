@@ -171,6 +171,10 @@ Route::get('staff', [StaffController::class, 'staff'])->name('staff');
 // reminder routes
 Route::get('reminders', [ReminderController::class, 'reminders'])->name('reminders');
 
+Route::get('find/reminder/{id}', [ReminderController::class, 'find_reminder'])->name('find_reminder');
+
+Route::post('edit/reminder/{id}', [ReminderController::class, 'edit_reminder'])->name('edit_reminder');
+
 Route::post('addReminders', [ReminderController::class, 'addReminders'])->name('addReminders');
 
 Route::get('get_service_reminders', [ReminderController::class, 'get_service_reminders'])->name('get_service_reminders');
