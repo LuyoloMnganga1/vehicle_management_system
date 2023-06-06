@@ -187,6 +187,7 @@ Route::get('maintenance', [MaintenanceController::class, 'maintenance'])->name('
 Route::post('addMaintenance', [MaintenanceController::class, 'addMaintenance'])->name('addMaintenance');
 Route::post('updateMaintenance', [MaintenanceController::class, 'updateMaintenance'])->name('updateMaintenance');
 Route::get('deleteMaintenance', [MaintenanceController::class, 'deleteMaintenance'])->name('deleteMaintenance');
+Route::get('maintenance/list', [MaintenanceController::class, 'getMaintenance'])->name('maintenance.list');
 
 
 // end of maintenance routes

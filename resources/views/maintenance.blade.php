@@ -37,13 +37,13 @@ Maintenance
             <table class="table table-hover data-table" style="width: 100%;">
                 <thead class="text-light bg bg-primary">
                     <tr>
-                        <th scope="col">#</th>
+                        <!-- <th scope="col">#</th> -->
+                        <th scope="col">Maintenance Date</th>
                         <th scope="col">Registration No</th>
-                        <th scope="col">Assigned Driver</th>
-                        <th scope="col">Evidence</th>
-                        <th scope="col">Issue Subject</th>
-                        <th scope="col">Priority</th>
-                        <th scope="col">Due Date</th>
+                        <th scope="col">Service Provider</th>
+                        <th scope="col">Odometer</th>
+                        <th scope="col">Current Millage</th>
+                        <th scope="col">Next Service Millage</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -114,25 +114,6 @@ Maintenance
                         <input type="text" name="next_service_millage" id="next_service_millage " class="form-control" required>
                     </div>
                     </div>
-        {{-- <div class="col-md-6">
-            <div class="form-group">
-                <label for="">Issue Evidence</label>
-                <input type="file" name="issue_image" id="issue_image" class="form-control" accept=".jpg,.jpeg,.bmp,.png,.gif,.jfif" required>
-            </div>
-        </div> --}}
-        {{-- <div class="col-md-6">
-            <div class="form-group">
-                <label for="">Priority</label>
-                <select name="priority" id="priority" class="form-control" required>
-                    <option value="" selected> Select priority</option>
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                </select>
-            </div>
-        </div> --}}
-      
-
         </div>
     </div>
         <div class="modal-footer">
@@ -144,159 +125,89 @@ Maintenance
     </div>
   </div>
   <!-- end of add issue modal -->
-<!-- edit issue modal -->
-<div class="modal fade" id="update_issue_info" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Update Issue</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form  id="update_issue_form" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="modal-body">
-                <div class="row">   
-                   @php
-                        $vehicle = App\Models\Vehicle::orderBy('Registration_no', 'ASC')->get();
-                   @endphp
-                     <div class="col-md-6">
-                       <div class="form-group">
-                           <label for=""> Date</label>
-                           <input type="datetime-local" name="due_date" id="due_date" class="form-control" required>
-                       </div>
-                   </div>
-                   <div class="col-md-6">
-                       <div class="form-group">
-                           <label for="">Registration Number</label>
-                           <select name="vehicle_id" id="vehicle_id" class="form-control" required>
-                               <option value="" selected>Select Registration number</option>
-                               @foreach($vehicle as $item )
-                               <option value="{{ $item->id }}">{{ $item->Registration_no }}</option>
-                               @endforeach
-                           </select>
-                       </div>
-                   </div>
-                   <input type="hidden" name="assignee" value="">
-                   <div class="col-md-6">
-                   <div class="form-group">
-                       <label for="">Service Provider</label>
-                       <input type="text" name="service_provider" id="service_provider" class="form-control" required>
-                   </div>
-                   </div>
-                   <div class="col-md-6">
-                       <div class="form-group">
-                           <label for="">Odometer</label>
-                           <input type="text" name="odometer" id="odometer" class="form-control" required>
-                       </div>
-                   </div>
-                   <div class="col-md-6">
-                       <div class="form-group">
-                           <label for="" >Current Millage </label>
-                           <input type="text" name="current_millage" id="current_millage " class="form-control" required>
-                       </div>
-                       </div>
-                       <div class="col-md-6">
-                           <div class="form-group">
-                               <label for="" >Next Service Millage </label>
-                               <input type="datetime-local" name="next_service_millage" id="next_service_millage " class="form-control" required>
-                           </div>
-                           </div>
-               {{-- <div class="col-md-6">
-                   <div class="form-group">
-                       <label for="">Issue Evidence</label>
-                       <input type="file" name="issue_image" id="issue_image" class="form-control" accept=".jpg,.jpeg,.bmp,.png,.gif,.jfif" required>
-                   </div>
-               </div> --}}
-               {{-- <div class="col-md-6">
-                   <div class="form-group">
-                       <label for="">Priority</label>
-                       <select name="priority" id="priority" class="form-control" required>
-                           <option value="" selected> Select priority</option>
-                           <option value="low">Low</option>
-                           <option value="medium">Medium</option>
-                           <option value="high">High</option>
-                       </select>
-                   </div>
-               </div> --}}
-             
-       
-               </div>
-           </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Update</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  <!-- end of edit issue modal -->
-  {{-- view issue moal --}}
-<div class="modal fade" id="issue_info" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">View Issue</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h5 class="text-center h5 mb-0 text-blue">Issue Information</h5>
-                <small class="text-center text-muted font-14">Bellow is the details of the issue</small>
-                <hr>
-                <div class="row">
-                    <div class="col-md-6">
-                        <ul>
-                            <li>
-                                <span>Vehicle Registration Number :</span>
-                                <p class="view_issue" id="view_issue_reg_no"></p>
-                            </li>
-                            <li>
-                                <span>Issue Subject :</span>
-                                <p class="view_issue" id="view_issue_subject"></p>
-                            </li>
-                            <li>
-                                <span>Priority  :</span>
-                                <p class="view_issue" id="view_issue_priority"></p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6">
-                        <ul>
-                            <li>
-                                <span>Issue By :</span>
-                                <p class="view_issue" id="view_issue_by"></p>
-                            </li>
-                            <li>
-                                <span>Issue Description :</span>
-                                <p class="view_issue" id="view_issue_description"></p>
-                            </li>
-                            <li>
-                                <span>Due Date :</span>
-                                <p class="view_issue" id="view_issue_due_date"></p>
-                            </li>
-                        </ul>
-                    </div>
 
-                </div>
-                        <div class="form-group col-md-12">
-                            <label for="inputEmail4">Issue Image</label>
-                            <img src="" alt="issue image" class="form-control" id="view_issue_image" style="width: 250px;height:300px">
-                        </div>
-                    </div>                                            
-                    <div class="modal-footer">                                       
-                      <button type="button" class="btn btn-secondary"
-                          data-dismiss="modal">Close</button>
-                  </div>
+ 
 
-                </form>
-            </div>
+@endSection
 
-        </div>
-    </div>
-</div>
-{{--  end of view issue moal --}}
+@section('scripts')
+<script type="text/javascript">
+  $(function () {
+    
+    var table = $('.data-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('maintenance') }}",
+        columns: [
+            {
+                data: 'DT_RowIndex',
+                name: 'DT_RowIndex',
+                orderable: false,
+                searchable: false,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'maintenance_date',
+                name: 'maintenance_date',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'vehicle_id',
+                name: 'vehicle_id',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            
+            {
+                data: 'service_provider',
+                name: 'service_provider',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'odometer', 
+                name: 'odometer',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'current_millage', 
+                name: 'current_millage',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'next_service_millage', 
+                name: 'next_service_millage',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'action', 
+                name: 'action',
+                orderable: false,
+                searchable: false,
+                print: false,
+                className: 'text-center'
+            }
+        ]
+    });
+    
+  });
+</script>
+
 @endsection
