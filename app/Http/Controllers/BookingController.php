@@ -124,7 +124,10 @@ class BookingController extends Controller
     public function getBookings(Request $request){
         if ($request->ajax()) {
             if(Auth::user()->hasRole('Admin')){
-                $data = Booking::orderBy('created_at', 'DESC')->get();
+                $data = Booking::whereBetween('created_at', [
+                    Carbon::now()->startOfYear(),
+                    Carbon::now()->endOfYear(),
+                ])->orderBy('created_at', 'DESC')->get();
             }else{
                 $data = Booking::where('email',Auth::user()->email)->orderBy('created_at', 'DESC')->get();
             }
