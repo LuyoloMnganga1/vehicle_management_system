@@ -77,6 +77,9 @@ Report
 </div>
 @endif
 <div class="row">
+@php
+    $vehicle = App\Models\Vehicle::orderBy('Registration_no', 'ASC')->get();
+@endphp
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-30">
         <div class="card height-100-p overflow-hidden">
             <div class="card-header">
@@ -93,24 +96,17 @@ Report
                 <fieldset class="scheduler-border border border-primary">
                     <legend class="scheduler-border">Report Filtering</legend>
                     <div class="row">
-                        <div class="col-lg-4">
+                     
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">Report From</label>
-                                <input type="date" name="position" class="custom-select browser-default">
+                                <label for="">Vehicle</label>
+                                <select name="vehicle_id" id="vehicle_id" class="form-control filter_item" required>
+                                    <option value="" selected>Select Registration Number</option>
+                                    @foreach($vehicle as $item )
+                                    <option value="{{ $item->id }}">{{ $item->Registration_no }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <label for="" class="control-label">Report To</label>
-                            <input type="date" name="gender" id="gender" class="custom-select browser-default filter_item">
-                               
-                        </div>
-                        <div class="col-lg-4">
-                            <label for="" class="control-label">Vehicle</label>
-                            <select name="education_level" id="education_level" class="custom-select browser-default filter_item" >
-                                <option value="none"> Select Vehicle</option>
-                                <option value="NQF Level 1">Grade 9 </option>
-                               
-                            </select>
                         </div>
                         <div class="col-lg-4">
                             <label for="" class="control-label">Driver</label>
@@ -120,7 +116,7 @@ Report
                                 
                             </select>
                         </div>
-                        <div class="col-lg-4">
+                        <!-- <div class="col-lg-4">
                             <label for="" class="control-label">Maintenance</label>
                             <select name="process_id" id="process_id" class="custom-select browser-default " >
                                 <option value="none"> Select progress status</option>
@@ -129,8 +125,8 @@ Report
                                     <option value=""></option>
                               
                             </select>
-                        </div>
-                        <div class="col-lg-4">
+                        </div> -->
+                        <!-- <div class="col-lg-4">
                             <label for="" class="control-label">Fuel Cost</label>
                             <select name="process_id" id="process_id" class="custom-select browser-default " >
                                 <option value="none"> Select progress status</option>
@@ -139,9 +135,9 @@ Report
                                     <option value=""></option>
                               
                             </select>
-                        </div>
+                        </div> -->
 
-                        <div class="col-lg-4">
+                        <!-- <div class="col-lg-4">
                             <label for="" class="control-label">Mechanical repairs</label>
                             <select name="process_id" id="process_id" class="custom-select browser-default " >
                                 <option value="none"> Select progress status</option>
@@ -150,7 +146,7 @@ Report
                                     <option value=""></option>
                               
                             </select>
-                        </div>
+                        </div> -->
                        
                     </div>
                 </fieldset>
@@ -159,18 +155,15 @@ Report
                     <table class="table table-hover data-table" style="width: 100%;">
                         <thead class="text-light bg bg-primary">
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Full Name(s) </th>
-                                <th scope="col">Vehicle</th>
-                                <th scope="col">Date From</th>
-                                <th scope="col">Date To</th>
-                                <th scope="col">fuel Cost</th>
-                                <th scope="col">Maintenance Cost</th>
-                                <th scope="col">Criminal Record?</th>
-                                <th scope="col">NQF Level</th>
-                                <th scope="col">Institution</th>
-                                <th scope="col">Qualification</th>
-                                <th scope="col">Progress Status</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Full Name</th>
+                            <th scope="col">Booking Date</th>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Vehicle</th>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Vehicle</th>
+                            <th scope="col">Action</th>
+                                
                                 
                             </tr>
                         </thead>
@@ -187,5 +180,103 @@ Report
     </div>
 
 </div>
+
+@endsection
+
+@section('scripts')
+<script>
+    $(document).ready(function () {
+        $('.filter_item').on('change',function () {
+            var vehicle_id = $('#vehicle_id').val();
+            // var gender = $('#gender').val();
+            // var education_level = $('#education_level').val();
+            // var licence = $('#licence').val();
+            // var process_id = $('#process_id').val();
+            // var institution = $('#institution').val();
+
+            var routing =  "{{ route('getRecords_filtered', ['vehicle_id' => ':vehicle_id']) }}";
+            routing = routing.replace(':position', position);
+            // routing = routing.replace(':gender', gender);
+            // routing = routing.replace(':education_level', education_level);
+            // routing = routing.replace(':licence', licence);
+            // routing = routing.replace(':process_id', process_id);
+            // routing = routing.replace(':institution', institution);
+                $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "GET",
+                url:  routing,
+                dataType: "json",
+                success: function(response) {
+                    $('.data-table').DataTable().destroy();
+                    loadDataTable(routing);
+                },
+                error: function(data) {
+                    console.log('Error:', data);
+                }
+            });
+        })
+    });
+</script>
+<script>
+$(function () {
+      
+      var table = $('.data-table').DataTable({
+          processing: true,
+          serverSide: true,
+          ajax:"{{route('Report.list')}}",
+          columns: [
+            {
+                data: 'DT_RowIndex',
+                name: 'DT_RowIndex',
+                orderable: false,
+                searchable: false,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'full_name',
+                name: 'full_name',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'trip_start_date',
+                name: 'trip_start_date',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'destination',
+                name: 'destination',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'vehicle_plate',
+                name: 'vehicle_plate',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },            
+            {
+                data: 'action', 
+                name: 'action', 
+                orderable: false, 
+                searchable: false,
+            },
+          ]
+      });
+      
+    });
+  </script>
 
 @endsection

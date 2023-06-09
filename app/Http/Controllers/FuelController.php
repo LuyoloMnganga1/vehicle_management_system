@@ -148,4 +148,6 @@ class FuelController extends Controller
         Fuel::destroy($id);
         return redirect()->back()->with('success','Fuel has been deleted successfully');
     }
+
+   
 }

@@ -203,6 +203,8 @@ Route::get('maintenance', [MaintenanceController::class, 'getMaintenance'])->nam
 // end of maintenance routes
 // report routes
 Route::get('report', [ReportController::class, 'report'])->name('report');
+Route::get('Report/list', [ReportController::class, 'getRecords'])->name('Report.list');
+Route::get('Report_filtered/{vehicle_plate}', [ReportController::class, 'getReport_filtered'])->name('Report_filtered');
 
 // end report routes
 
