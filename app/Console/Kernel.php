@@ -15,11 +15,13 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\DailyReminder::class,
+        Commands\MaintanceReminder::class,
     ];
 
     protected function schedule(Schedule $schedule)
     {
        $schedule->command('reminder:daily')->twiceDaily(12, 15);
+       $schedule->command('maintenance:reminder')->twiceDaily(11, 14);
     }
 
     /**

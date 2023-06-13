@@ -162,6 +162,52 @@ class EmailBodyController extends Controller
         </tr>';
     return $body;
     }
+    public static function  maintenance_reminder($user,$reminder){
+        $body = '
+        <tr>
+            <td align="center" style="padding:0;">
+                    <tr>
+                        <td style="padding:36px 30px 42px 30px;">
+                                <tr>
+                                    <td style="padding:0 0 36px 0;color:#153643;">
+                                        <p style="font-weight:bold;margin:30px 0 20px 0;font-family:Arial,sans-serif;">
+                                            Good day '.$user['name'].' '.$user['surname'].',
+                                        <p
+                                            style="margin:0 0 12px 0;font-size:14px;line-height:24px;font-family:Arial,sans-serif;">
+                                              This serve has to inform you that maintenance reminder that is due or expire in 10 days time. Please check the vehicle management system on maintenance tab for more information.<br>
+                                              <ul>
+                                                <li><strong> Reminder Type : </strong>'.$reminder['maintenance_date'].'</li>
+                                                <li><strong> Service Provider : </strong>'.$reminder['service_provider'].'</li>
+                                                <li><strong> Current Millage : </strong>'.$reminder['current_millage'].'</li>
+                                                <li><strong> Next Service Millage : </strong>'.$reminder['next_service_millage'].'</li>
+                                              </ul>
+                                        </p>
+                                        <br>
+                                        </p>
+                                        <p style="text-align: center;">
+                                          <a   href="http://127.0.0.1:8000/dashboard" tagert="_blank"  style=" margin: 10px 0px;
+                                          border-radius: 4px;
+                                          text-decoration: none;
+                                          color: #fff !important;
+                                          height: 46px;
+                                          padding: 10px 20px;
+                                          font-size: 16px;
+                                          font-weight: 600;
+                                          background-color: #021d68 !important;">Access system</a>
+                                      </p>
+                                        <p style="margin:20px 0 12px 0;font-size:14px;font-family:Arial,sans-serif;">
+                                            Thank
+                                            you, </p>
+                                        <p style="margin:0 0 12px 0;font-size:14px;font-family:Arial,sans-serif;">
+                                            VMS </p>
+                                    </td>
+                                </tr>
+                        </td>
+                    </tr>
+            </td>
+        </tr>';
+    return $body;
+    }
     public static function  daily_reminder($user,$reminder){
         $body = '
         <tr>
