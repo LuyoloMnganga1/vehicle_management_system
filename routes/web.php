@@ -16,6 +16,7 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\MaintenanceController;
+use App\Http\Controllers\UtilitiesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -207,7 +208,10 @@ Route::get('Report/list', [ReportController::class, 'getRecords'])->name('Report
 Route::get('Report_filtered/{vehicle_plate}', [ReportController::class, 'getReport_filtered'])->name('Report_filtered');
 
 // end report routes
-
+//utilities
+Route::get('utilities', [UtilitiesController::class, 'index'])->name('utilities');
+Route::post('import/bookings', [UtilitiesController::class, 'import_bookings'])->name('import_bookings');
+//end of utilities
 Route::post('registerStore',[RegisterUserController::class, 'store'])->name('registerStore');
 Route::post('image/update',[RegisterUserController::class, 'profile_image'])->name('image/update');
 Route::post('signature',[RegisterUserController::class, 'signature'])->name('signature');

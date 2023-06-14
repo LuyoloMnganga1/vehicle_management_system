@@ -40,7 +40,7 @@ class DashboardController extends Controller
     }
     public function booking_list(Request $request){
             if ($request->ajax()) {
-                $data = Booking::orderBy('created_at', 'DESC')->get();
+                $data = Booking::where('status','Pending')->orderBy('created_at', 'DESC')->get();
                 return Datatables::of($data)
                         //**********INDEX COLUMN ************/
                         ->addIndexColumn()

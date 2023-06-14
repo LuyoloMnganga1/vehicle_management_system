@@ -75,11 +75,18 @@
                         <span class="micon material-icons">local_gas_station</span><span class="mtext"> Fuel Entry</span>
                     </a>
                 </li>
+                @if(Auth::user()->hasRole('Admin') || Auth::user()->hasRole('General-Manager') || Auth::user()->hasRole('SuperAdmin'))
                 <li>
                     <a href="{{route('report')}}" class="dropdown-toggle no-arrow">
                         <span class="micon fa fa-line-chart"></span><span class="mtext">Report</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('utilities') }}" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-gear"></span><span class="mtext">Utilities</span>
+                    </a>
+                </li>
+                @endif
             </ul>
         </div>
     </div>
