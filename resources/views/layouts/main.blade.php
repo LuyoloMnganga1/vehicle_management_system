@@ -32,7 +32,7 @@
 <style>
     .dataTables_wrapper .dataTables_paginate .paginate_button.current {
        color: white !important;
-       background-color: #18345D !important;
+       background-color: transparent !important;
        border-color: #18345D !important;
 
 }

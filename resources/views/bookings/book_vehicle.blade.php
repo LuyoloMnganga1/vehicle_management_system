@@ -58,6 +58,18 @@ Booking Entry
                 <option value="" selected disabled>Select Available Vehicles</option>
               </select>
           </div>
+          <div class="mb-3 row">
+            <label for="" class="col-sm-2 col-form-label">Driver</label>
+            <select class="form-control form-control-sm col-sm-4" name="driver" id="driver"  required>
+                @php
+                        $Drivers = App\Models\User::join('drivers', 'users.id', '=', 'drivers.user_id')->select('users.name', 'users.surname','users.id')->get();
+                @endphp
+                <option value="none">None</option>
+                @foreach($Drivers as $driver)
+                <option value="{{ $driver->name }} {{ $driver->surname }}">{{ $driver->name }} {{ $driver->surname }}</option>
+                @endforeach
+            </select>
+          </div>
             <div class="mb-3 row">
                 <div class="col-sm-12">
                     <label for="exampleFormControlTextarea1" class="form-label">Trip Details</label>

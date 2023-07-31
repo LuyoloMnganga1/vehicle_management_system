@@ -33,10 +33,11 @@ Booking History
                 <thead class="text-light bg bg-primary">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Full Name</th>
+                        <th scope="col">Booker</th>
                         <th scope="col">Booking Date</th>
                         <th scope="col">Destination</th>
                         <th scope="col">Vehicle</th>
+                        <th scope="col">Driver</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -164,7 +165,15 @@ Booking History
                 searchable: true,
                 print: true,
                 className: 'text-center'
-            },            
+            },  
+            {
+                data: 'driver',
+                name: 'driver',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },  
             {
                 data: 'action', 
                 name: 'action', 

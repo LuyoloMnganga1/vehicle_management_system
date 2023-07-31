@@ -205,7 +205,7 @@ Route::get('maintenance', [MaintenanceController::class, 'getMaintenance'])->nam
 // report routes
 Route::get('report', [ReportController::class, 'report'])->name('report');
 Route::get('Report/list', [ReportController::class, 'getRecords'])->name('Report.list');
-Route::get('Report_filtered/{vehicle_plate}', [ReportController::class, 'getReport_filtered'])->name('Report_filtered');
+Route::get('Report_filtered/{vehicle_id}/{driver}/{status}', [ReportController::class, 'getReport_filtered'])->name('Report_filtered');
 
 // end report routes
 //utilities

@@ -246,8 +246,8 @@ Assigned Vehicles
                           @endphp
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4">Registration Number</label>
-                                <select name="Registration_no" id=""  class="custom-select my-1 mr-sm-2 ">
-                                <option selected>Select Registration number</option>
+                                <select name="Registration_no" id=""  class="custom-select my-1 mr-sm-2 " required>
+                                <option selected value="">Select Registration number</option>
                                 @foreach ($vehicles as $item)                            
                                     <option  value="{{ $item->Registration_no }}">{{$item->vehicle_name}}  {{ $item->vehicle_type }} {{$item->vehicle_model}} ({{$item->Registration_no}})</option>
                                 @endforeach

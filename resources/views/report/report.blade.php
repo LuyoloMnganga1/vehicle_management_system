@@ -89,92 +89,88 @@ Report
             </div>
             
             <div class="card-body ">
-
-                <fieldset class="scheduler-border border border-primary">
-                    <legend class="scheduler-border">Report Filtering</legend>
-                    <div class="row">
-                     
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Vehicle</label>
-                                <select name="vehicle_id" id="vehicle_id" class="form-control filter_item" required>
+                <nav>
+                    <div class="nav nav-tabs mb-4" id="nav-tab" role="tablist">
+                      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Bookings</a>
+                      <a class="nav-item nav-link" id="nav-vehicle-tab" data-toggle="tab" href="#nav-vehicle" role="tab" aria-controls="nav-vehicle" aria-selected="false">Vehicles</a>
+                      <a class="nav-item nav-link" id="nav-fuel-tab" data-toggle="tab" href="#nav-fuel" role="tab" aria-controls="nav-fuel" aria-selected="false">Fuel Entry</a>
+                      <a class="nav-item nav-link" id="nav-issues-tab" data-toggle="tab" href="#nav-issues" role="tab" aria-controls="nav-issues" aria-selected="false">Issues</a>
+                    </div>
+                  </nav>
+                  <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <fieldset class="scheduler-border border border-primary">
+                        <legend class="scheduler-border">Report Filtering</legend>
+                        <div class="row">
+                        
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Vehicle</label>
+                                    <select name="vehicle_id" id="vehicle_id" class="form-control filter_item" required>
+                                        @php
+                                            $vehicle = App\Models\Vehicle::orderBy('Registration_no', 'ASC')->get();
+                                        @endphp
+                                        <option value="none" selected>None</option>
+                                        @foreach($vehicle as $item )
+                                        <option value="{{ $item->id }}">{{ $item->Registration_no }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="" class="control-label">Driver</label>
+                                <select name="driver" id="driver" class="custom-select browser-default filter_item" required>
                                     @php
-                                        $vehicle = App\Models\Vehicle::orderBy('Registration_no', 'ASC')->get();
+                                            $Drivers = App\Models\User::join('drivers', 'users.id', '=', 'drivers.user_id')->select('users.name', 'users.surname','users.id')->get();
                                     @endphp
-                                    <option value="none" selected>None</option>
-                                    @foreach($vehicle as $item )
-                                    <option value="{{ $item->id }}">{{ $item->Registration_no }}</option>
+                                    <option value="none">None</option>
+                                    @foreach($Drivers as $driver)
+                                    <option value="{{ $driver->name }} {{ $driver->surname }}">{{ $driver->name }} {{ $driver->surname }}</option>
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="col-lg-4">
+                                <label for="" class="control-label">Booking Status</label>
+                                <select name="status" id="status" class="custom-select browser-default filter_item" >
+                                    <option value="none">None </option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Rejected">Rejected</option>                              
+                                </select>
+                            </div> 
+                        
+                                                  
                         </div>
-                        <div class="col-lg-4">
-                            <label for="" class="control-label">Driver</label>
-                            <select name="licence" id="licence" class="custom-select browser-default filter_item" required>
-                                @php
-                                        $Drivers = App\Models\User::join('drivers', 'users.id', '=', 'drivers.user_id')->select('users.name', 'users.surname','users.id')->get();
-                                @endphp
-                                <option value="none">None</option>
-                                @foreach($Drivers as $driver)
-                                <option value="{{ $driver->name }} {{ $driver->surname }}">{{ $driver->name }} {{ $driver->surname }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-lg-4">
-                            <label for="" class="control-label">Maintenance</label>
-                            <select name="process_id" id="process_id" class="custom-select browser-default " >
-                                <option value="none"> Select progress status</option>
-                                <option value="new">New</option>
-                               
-                                    <option value=""></option>
-                              
-                            </select>
-                        </div> 
-                        <div class="col-lg-4">
-                            <label for="" class="control-label">Fuel Cost</label>
-                            <select name="process_id" id="process_id" class="custom-select browser-default " >
-                                <option value="none"> Select progress status</option>
-                                <option value="new">New</option>
-                               
-                                    <option value=""></option>
-                              
-                            </select>
-                        </div> 
+                    </fieldset>
 
-                        <div class="col-lg-4">
-                            <label for="" class="control-label">Mechanical repairs</label>
-                            <select name="process_id" id="process_id" class="custom-select browser-default " >
-                                <option value="none"> Select progress status</option>
-                                <option value="new">New</option>
-                               
-                                    <option value=""></option>
-                              
-                            </select>
-                        </div> 
-                       
+                    <div class="card-content table-responsive">
+                        <table class="table table-hover data-table" style="width: 100%;">
+                            <thead class="text-light bg bg-primary">
+                                <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Booker</th>
+                                <th scope="col">Booking Date</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Vehicle</th>
+                                <th scope="col">Driver</th>
+                                <th scope="col">Destination</th>
+                                <th scope="col">Booking status</th>
+                                <th scope="col">Admin Comment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                            </tbody>
+                        </table>
+
                     </div>
-                </fieldset>
-
-                <div class="card-content table-responsive">
-                    <table class="table table-hover data-table" style="width: 100%;">
-                        <thead class="text-light bg bg-primary">
-                            <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Full Name</th>
-                            <th scope="col">Booking Date</th>
-                            <th scope="col">Destination</th>
-                            <th scope="col">Vehicle</th>
-                            <th scope="col">Destination</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    </div>
 
 
-                        </tbody>
-                    </table>
-
-                </div>
-
+                    <div class="tab-pane fade" id="nav-vehicle" role="tabpanel" aria-labelledby="nav-vehicle-tab">V...</div>
+                    <div class="tab-pane fade" id="nav-fuel" role="tabpanel" aria-labelledby="nav-fuel-tab">F...</div>
+                    <div class="tab-pane fade" id="nav-issues" role="tabpanel" aria-labelledby="nav-issues-tab">I...</div>
+                  </div>
             </div>
         </div>
     </div>
@@ -194,19 +190,13 @@ Report
     $(document).ready(function () {
         $('.filter_item').on('change',function () {
             var vehicle_id = $('#vehicle_id').val();
-            // var gender = $('#gender').val();
-            // var education_level = $('#education_level').val();
-            // var licence = $('#licence').val();
-            // var process_id = $('#process_id').val();
-            // var institution = $('#institution').val();
+            var driver = $('#driver').val();
+            var status = $('#status').val();
 
-            // var routing =  "{{ route('Report_filtered', ['vehicle_plate' => ':vehicle_id']) }}";
-            // routing = routing.replace(':position', position);
-            // routing = routing.replace(':gender', gender);
-            // routing = routing.replace(':education_level', education_level);
-            // routing = routing.replace(':licence', licence);
-            // routing = routing.replace(':process_id', process_id);
-            // routing = routing.replace(':institution', institution);
+            var routing =  "{{ route('Report_filtered', ['vehicle_id' => ':vehicle_id','driver' => ':driver','status' => ':status']) }}";
+            routing = routing.replace(':vehicle_id', vehicle_id);
+            routing = routing.replace(':driver', driver);
+            routing = routing.replace(':status', status);
                 $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -239,7 +229,7 @@ Report
                 }
             },
                 { extend: 'pdf',text:'<i class="fa fa-file-pdf-o"> PDF</i>', className: 'bg bg-danger text-light border border-danger',
-                customize : function (doc) {
+                customize : function (doc) {  
 						//Remove the title created by datatTables
 						doc.content.splice(0,1);
 						//Create a date string that we use in the footer. Format is dd-mm-yyyy
@@ -313,8 +303,30 @@ Report
                 className: 'text-center'
             },
             {
-                data: 'trip_start_date',
-                name: 'trip_start_date',
+                data: 'created_at', 
+                name: 'created_at', 
+                orderable: false, 
+                searchable: false,
+            },
+            {
+                data: 'duration',
+                name: 'duration',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'vehicle_plate',
+                name: 'vehicle_plate',
+                orderable: true,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            },
+            {
+                data: 'driver',
+                name: 'driver',
                 orderable: true,
                 searchable: true,
                 print: true,
@@ -329,19 +341,22 @@ Report
                 className: 'text-center'
             },
             {
-                data: 'vehicle_plate',
-                name: 'vehicle_plate',
+                data: 'status',
+                name: 'status',
                 orderable: true,
                 searchable: true,
                 print: true,
                 className: 'text-center'
-            },            
-            {
-                data: 'action', 
-                name: 'action', 
-                orderable: false, 
-                searchable: false,
             },
+            {
+                data: 'comment',
+                name: 'comment',
+                orderable: false,
+                searchable: true,
+                print: true,
+                className: 'text-center'
+            }
+
           ]
       });
      }

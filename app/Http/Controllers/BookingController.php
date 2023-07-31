@@ -35,6 +35,7 @@ class BookingController extends Controller
             'return_date' => ['required', 'string' , 'max:225'],
             'destination' => ['required', 'string' , 'max:225'],
             'vehicle_id' => ['required', 'string' , 'max:100000'],
+            'driver'=> ['required', 'string' , 'max:100000'],
             'trip_datails' => ['required', 'string' , 'max:100000'],
         ]);
         if ($validator->fails()) {
@@ -50,6 +51,7 @@ class BookingController extends Controller
             'return_date' => $request->return_date,
             'destination' => $request->destination,
             'vehicle_id' => $request->vehicle_id,
+            'driver'=>$request->driver,
             'trip_datails' => $request->trip_datails,
             'status' => 'Pending',
             'comment' => 'N/A',
@@ -165,15 +167,13 @@ class BookingController extends Controller
                         $vehicle_plate = Vehicle::where('id', $row->vehicle_id)->value('Registration_no');
                         return $vehicle_plate;
                         })
-                    //**********END OF PLATE COLUMN ************/
-                    
                     
                     ->addColumn('action', function($row){
                         $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a> 
                         <a href="javascript:void(0)" class="delete btn btn-danger btn-sm" id="delete" data-id ="'.$row->id.'"><i class="fa fa-trash text-light"></i></a>';
                         return $actionBtn;
                     })
-                    ->rawColumns(['full_name','trip_start_date','destination','vehicle_plate','action'])
+                    ->rawColumns(['full_name','trip_start_date','destination','driver','vehicle_plate','action'])
                     ->make(true);
         }
         return view('bookings.booking_history');
