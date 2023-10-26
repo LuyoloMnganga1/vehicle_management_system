@@ -128,6 +128,10 @@ Route::get('councillors',[VehicleController::class, 'councillors'])->name('counc
 // Bookings Routes
 Route::get('bookings',[BookingController::class, 'bookings'])->name('bookings');
 
+Route::get('booking/calender',[BookingController::class, 'booking_calender'])->name('booking-calender');
+
+Route::get('bookings',[BookingController::class, 'bookings'])->name('bookings');
+
 Route::post('add-log-book',[BookingController::class, 'addLogBook'])->name('add-log-book');
 
 Route::post('return-log-book',[BookingController::class, 'returnLogBook'])->name('return-log-book');
@@ -161,7 +165,7 @@ Route::get('deleloginfo/{id}',[BookingController::class, 'deleloginfo'])->name('
 Route::get('findlogDetails/{id}',[BookingController::class, 'findlogDetails'])->name('findlogDetails');
 // End Booking Routes
 
-// staff routes 
+// staff routes
 Route::post('staffUpdate/{id}', [StaffController::class, 'staffUpdate'])->name('staffUpdate');
 
 Route::get('staffdestroy/{id}',[StaffController::class, 'staffdestroy'])->name('staffdestroy');
@@ -239,6 +243,6 @@ Route::post('/reset-password',  [ResetPasswordController::class,'updatePassword'
 
 Route::post('/reset-PasswordByUser',  [ResetPasswordController::class,'updatePasswordbyUser'])->name('reset-PasswordByUser');
 
-//portal route 
+//portal route
 Route::get('/portal_auth/{email}',[LoginController::class, 'auth_by_portal'])->name('portal_auth');
-//end of portal 
+//end of portal

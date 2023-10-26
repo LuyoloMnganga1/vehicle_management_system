@@ -6,10 +6,10 @@
     	<!-- Mobile Specific Metas -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- Site favicon -->
-    <link rel="icon" href="images/logo.png" sizes="16x16" type="images/logo.png">
+    <link rel="icon" href="{{asset('images/logo.png')}}" sizes="16x16" type="{{asset('images/logo.png')}}">
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    
+
     <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
@@ -19,9 +19,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
 
     	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="vendors/styles/core.css">
-	<link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css">
-	<link rel="stylesheet" type="text/css" href="vendors/styles/style.css">
+	<link rel="stylesheet" type="text/css" href="{{asset('vendors/styles/core.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('vendors/styles/icon-font.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('vendors/styles/style.css')}}">
 
     <script type="text/javascript">
         function preventBack() { window.history.forward(); }
@@ -148,8 +148,8 @@ color: black;
             </div>
             <div class="modal-body">
                  <h6>Are you sure you want to delete this record?</h6>
-                    </div>                                            
-                    <div class="modal-footer">                                       
+                    </div>
+                    <div class="modal-footer">
                       <button id="yes" class="btn btn-danger">Yes</button>
                       <button type="button" class="btn btn-secondary"
                           data-dismiss="modal">No</button>

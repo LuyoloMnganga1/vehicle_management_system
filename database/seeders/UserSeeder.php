@@ -48,7 +48,7 @@ class UserSeeder extends Seeder
                 'apointment_date' => '2019-02-01',
                 'department' => 'Software Development',
                 'job_title' => 'Intern Software Developer',
-                'role' => 'user',
+                'role' => ' Admin',
                 'location' => 'East London,Eastern Cape',
                 'password' => Hash::make('password'),
             ],

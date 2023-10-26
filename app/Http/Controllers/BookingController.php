@@ -28,7 +28,7 @@ class BookingController extends Controller
 
     public function bookVehicle(Request $request){
         $validator = Validator::make($request->all(), [
-            
+
             'full_name' => ['required', 'string' , 'max:225'],
             'email' => ['required', 'string' , 'max:100000'],
             'trip_start_date' => ['required', 'string' , 'max:225'],
@@ -44,7 +44,7 @@ class BookingController extends Controller
                         ->withInput();
         }
         $data = [
-            
+
             'full_name' => $request->full_name,
             'email' => $request->email,
             'trip_start_date' => $request->trip_start_date,
@@ -55,7 +55,7 @@ class BookingController extends Controller
             'trip_datails' => $request->trip_datails,
             'status' => 'Pending',
             'comment' => 'N/A',
-            
+
         ];
         Booking::create($data);
 
@@ -69,13 +69,13 @@ class BookingController extends Controller
 
     public function updateBooking(Request $request,$id){
         $validator = Validator::make($request->all(), [
-            
+
             'full_name' => ['required', 'string' , 'max:225'],
             'email' => ['required', 'string' , 'max:100000'],
             'trip_start_date' => ['required', 'string' , 'max:225'],
             'return_date' => ['required', 'string' , 'max:225'],
             'destination' => ['required', 'string' , 'max:225'],
-            'trip_datails' => ['required', 'string' , 'max:100000'],            
+            'trip_datails' => ['required', 'string' , 'max:100000'],
         ]);
         if ($validator->fails()) {
             return redirect()->back()
@@ -89,7 +89,7 @@ class BookingController extends Controller
             'return_date' => $request->return_date,
             'destination' => $request->destination,
             'trip_datails' => $request->trip_datails,
-            
+
         ];
         Booking::whereId($id)->update($data);
         return redirect()->back()->with('success','Booking  has been updated successfully');
@@ -135,7 +135,7 @@ class BookingController extends Controller
             }
             return Datatables::of($data)
                     //**********INDEX COLUMN ************/
-                  
+
                     ->addIndexColumn()
                     //**********END OF INDEX COLUMN ************/
                      //**********FULL NAME COLUMN ************/
@@ -156,7 +156,7 @@ class BookingController extends Controller
                         return $trip_start_date;
                         })
                     /**********END OF BOOKING DATE COLUMN ************/
-                   
+
                     //**********BOOKING DATE COLUMN ************/
                     ->addColumn('destination', function($row){
                         $destination = $row->destination;
@@ -167,9 +167,9 @@ class BookingController extends Controller
                         $vehicle_plate = Vehicle::where('id', $row->vehicle_id)->value('Registration_no');
                         return $vehicle_plate;
                         })
-                    
+
                     ->addColumn('action', function($row){
-                        $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a> 
+                        $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a>
                         <a href="javascript:void(0)" class="delete btn btn-danger btn-sm" id="delete" data-id ="'.$row->id.'"><i class="fa fa-trash text-light"></i></a>';
                         return $actionBtn;
                     })
@@ -186,7 +186,7 @@ class BookingController extends Controller
         $vehicle_plate = Vehicle::where('id', $booking->vehicle_id)->value('Registration_no');
 
         $data = [
-            
+
             'full_name' => $booking->full_name,
             'email' => $booking->email,
             'trip_start_date' => $booking->trip_start_date,
@@ -196,7 +196,7 @@ class BookingController extends Controller
             'trip_datails' => $booking->trip_datails,
             'status' => $booking->status,
             'comment' => $booking->comment,
-            
+
         ];
 
 
@@ -225,7 +225,7 @@ class BookingController extends Controller
         }
 
         // dd($reg_no);
-       
+
         return view('bookings.log_book')->with(
             [
                 'loog'=>$loog,
@@ -254,19 +254,19 @@ class BookingController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
-        
+
         $vehicle_id = Vehicle::where('Registration_no',$request->vehicle_id)->value('id');
         $data = [
             'vehicle_id' => $vehicle_id,
             'full_name' => $request->full_name,
             'trip_start_date' => Carbon::parse($request->trip_start_date)->toDateTimeString(),
             'trip_end_date' => Carbon::parse($request->trip_end_date)->toDateTimeString(),
-            'start_odometer' => $request->start_odometer,            
+            'start_odometer' => $request->start_odometer,
             'kilometers' => $request->kilometers,
             'destination_start' => $request->destination_start,
             'destination_end' => $request->destination_end,
             'trip_details' => $request->trip_details,
-            'petrol' => $request->petrol,            
+            'petrol' => $request->petrol,
             'oil' => $request->oil,
             'start_comment' => $request->start_comment,
         ];
@@ -289,7 +289,7 @@ class BookingController extends Controller
             'return_kilometers' => ['required',  'max:225'],
             'return_petrol' => ['max:225'],
             'return_oil' => [ 'max:225'],
-            'return_comment' => ['max:225'],         
+            'return_comment' => ['max:225'],
         ]);
         if ($validator->fails()) {
             return redirect()->back()
@@ -304,9 +304,9 @@ class BookingController extends Controller
             'return_kilometers' => $request->return_kilometers,
             'return_destination_start'=> $request->return_destination_start,
             'return_destination_end'=> $request->return_destination_end,
-            'return_petrol' => $request->return_petrol,          
+            'return_petrol' => $request->return_petrol,
             'return_oil' => $request->return_oil,
-            'return_comment' => $request->return_comment,            
+            'return_comment' => $request->return_comment,
         ];
         LogBook::where('id',$id)->update($data);
         return redirect()->back()->with('success','Return log has been captured successfully');
@@ -332,7 +332,7 @@ class BookingController extends Controller
                 $data = LogBook::orderBy('created_at', 'DESC')->get();
             return Datatables::of($data)
                     //**********INDEX COLUMN ************/
-                  
+
                     ->addIndexColumn()
                     //**********END OF INDEX COLUMN ************/
                      //**********FULL NAME COLUMN ************/
@@ -358,14 +358,14 @@ class BookingController extends Controller
                         return $vehicle_plate;
                         })
                     //**********END OF PLATE COLUMN ************/
-                    
-                    
+
+
                     ->addColumn('action', function($row){
                         $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id = "'.$row->id.'"><i class="fa fa-pencil text-light"></i></a> ';
                         if(Auth::user()->hasRole('Admin')){
                             $actionBtn = $actionBtn .' <a href="javascript:void(0)" class="delete btn btn-danger btn-sm" id="delete" data-id ="'.$row->id.'"><i class="fa fa-trash text-light"></i></a>';
                         }
-                        
+
                         return $actionBtn;
                     })
                     ->rawColumns(['full_name','trip_start_date','destination_end','vehicle_plate','action'])
@@ -382,24 +382,54 @@ class BookingController extends Controller
             'full_name' => $log->full_name,
             'trip_start_date' => Carbon::parse($log->trip_start_date)->toDateTimeString(),
             'trip_end_date' => Carbon::parse($log->trip_end_date)->toDateTimeString(),
-            'start_odometer' => $log->start_odometer,            
+            'start_odometer' => $log->start_odometer,
             'kilometers' => $log->kilometers,
             'destination_start' => $log->destination_start,
             'destination_end' => $log->destination_end,
             'trip_details' => $log->trip_details,
-            'petrol' => $log->petrol,            
+            'petrol' => $log->petrol,
             'oil' => $log->oil,
             'start_comment' => $log->start_comment,
             'return_date_out' => Carbon::parse($log->return_date_out)->toDateTimeString(),
             'return_date_in' => Carbon::parse($log->return_date_in)->toDateTimeString(),
-            'return_odometer' => $log->return_odometer,  
+            'return_odometer' => $log->return_odometer,
             'return_kilometers' => $log->return_kilometers,
             'return_destination_start'=> $log->return_destination_start,
             'return_destination_end'=> $log->return_destination_end,
-            'return_petrol' => $log->return_petrol,          
+            'return_petrol' => $log->return_petrol,
             'return_oil' => $log->return_oil,
-            'return_comment' => $log->return_comment,     
+            'return_comment' => $log->return_comment,
         ];
         return response()->json($data);
+    }
+    public function booking_calender(){
+        $events = [];
+
+        $appointments = Booking::whereBetween('created_at', [
+            Carbon::now()->startOfYear(),
+            Carbon::now()->endOfYear(),
+        ])->get();
+        foreach ($appointments as $appointment) {
+            $date = Carbon::parse($appointment->return_date);
+            $color = '';
+            if($date->isPast()){
+                $color = '#9FA6B2';
+            }elseif($appointment->status == 'Pending'){
+                $color = '#E4A11B';
+            }elseif($appointment->status == 'Rejected'){
+                $color ='#DC4C64';
+            }else{
+                $color = '#14A44D';
+            }
+
+            $events[] = [
+                'title' => $appointment->destination,
+                'start' =>  Carbon::parse($appointment->trip_start_date),
+                'end' =>  Carbon::parse($appointment->return_date),
+                'color'=> $color,
+
+            ];
+        }
+        return view('bookings.calender', compact('events'));
     }
 }

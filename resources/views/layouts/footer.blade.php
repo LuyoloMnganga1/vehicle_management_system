@@ -24,10 +24,10 @@
        })
          </script>
         <!-- js -->
-      <script src="vendors/scripts/core.js"></script>
-        <script src="vendors/scripts/script.min.js"></script>
-        <script src="vendors/scripts/process.js"></script>
-        <script src="vendors/scripts/layout-settings.js"></script>
+      <script src="{{asset('vendors/scripts/core.js')}}"></script>
+        <script src="{{asset('vendors/scripts/script.min.js')}}"></script>
+        <script src="{{asset('vendors/scripts/process.js')}}"></script>
+        <script src="{{asset('vendors/scripts/layout-settings.js')}}"></script>
      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
@@ -39,4 +39,5 @@
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js'></script>
 @yield('scripts')

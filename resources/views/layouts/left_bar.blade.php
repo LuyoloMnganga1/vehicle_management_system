@@ -3,7 +3,7 @@
 <div class="left-side-bar">
     <div class="brand-logo">
         <a class="navbar-brand" href="#">
-            <img src="vendors/images/logo.png" alt="logo" />
+            <img src="{{asset('vendors/images/logo.png')}}" alt="logo" />
           </a>
         <div class="close-sidebar" data-toggle="left-sidebar-close">
             <i class="ion-close-round"></i>
@@ -18,6 +18,11 @@
                     </a>
 
                 </li>
+                <li class="dropdown">
+                    <a href="{{route('booking-calender')}}" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-calendar-o"></span><span class="mtext"> Bookings calender</span>
+                    </a>
+                </li>
                 @if(Auth::user()->hasRole('Admin') || Auth::user()->hasRole('General-Manager') || Auth::user()->hasRole('SuperAdmin'))
                 <li class="dropdown">
                     <a href="javascript:void(0);" class="dropdown-toggle">
@@ -27,10 +32,10 @@
 
                         <li><a  href="{{route('vehicle')}}">Vehicles</a></li>
 
-                        <li><a href="{{route('assiged-vehicle')}}">Assign Vehicle</a></li>                        
+                        <li><a href="{{route('assiged-vehicle')}}">Assign Vehicle</a></li>
                     </ul>
                 </li>
-              
+
                 <li class="dropdown">
                     <a href="{{route('vehicle-driver')}}" class="dropdown-toggle no-arrow">
                         <span class="micon fa fa-users"></span><span class="mtext">Drivers</span>
