@@ -427,7 +427,7 @@ class BookingController extends Controller
                 'start' =>  Carbon::parse($appointment->trip_start_date),
                 'end' =>  Carbon::parse($appointment->return_date),
                 'color'=> $color,
-
+                'editable'=> false,
             ];
         }
         return view('bookings.calender', compact('events'));
