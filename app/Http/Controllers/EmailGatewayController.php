@@ -20,8 +20,8 @@ class EmailGatewayController extends Controller
     {
 
         $tenantId = 'b7c1d9a8-4dd4-4e3a-b0b6-44fb57a4fc6d';
-        $clientId = 'c6b4ba29-e2ac-4959-97cf-7c7706924075';
-        $clientSecret = '1TG8Q~HVNGyKeZ0wFvAe4KEanBviccLpjg8hzaCq';
+        $clientId = 'b64ec7df-474d-4077-b48a-e95f3e79539d';
+        $clientSecret = 'K9w8Q~_CATpY3K1fjnx1YWR4Mm3pbqbtkN6UDb_o';
 
 
         $guzzle = new \GuzzleHttp\Client();
